@@ -1,9 +1,9 @@
 
-export default class OrbitInfo {
-  constructor(parent, L0, Ldot, semiMajorAxis, eccentricity, argumentOfPeriapsis, inclination, longitudeOfAscendingNode) {
+export default class OrbitData {
+  constructor({parent, L0, Ldot, semiMajorAxis, eccentricity, argumentOfPeriapsis, inclination, longitudeOfAscendingNode}) {
 		this.parent = parent;
-		this.L0 = L0;
-		this.Ldot = Ldot;
+		this.L0 = L0 * Math.PI / 180;
+		this.Ldot = Ldot * Math.PI / 180;
 		this.semiMajorAxis = semiMajorAxis;
 		this.eccentricity = eccentricity;
 
@@ -22,7 +22,7 @@ export default class OrbitInfo {
 		this.longitudeOfPeriapsis = this.longitudeOfAscendingNode + this.argumentOfPeriapsis;
   }
 
-  getOrbitInfo(body) {
+  getOrbitData(body) {
     // calculate orbit info from position, velocity, mass of parent
   }
 }

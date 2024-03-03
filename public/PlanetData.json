@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Sun",
+    "mass": 1989000,
+    "radius": 696.34,
+    "texturePath": "/images/star_texture_orange.jpeg", 
+    "startingPosition": { "x": 0, "y": 0, "z": 0 },
+    "rotationPeriod": 24.47,
+    "axisTilt" : 7.25,
+    "lightIntensity": 20000000000,
+    "basicMat": true,
+    "children": [
+      {
+        "name": "Mercury",
+        "mass": 0.3285,
+        "radius": 2.4397,
+        "texturePath": "/images/mercury_texture.jpeg", 
+        "startingPosition": { "x": 57909, "y": 0, "z": 0 },
+        "rotationPeriod": 58.65,
+        "axisTilt" : 0.03,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 252.25032350, 
+          "Ldot": 149472.67411175, 
+          "semiMajorAxis": 57909.22654, 
+          "eccentricity": 0.20563593, 
+          "argumentOfPeriapsis": 29.124, 
+          "inclination": 7.005, 
+          "longitudeOfAscendingNode" : 48.33
+        }
+      },
+      {
+        "name": "Venus",
+        "mass": 4.8673,
+        "radius": 6.0518,
+        "texturePath": "/images/venus_texture.jpeg", 
+        "startingPosition": { "x": 108209, "y": 0, "z": 0 },
+        "rotationPeriod": 58.65,
+        "axisTilt" : 2.64,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 181.97909950, 
+          "Ldot": 58517.81538729, 
+          "semiMajorAxis": 108209.4745374, 
+          "eccentricity": 0.00677672, 
+          "argumentOfPeriapsis": 54.9226, 
+          "inclination": 3.395, 
+          "longitudeOfAscendingNode" : 76.68069
+        }
+      },
+      {
+        "name": "Earth",
+        "mass": 5.9722,
+        "radius": 6.371,
+        "texturePath": "/images/earth_texture.jpg", 
+        "startingPosition": { "x": 149598, "y": 0, "z": 0 },
+        "rotationPeriod": 0.99727,
+        "axisTilt" : 23.44,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 100.46457166, 
+          "Ldot": 35999.37244981, 
+          "semiMajorAxis": 149598, 
+          "eccentricity": 0.01671022, 
+          "argumentOfPeriapsis": 102.93768193, 
+          "inclination": 0, 
+          "longitudeOfAscendingNode" : 0
+        }
+      }
+    ]
+	}
+]

@@ -1,10 +1,10 @@
 import * as THREE from 'three';
+import OrbitData from './OrbitData.js'
 
 export default class CelestialBody {
-  constructor(name, mass, radius, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, orbitInfo = null, lightIntensity = 0, basicMat = false ) {
+  constructor({name, mass, radius, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, children = [], parent = null }) {
 		this.name = name;
 		this.container = new THREE.Object3D();
-		this.children = [];
 		this.mass = mass;
 		this.radius = radius;
 		this.rotationPeriod = rotationPeriod;
@@ -14,31 +14,56 @@ export default class CelestialBody {
 		const geometry = new THREE.SphereGeometry(radius, 80, 40);
 		const mesh = new THREE.Mesh(geometry, material);
 		this.container.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
-		this.orbitInfo = orbitInfo;
+		this.orbitData = orbitData;
 		this.orbitEllipse = null;
+		this.parent = parent;
 
 		if (lightIntensity > 0) {
 			const light = new THREE.PointLight(0xffffff, lightIntensity);
 			mesh.add(light);
 		}
 
-		if(orbitInfo != null) {
-			this.orbitInfo.parent.container.add(this.container);
-			this.orbitInfo.parent.children.push(this);
+		if(orbitData != null) {
 			this.orbitEllipse = this.createOrbitEllipse();
-			this.orbitInfo.parent.container.add(this.orbitEllipse);
+			// console.log(this);
+			parent.container.add(this.orbitEllipse);
 		}
 
+		mesh.rotation.x = axisTilt * Math.PI / 180;
 		this.mesh = mesh;
 		this.container.add(mesh);
+
+		this.children = [];
+		if(children.length !== 0) {
+			children.forEach((child) => {
+				let childBody = new CelestialBody({
+					name: child.name,
+					mass: child.mass, 
+					radius: child.radius, 
+					texturePath: child.texturePath, 
+					startingPosition: child.startingPosition,
+					rotationPeriod: child.rotationPeriod, 
+					axisTilt: child.axisTilt, 
+					orbitData: new OrbitData(child.orbitData), 
+					lightIntensity: child.ightIntensity, 
+					basicMat: child.basicMat,
+					children: child.children, 
+					parent: this
+				});
+				this.children.push(childBody);
+				this.container.add(childBody.container);
+			});
+		}
+		// console.log(this);
   }
 
+	// move to OrbitData
 	createOrbitEllipse() {
-		const semiMinorAxis = this.orbitInfo.semiMajorAxis * Math.sqrt(1 - this.orbitInfo.eccentricity ** 2);
-		const parentPos = Math.sqrt(this.orbitInfo.semiMajorAxis ** 2 - semiMinorAxis ** 2);
+		const semiMinorAxis = this.orbitData.semiMajorAxis * Math.sqrt(1 - this.orbitData.eccentricity ** 2);
+		const parentPos = Math.sqrt(this.orbitData.semiMajorAxis ** 2 - semiMinorAxis ** 2);
 		const curve = new THREE.EllipseCurve(
       parentPos,  0,         // ax, aY
-      this.orbitInfo.semiMajorAxis, semiMinorAxis,      // xRadius, yRadius
+      this.orbitData.semiMajorAxis, semiMinorAxis,      // xRadius, yRadius
       0,  2 * Math.PI,   // aStartAngle, aEndAngle
       false,              // aClockwise
       0                  // aRotation
@@ -52,29 +77,30 @@ export default class CelestialBody {
     // Create the final object to add to the scene
     const ellipse = new THREE.Line( ellipseGeometry, ellipseMaterial );
     ellipse.rotateX(Math.PI / 2);
-    ellipse.rotateZ(this.orbitInfo.longitudeOfAscendingNode);
-    ellipse.rotateX(-this.orbitInfo.inclination);
-    ellipse.rotateZ(this.orbitInfo.argumentOfPeriapsis);
+    ellipse.rotateZ(this.orbitData.longitudeOfAscendingNode);
+    ellipse.rotateX(-this.orbitData.inclination);
+    ellipse.rotateZ(this.orbitData.argumentOfPeriapsis);
     // ellipse.renderOrder = -1;
 
 		return ellipse;
 	}
 
+	//TODO move to OrbitData.js
 	calculateEllipticalOrbitPosition(date) {
 		// parent, period, semiMajorAxis, eccentricity, argumentOfPeriapsis, inclination, longitudeOfAscendingNode
 		let tMillisFromJ2000 = date - Date.UTC(2000, 0, 1, 12, 0, 0);
 		let tCenturiesFromJ2000 = tMillisFromJ2000 / 3.15576e12;//(1000*60*60*24*365.25*100);
 
 		// mean longitude
-		let L = this.orbitInfo.L0 + this.orbitInfo.Ldot * tCenturiesFromJ2000;
+		let L = this.orbitData.L0 + this.orbitData.Ldot * tCenturiesFromJ2000;
     // mean anomaly
-		let M = L - this.orbitInfo.longitudeOfPeriapsis;
+		let M = L - this.orbitData.longitudeOfPeriapsis;
 
     // Solve Kepler's equation for eccentric anomaly (E)
     let E = M;
 		// use for loop instead of while true to avoid infinite loops (unlikely)
 		for(let i=0; i<100; i++) {
-			let dE = (E - this.orbitInfo.eccentricity * Math.sin(E) - M)/(1 - this.orbitInfo.eccentricity * Math.cos(E));
+			let dE = (E - this.orbitData.eccentricity * Math.sin(E) - M)/(1 - this.orbitData.eccentricity * Math.cos(E));
 			E -= dE;
 			if( Math.abs(dE) < 1e-6 ) break;
 			if(i === 99) {
@@ -82,25 +108,26 @@ export default class CelestialBody {
 			}
 		}
 
-		let P = this.orbitInfo.semiMajorAxis * (Math.cos(E) - this.orbitInfo.eccentricity);
-		let Q = this.orbitInfo.semiMajorAxis * Math.sin(E) * Math.sqrt(1 - Math.pow(this.orbitInfo.eccentricity, 2));
+		let P = this.orbitData.semiMajorAxis * (Math.cos(E) - this.orbitData.eccentricity);
+		let Q = this.orbitData.semiMajorAxis * Math.sin(E) * Math.sqrt(1 - Math.pow(this.orbitData.eccentricity, 2));
 
     // rotate by argument of periapsis
-		let x = -this.orbitInfo.cosArgumentOfPeriapsis * P - this.orbitInfo.sinArgumentOfPeriapsis * Q;
-		let z = -this.orbitInfo.sinArgumentOfPeriapsis * P + this.orbitInfo.cosArgumentOfPeriapsis * Q;
+		let x = -this.orbitData.cosArgumentOfPeriapsis * P - this.orbitData.sinArgumentOfPeriapsis * Q;
+		let z = -this.orbitData.sinArgumentOfPeriapsis * P + this.orbitData.cosArgumentOfPeriapsis * Q;
 		// // rotate by inclination
-		let y = this.orbitInfo.sinInclination * z;
-				z = this.orbitInfo.cosInclination * z;
+		let y = this.orbitData.sinInclination * z;
+				z = this.orbitData.cosInclination * z;
 		// rotate by longitude of ascending node
 		let xtemp = x;
-		x = this.orbitInfo.cosLongitudeOfAscendingNode * xtemp - this.orbitInfo.sinLongitudeOfAscendingNode * z;
-		z = this.orbitInfo.sinLongitudeOfAscendingNode * xtemp + this.orbitInfo.cosLongitudeOfAscendingNode * z;
+		x = this.orbitData.cosLongitudeOfAscendingNode * xtemp - this.orbitData.sinLongitudeOfAscendingNode * z;
+		z = this.orbitData.sinLongitudeOfAscendingNode * xtemp + this.orbitData.cosLongitudeOfAscendingNode * z;
     return new THREE.Vector3(x, y, z);
 	}
 
   update(date) {
 		this.mesh.rotation.y = ((date / 8.64e7) / this.rotationPeriod) * 2 * Math.PI;
-		if(this.orbitInfo != null) {
+		// this.mesh.rotation.y += 0.01;
+		if(this.orbitData != null) {
 			const position = this.calculateEllipticalOrbitPosition(date);
 			this.container.position.set(...position.toArray());
 		}
