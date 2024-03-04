@@ -5,9 +5,9 @@
     "radius": 696.34,
     "texturePath": "/images/star_texture_orange.jpeg", 
     "startingPosition": { "x": 0, "y": 0, "z": 0 },
-    "rotationPeriod": 24.47,
+    "rotationPeriod": 587.28,
     "axisTilt" : 7.25,
-    "lightIntensity": 20000000000,
+    "lightIntensity": 400000000000,
     "basicMat": true,
     "children": [
       {
@@ -16,7 +16,7 @@
         "radius": 2.4397,
         "texturePath": "/images/mercury_texture.jpeg", 
         "startingPosition": { "x": 57909, "y": 0, "z": 0 },
-        "rotationPeriod": 58.65,
+        "rotationPeriod": 1407.6,
         "axisTilt" : 0.03,
         "orbitData": {
           "parent": "Sun", 
@@ -35,7 +35,7 @@
         "radius": 6.0518,
         "texturePath": "/images/venus_texture.jpeg", 
         "startingPosition": { "x": 108209, "y": 0, "z": 0 },
-        "rotationPeriod": 58.65,
+        "rotationPeriod": -139982.4,
         "axisTilt" : 2.64,
         "orbitData": {
           "parent": "Sun", 
@@ -54,8 +54,8 @@
         "radius": 6.371,
         "texturePath": "/images/earth_texture.jpg", 
         "startingPosition": { "x": 149598, "y": 0, "z": 0 },
-        "rotationPeriod": 0.99727,
-        "axisTilt" : 23.44,
+        "rotationPeriod": 23.9345,
+        "axisTilt": 23.44,
         "orbitData": {
           "parent": "Sun", 
           "L0": 100.46457166, 
@@ -65,6 +65,143 @@
           "argumentOfPeriapsis": 102.93768193, 
           "inclination": 0, 
           "longitudeOfAscendingNode" : 0
+        },
+        "children": [
+          {
+            "name": "Moon",
+            "mass": 0.07346,
+            "radius": 1.7374,
+            "texturePath": "/images/moon_texture.png", 
+            "startingPosition": { "x": 149982.4, "y": 0, "z": 0 },
+            "rotationPeriod": 655.7208,
+            "axisTilt": 1.5,
+            "orbitData": {
+              "parent": "Earth", 
+              "L0": 0,
+              "Ldot": 481267.8855858, 
+              "semiMajorAxis": 384.4, 
+              "eccentricity": 0.0549, 
+              "argumentOfPeriapsis": 318.15, 
+              "inclination": 5.145, 
+              "longitudeOfAscendingNode" : 125.08
+            },
+            "startingRotation" : 180
+          }
+        ]
+      },
+      {
+        "name": "Mars",
+        "mass": 0.64169,
+        "radius": 3.3895,
+        "texturePath": "/images/mars_texture.jpeg", 
+        "startingPosition": { "x": 227956, "y": 0, "z": 0 },
+        "rotationPeriod": 24.6229,
+        "axisTilt" : 25.19,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": -4.56813164,
+          "Ldot": 19140.29934243, 
+          "semiMajorAxis": 227956, 
+          "eccentricity": 0.0935, 
+          "inclination": 3.395, 
+          "longitudeOfAscendingNode" : 49.57854,
+          "longitudeOfPeriapsis" : 336.04084
+        }
+      },
+      {
+        "name": "Jupiter",
+        "mass": 1898.13,
+        "radius": 69.911,
+        "texturePath": "/images/jupiter_texture.jpeg", 
+        "startingPosition": { "x": 778479, "y": 0, "z": 0 },
+        "rotationPeriod": 9.9250,
+        "axisTilt" : 3.13,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 34.33479152, 
+          "Ldot": 3034.90371757, 
+          "semiMajorAxis": 778479, 
+          "eccentricity": 0.00677672, 
+          "inclination": 1.304, 
+          "longitudeOfAscendingNode" : 100.55615,
+          "longitudeOfPeriapsis" : 14.75385
+        }
+      },
+      {
+        "name": "Saturn",
+        "mass": 568.32,
+        "radius": 58.232,
+        "texturePath": "/images/saturn_texture.jpeg", 
+        "startingPosition": { "x": 1432041, "y": 0, "z": 0 },
+        "rotationPeriod": 10.656,
+        "axisTilt" : 26.73,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 50.07571329, 
+          "Ldot": 1222.11494724, 
+          "semiMajorAxis": 1432041, 
+          "eccentricity": 0.00677672, 
+          "inclination": 2.486, 
+          "longitudeOfAscendingNode" : 76.68069,
+          "longitudeOfPeriapsis" : 131.53298
+        }
+      },
+      {
+        "name": "Uranus",
+        "mass": 86.811,
+        "radius": 25.362,
+        "texturePath": "/images/uranus_texture.jpeg", 
+        "startingPosition": { "x": 2867043, "y": 0, "z": 0 },
+        "rotationPeriod": -17.24,
+        "axisTilt" : 97.77,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 314.20276625, 
+          "Ldot": 428.49512595, 
+          "semiMajorAxis": 2867043, 
+          "eccentricity": 0.0469, 
+          "inclination": 0.770, 
+          "longitudeOfAscendingNode" : 74.22988,
+          "longitudeOfPeriapsis" : 170.96424
+        }
+      },
+      {
+        "name": "Neptune",
+        "mass": 102.409,
+        "radius": 24.622,
+        "texturePath": "/images/neptune_texture.jpeg", 
+        "startingPosition": { "x": 4514953, "y": 0, "z": 0 },
+        "rotationPeriod": 16.11,
+        "axisTilt" : 28.32,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 304.22289287, 
+          "Ldot": 218.46515314, 
+          "semiMajorAxis": 4514953, 
+          "eccentricity": 0.0097, 
+          "inclination": 1.770, 
+          "longitudeOfAscendingNode" : 131.72169,
+          "longitudeOfPeriapsis" : 44.97135
+        }
+      },
+      {
+        "name": "Halley's Comet",
+        "mass": 2.2e-10,
+        "radius": 0.0055,
+        "texturePath": "/images/comet_texture.png", 
+        "startingPosition": { "x": 5256869.2, "y": 0, "z": 0 },
+        "rotationPeriod": 100,
+        "axisTilt" : 0,
+        "basicMat": true,
+        "orbitData": {
+          "parent": "Sun", 
+          "L0": 181.97909950, 
+          "Ldot": 474.24543,
+          "semiMajorAxis": 2681963.35946026, 
+          "eccentricity": 0.9679427911271, 
+          "argumentOfPeriapsis": 112.2578,
+          "inclination": 162.1878711908339, 
+          "longitudeOfAscendingNode" : 59.114483
         }
       }
     ]

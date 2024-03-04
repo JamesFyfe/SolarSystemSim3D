@@ -15,21 +15,24 @@ const CosmicExplorer = () => {
 
   useEffect(() => {
     let date = Date.now();
-    const timeSpeed = 2000000;
-    let relativePosition = new THREE.Vector3(0,100000,100000);
+    const timeSpeed = 20000;
+    let relativePosition = new THREE.Vector3(0,500000,500000);
     relativePosition = new THREE.Vector3(0,1,10);
     let previousTimestamp, sun, selectedBody;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.toneMappingExposure = 1;
 
     // Set up scene
-    scene.add(new THREE.AmbientLight(0xffffff, 0.02));
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.02)
+    scene.add(ambientLight);
 
     // Set up bloom effect
     const renderScene = new RenderPass(scene, camera);
@@ -37,7 +40,7 @@ const CosmicExplorer = () => {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
-    composer.addPass(bloomPass);
+    // composer.addPass(bloomPass);
     composerRef.current = composer;
     composerRef.current.setSize(window.innerWidth, window.innerHeight);
 
@@ -59,19 +62,27 @@ const CosmicExplorer = () => {
       // let dateStr = new Date(date).toLocaleDateString();
       // console.log(dateStr);
       if(selectedBody != undefined) {
+        let worldPos = new THREE.Vector3();
+        selectedBody.container.getWorldPosition(worldPos);
 
-        let selectedPos = new THREE.Vector3(...selectedBody.container.position.toArray());
+        let selectedPos = new THREE.Vector3(...worldPos.toArray());
         //update all positions and rotations
         updateBodyAndChildren(sun, date);
         
-        let selectedPosAfter = selectedBody.container.position;
+        let selectedPosAfter = new THREE.Vector3();
+        selectedBody.container.getWorldPosition(selectedPosAfter);
         
         const diff = new THREE.Vector3().subVectors(selectedPosAfter, selectedPos);
         camera.position.add(diff);
-        controls.target.set(...selectedBody.container.position.toArray());
+        controls.target.set(...selectedPosAfter.toArray());
       }
 
       controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+      // let distToSun = camera.position.distanceTo(sun.container.position);
+      // renderer.toneMappingExposure = Math.min(Math.max(distToSun/400000, 0.1), 10);
+      // renderer.toneMappingExposure = 10;
+      // ambientLight.intensity = 0;// Math.max(0.02, );
+
       composerRef.current.render();
       previousTimestamp = timestamp;
 
@@ -84,13 +95,14 @@ const CosmicExplorer = () => {
         const response = await fetch('./PlanetData.json');
         const data = await response.json();
 
-      
         // Create CelestialBody instances based on the loaded data
         sun = data.map(bodyData => new CelestialBody(bodyData))[0];
 
         // Add celestial bodies to the scene
         scene.add(sun.container);
-        setSelectedBody(sun.children[2]);
+
+        setSelectedBody(sun);
+        // setSelectedBody(sun.children[7]);
 
         // Set the initial selected body (e.g., first body in the array)
       } catch (error) {
@@ -134,10 +146,13 @@ const CosmicExplorer = () => {
     }
 
     function setSelectedBody(body) {
+      scene.updateMatrixWorld();
+      let worldPos = new THREE.Vector3();
+      body.container.getWorldPosition(worldPos);
       selectedBody = body;
-      controls.target.set(...body.container.position.toArray());
-      controls.minDistance = body.radius * 2;
-      const camPos = new THREE.Vector3().addVectors(body.container.position, relativePosition);
+      controls.target.set(...worldPos.toArray());
+      controls.minDistance = body.radius * 3;
+      const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
     }
 
