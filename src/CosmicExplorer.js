@@ -12,6 +12,7 @@ const CosmicExplorer = () => {
   const animationIdRef = useRef(null);
   const composerRef = useRef(null);
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
+  const selectedPlanet = 3;
 
   useEffect(() => {
     let date = Date.now();
@@ -78,7 +79,10 @@ const CosmicExplorer = () => {
       controls.target.set(...selectedPosAfter.toArray());
 
       controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
-      
+      setOrbitEllipseOpac();
+
+      console.log(selectedBody.orbitEllipse);
+
       // make sun brighter when further away so outer planets are bright enough
       let distToSun = camera.position.distanceTo(sun.container.position);
       sun.mesh.children[0].intensity = distToSun ** 1.8 * 5;
@@ -108,11 +112,14 @@ const CosmicExplorer = () => {
     fetchData().then(() => {
       // render all objects then wait until textures are loaded before starting animation
       composerRef.current.render();
-      // setTimeout(function() {
-        // setSelectedBody(sun);
-        setSelectedBody(sun.children[0]);
+      setTimeout(function() {
+        if(selectedPlanet == 0) {
+          setSelectedBody(sun);
+        } else {
+          setSelectedBody(sun.children[selectedPlanet - 1]);
+        }
         animationIdRef.current = requestAnimationFrame(animate);
-      // }, 10);
+      }, 10);
     });
 
     // const grid = new THREE.GridHelper( 1000000, 25, 0x222222, 0x222222 );
@@ -151,9 +158,22 @@ const CosmicExplorer = () => {
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 1.5;
+      controls.minDistance = body.radius * 3;
       const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
+    }
+
+    function setOrbitEllipseOpac() {
+      const radiiToTarget = controls.getDistance() / selectedBody.radius;
+      if(radiiToTarget < 15) {
+        selectedBody.orbitEllipse.visible = false;
+      } else if(radiiToTarget < 150) {
+        selectedBody.orbitEllipse.visible = true;
+        selectedBody.orbitEllipse.material.opacity = (radiiToTarget - 15) / 150;
+      } else {
+        selectedBody.orbitEllipse.visible = true;
+        selectedBody.orbitEllipse.material.opacity = 1;
+      }
     }
 
     // Clean up on component unmount

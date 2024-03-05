@@ -31,7 +31,6 @@ export default class CelestialBody {
 		if(orbitData != null) {
 			this.orbitEllipse = this.orbitData.createOrbitEllipse();
 			parent.container.add(this.orbitEllipse);
-			// this.orbitEllipse.visible = false;
 		}
 
 		mesh.rotation.x = axisTilt * Math.PI / 180;
