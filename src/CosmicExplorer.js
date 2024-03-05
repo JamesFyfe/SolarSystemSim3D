@@ -16,19 +16,21 @@ const CosmicExplorer = () => {
   useEffect(() => {
     let date = Date.now();
     const timeSpeed = 20000;
-    let relativePosition = new THREE.Vector3(0,500000,500000);
-    relativePosition = new THREE.Vector3(0,1,10);
+
     let previousTimestamp, sun, selectedBody;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
+    camera.position.set(0, 0, 20000);
+    let relativePosition = new THREE.Vector3(0,500000,500000);
+    relativePosition = new THREE.Vector3(0,1,10);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.toneMapping = THREE.ReinhardToneMapping;
-    renderer.toneMappingExposure = 1;
+    // renderer.toneMapping = THREE.ReinhardToneMapping;
+    // renderer.toneMappingExposure = 0.1;
 
     // Set up scene
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.02)
@@ -36,11 +38,11 @@ const CosmicExplorer = () => {
 
     // Set up bloom effect
     const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.5, 0.01);    
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 1, 0.2, 0.01);    
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
-    // composer.addPass(bloomPass);
+    composer.addPass(bloomPass);
     composerRef.current = composer;
     composerRef.current.setSize(window.innerWidth, window.innerHeight);
 
@@ -61,27 +63,25 @@ const CosmicExplorer = () => {
 
       // let dateStr = new Date(date).toLocaleDateString();
       // console.log(dateStr);
-      if(selectedBody != undefined) {
-        let worldPos = new THREE.Vector3();
-        selectedBody.container.getWorldPosition(worldPos);
+      let worldPos = new THREE.Vector3();
+      selectedBody.container.getWorldPosition(worldPos);
 
-        let selectedPos = new THREE.Vector3(...worldPos.toArray());
-        //update all positions and rotations
-        updateBodyAndChildren(sun, date);
-        
-        let selectedPosAfter = new THREE.Vector3();
-        selectedBody.container.getWorldPosition(selectedPosAfter);
-        
-        const diff = new THREE.Vector3().subVectors(selectedPosAfter, selectedPos);
-        camera.position.add(diff);
-        controls.target.set(...selectedPosAfter.toArray());
-      }
+      let selectedPos = new THREE.Vector3(...worldPos.toArray());
+      //update all positions and rotations
+      updateBodyAndChildren(sun, date);
+      
+      let selectedPosAfter = new THREE.Vector3();
+      selectedBody.container.getWorldPosition(selectedPosAfter);
+      
+      const diff = new THREE.Vector3().subVectors(selectedPosAfter, selectedPos);
+      camera.position.add(diff);
+      controls.target.set(...selectedPosAfter.toArray());
 
       controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
-      // let distToSun = camera.position.distanceTo(sun.container.position);
-      // renderer.toneMappingExposure = Math.min(Math.max(distToSun/400000, 0.1), 10);
-      // renderer.toneMappingExposure = 10;
-      // ambientLight.intensity = 0;// Math.max(0.02, );
+      
+      // make sun brighter when further away so outer planets are bright enough
+      let distToSun = camera.position.distanceTo(sun.container.position);
+      sun.mesh.children[0].intensity = distToSun ** 1.8 * 5;
 
       composerRef.current.render();
       previousTimestamp = timestamp;
@@ -100,18 +100,19 @@ const CosmicExplorer = () => {
 
         // Add celestial bodies to the scene
         scene.add(sun.container);
-
-        setSelectedBody(sun);
-        // setSelectedBody(sun.children[7]);
-
-        // Set the initial selected body (e.g., first body in the array)
       } catch (error) {
         console.error('Error loading celestial data:', error);
       }
     };
 
     fetchData().then(() => {
-      animationIdRef.current = requestAnimationFrame(animate);
+      // render all objects then wait until textures are loaded before starting animation
+      composerRef.current.render();
+      // setTimeout(function() {
+        // setSelectedBody(sun);
+        setSelectedBody(sun.children[0]);
+        animationIdRef.current = requestAnimationFrame(animate);
+      // }, 10);
     });
 
     // const grid = new THREE.GridHelper( 1000000, 25, 0x222222, 0x222222 );
@@ -146,12 +147,11 @@ const CosmicExplorer = () => {
     }
 
     function setSelectedBody(body) {
-      scene.updateMatrixWorld();
       let worldPos = new THREE.Vector3();
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 3;
+      controls.minDistance = body.radius * 1.5;
       const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
     }
