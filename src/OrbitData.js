@@ -81,7 +81,7 @@ export default class OrbitData {
 		const points = curve.getPoints( 5000 );
 
 		const ellipseGeometry = new THREE.BufferGeometry().setFromPoints( points );
-		const ellipseMaterial = new THREE.MeshBasicMaterial( {color: 0x555555, transparent: true} );
+		const ellipseMaterial = new THREE.MeshBasicMaterial({color: "rgb(100, 100, 100)", transparent: true, opacity: 0.8});
 		
 		// Create the final object to add to the scene
 		const ellipse = new THREE.Line( ellipseGeometry, ellipseMaterial );

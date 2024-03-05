@@ -3,6 +3,7 @@
     "name": "Sun",
     "mass": 1989000,
     "radius": 696.34,
+    "color": "rgb(130, 130, 70)",
     "texturePath": "/images/star_texture_orange.jpeg", 
     "startingPosition": { "x": 0, "y": 0, "z": 0 },
     "rotationPeriod": 587.28,
@@ -14,6 +15,7 @@
         "name": "Mercury",
         "mass": 0.3285,
         "radius": 2.4397,
+        "color": "rgb(100, 100, 100)",
         "texturePath": "/images/mercury_texture.jpeg", 
         "startingPosition": { "x": 57909, "y": 0, "z": 0 },
         "rotationPeriod": 1407.6,
@@ -33,6 +35,7 @@
         "name": "Venus",
         "mass": 4.8673,
         "radius": 6.0518,
+        "color": "rgb(142, 116, 72)",
         "texturePath": "/images/venus_texture.jpeg", 
         "startingPosition": { "x": 108209, "y": 0, "z": 0 },
         "rotationPeriod": -139982.4,
@@ -52,10 +55,12 @@
         "name": "Earth",
         "mass": 5.9722,
         "radius": 6.371,
+        "color": "rgb(60, 90, 140)",
         "texturePath": "/images/earth_texture.jpg", 
         "startingPosition": { "x": 149598, "y": 0, "z": 0 },
         "rotationPeriod": 23.9345,
         "axisTilt": 23.44,
+        "startingRotation" : 90,
         "orbitData": {
           "parent": "Sun", 
           "L0": 100.46457166, 
@@ -71,10 +76,12 @@
             "name": "Moon",
             "mass": 0.07346,
             "radius": 1.7374,
+            "color": "rgb(100, 100, 100)",
             "texturePath": "/images/moon_texture.png", 
             "startingPosition": { "x": 149982.4, "y": 0, "z": 0 },
             "rotationPeriod": 655.7208,
             "axisTilt": 1.5,
+            "startingRotation" : 180,
             "orbitData": {
               "parent": "Earth", 
               "L0": 0,
@@ -84,8 +91,7 @@
               "argumentOfPeriapsis": 318.15, 
               "inclination": 5.145, 
               "longitudeOfAscendingNode" : 125.08
-            },
-            "startingRotation" : 180
+            }
           }
         ]
       },
@@ -93,10 +99,12 @@
         "name": "Mars",
         "mass": 0.64169,
         "radius": 3.3895,
+        "color": "rgb(150, 70, 60)",
         "texturePath": "/images/mars_texture.jpeg", 
         "startingPosition": { "x": 227956, "y": 0, "z": 0 },
         "rotationPeriod": 24.6229,
         "axisTilt" : 25.19,
+        "startingRotation" : -12,
         "orbitData": {
           "parent": "Sun", 
           "L0": -4.56813164,
@@ -112,10 +120,12 @@
         "name": "Jupiter",
         "mass": 1898.13,
         "radius": 69.911,
+        "color": "rgb(130, 100, 60)",
         "texturePath": "/images/jupiter_texture.jpeg", 
         "startingPosition": { "x": 778479, "y": 0, "z": 0 },
         "rotationPeriod": 9.9250,
         "axisTilt" : 3.13,
+        "startingRotation" : 140,
         "orbitData": {
           "parent": "Sun", 
           "L0": 34.33479152, 
@@ -131,6 +141,7 @@
         "name": "Saturn",
         "mass": 568.32,
         "radius": 58.232,
+        "color": "rgb(110, 120, 70)",
         "texturePath": "/images/saturn_texture.jpeg", 
         "startingPosition": { "x": 1432041, "y": 0, "z": 0 },
         "rotationPeriod": 10.656,
@@ -144,12 +155,21 @@
           "inclination": 2.486, 
           "longitudeOfAscendingNode" : 76.68069,
           "longitudeOfPeriapsis" : 131.53298
+        },
+        "ringData": 
+        {
+          "distance" : 66900,
+          "width": 73280,
+          "color": "rgb(85, 85, 85)",
+          "opacity": 0.95,
+          "texturePath": "./images/saturn_rings.png"
         }
       },
       {
         "name": "Uranus",
         "mass": 86.811,
         "radius": 25.362,
+        "color": "rgb(60, 90, 120)",
         "texturePath": "/images/uranus_texture.jpeg", 
         "startingPosition": { "x": 2867043, "y": 0, "z": 0 },
         "rotationPeriod": -17.24,
@@ -169,6 +189,7 @@
         "name": "Neptune",
         "mass": 102.409,
         "radius": 24.622,
+        "color": "rgb(50, 70, 150)",
         "texturePath": "/images/neptune_texture.jpeg", 
         "startingPosition": { "x": 4514953, "y": 0, "z": 0 },
         "rotationPeriod": 16.11,
@@ -188,6 +209,7 @@
         "name": "Halley's Comet",
         "mass": 2.2e-10,
         "radius": 0.0055,
+        "color": "rgb(100, 100, 100)",
         "texturePath": "/images/comet_texture.png", 
         "startingPosition": { "x": 5256869.2, "y": 0, "z": 0 },
         "rotationPeriod": 100,

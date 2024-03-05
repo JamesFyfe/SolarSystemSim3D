@@ -4,32 +4,35 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import CelestialBody from './CelestialBody.js'
-import OrbitData from './OrbitData.js'
-import DateDisplay from './DateDisplay';
+import CelestialBody from './CelestialBody.js';
+import Constants from './Constants.js';
+// import OrbitData from './OrbitData.js'
+// import DateDisplay from './DateDisplay';
 
 const CosmicExplorer = () => {
   const animationIdRef = useRef(null);
   const composerRef = useRef(null);
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
-  const selectedPlanet = 3;
+  const selectedPlanet = Constants.selectedPlanet;
 
   useEffect(() => {
     let date = Date.now();
-    const timeSpeed = 20000;
+    // let date = Date.UTC(2000, 0, 1, 12);
+    const timeSpeed = 8 * Constants.timeMultiple;
 
     let previousTimestamp, sun, selectedBody;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
     camera.position.set(0, 0, 20000);
-    let relativePosition = new THREE.Vector3(0,500000,500000);
-    relativePosition = new THREE.Vector3(0,1,10);
+    let relativePosition = new THREE.Vector3(0,5000,5000);
+    // relativePosition = new THREE.Vector3(10,1,0);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
     // renderer.toneMapping = THREE.ReinhardToneMapping;
     // renderer.toneMappingExposure = 0.1;
 
@@ -59,7 +62,8 @@ const CosmicExplorer = () => {
       }
 
       const elapsed = timestamp - previousTimestamp;
-      date += timeSpeed;
+      // date += timeSpeed;
+      date += elapsed * Constants.timeMultiple
       // setMyTimestamp(date);
 
       // let dateStr = new Date(date).toLocaleDateString();
@@ -79,9 +83,9 @@ const CosmicExplorer = () => {
       controls.target.set(...selectedPosAfter.toArray());
 
       controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
-      setOrbitEllipseOpac();
-
-      console.log(selectedBody.orbitEllipse);
+      if(selectedBody.orbitEllipse != null) {
+        setOrbitEllipseOpac();
+      }
 
       // make sun brighter when further away so outer planets are bright enough
       let distToSun = camera.position.distanceTo(sun.container.position);
@@ -104,6 +108,7 @@ const CosmicExplorer = () => {
 
         // Add celestial bodies to the scene
         scene.add(sun.container);
+
       } catch (error) {
         console.error('Error loading celestial data:', error);
       }
@@ -149,8 +154,10 @@ const CosmicExplorer = () => {
     controls.addEventListener('change', handleZoomChange);
 
     function updateBodyAndChildren(body, date) {
-      body.update(date);
-      body.children.forEach((child) => updateBodyAndChildren(child, date));
+      body.update(date, camera);
+      body.children.forEach((child) => {
+        updateBodyAndChildren(child, date);
+      });
     }
 
     function setSelectedBody(body) {
@@ -165,14 +172,19 @@ const CosmicExplorer = () => {
 
     function setOrbitEllipseOpac() {
       const radiiToTarget = controls.getDistance() / selectedBody.radius;
-      if(radiiToTarget < 15) {
+      if(radiiToTarget < 75) {
         selectedBody.orbitEllipse.visible = false;
-      } else if(radiiToTarget < 150) {
+        selectedBody.indicator.visible = false;
+      } else if(radiiToTarget < 250) {
         selectedBody.orbitEllipse.visible = true;
-        selectedBody.orbitEllipse.material.opacity = (radiiToTarget - 15) / 150;
+        selectedBody.orbitEllipse.material.opacity = (radiiToTarget - 70) / 250;
+        selectedBody.indicator.visible = true;
+        selectedBody.indicator.material.opacity = (radiiToTarget - 70) / 250;
       } else {
         selectedBody.orbitEllipse.visible = true;
-        selectedBody.orbitEllipse.material.opacity = 1;
+        selectedBody.orbitEllipse.material.opacity = 0.8;
+        selectedBody.indicator.visible = true;
+        selectedBody.indicator.material.opacity = 0.8;
       }
     }
 
