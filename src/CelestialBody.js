@@ -19,7 +19,7 @@ export default class CelestialBody {
 			emissiveIntensity: 3
 		}) : new THREE.MeshStandardMaterial({ map: texture });
 		const geometry = new THREE.SphereGeometry(radius, 80, 40);
-		const mesh = new THREE.Mesh(geometry, material);
+		this.mesh = new THREE.Mesh(geometry, material);
 		this.container.position.set(Math.random() * 5000, Math.random() * 5000, Math.random() * 5000);
 		this.orbitData = orbitData;
 		this.orbitEllipse = null;
@@ -27,14 +27,17 @@ export default class CelestialBody {
 
 		if (lightIntensity > 0) {
 			const light = new THREE.PointLight(0xffffff, lightIntensity);
-			mesh.add(light);
+			this.mesh.add(light);
 		}
 
 		if(orbitData != null) {
 			this.orbitEllipse = this.orbitData.createOrbitEllipse();
 			this.orbitEllipse.material.color.set(this.color);
-			console.log(this.orbitEllipse.material.color);
 			parent.container.add(this.orbitEllipse);
+		}
+
+		if(this.name == "Earth") {
+			this.addNightLights();
 		}
 		
 		let tilt = axisTilt * Math.PI / 180;
@@ -42,9 +45,8 @@ export default class CelestialBody {
 			// subtract inclination from tilt since tilt is relative to inclination
 			tilt -= this.orbitData.inclination;
 		}
-		mesh.rotation.x = -tilt;
-		this.mesh = mesh;
-		this.container.add(mesh);
+		this.mesh.rotation.x = -tilt;
+		this.container.add(this.mesh);
 
 		if(ringData != null) {
 			let ring = new Ring(ringData);
@@ -106,5 +108,14 @@ export default class CelestialBody {
 		const indicatorMesh = new THREE.Mesh(indicatorGeometry, indicatorMaterial);
 		indicatorMesh.position.copy(this.mesh.position);
 		return indicatorMesh
+	}
+
+	addNightLights() {
+		const textureLoader = new THREE.TextureLoader();
+		const texture = textureLoader.load("/images/earth_lights.png");
+		const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, color: 0x999999 });
+		const geometry = new THREE.SphereGeometry(this.radius + 0.0001, 80, 40);
+		const mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
 	}
 }

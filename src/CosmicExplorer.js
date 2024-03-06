@@ -26,7 +26,7 @@ const CosmicExplorer = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
     camera.position.set(0, 0, 20000);
     let relativePosition = new THREE.Vector3(0,5000,5000);
-    // relativePosition = new THREE.Vector3(10,1,0);
+    relativePosition = new THREE.Vector3(10,1,0);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -165,7 +165,7 @@ const CosmicExplorer = () => {
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 3;
+      controls.minDistance = body.radius * 1.5;
       const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
     }
