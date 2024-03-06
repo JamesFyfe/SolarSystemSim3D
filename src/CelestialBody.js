@@ -3,7 +3,7 @@ import OrbitData from './OrbitData.js'
 import Ring from './Ring.js'
 
 export default class CelestialBody {
-  constructor({name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, children = [], parent = null }) {
+  constructor({name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphereOpacity, children = [], parent = null }) {
 		this.name = name;
 		this.container = new THREE.Object3D();
 		this.mass = mass;
@@ -38,6 +38,11 @@ export default class CelestialBody {
 
 		if(this.name == "Earth") {
 			this.addNightLights();
+			this.addClouds();
+		}
+		if(atmosphereOpacity > 0) {
+			this.atmosphereOpacity = atmosphereOpacity;
+			this.addAtmosphere();
 		}
 		
 		let tilt = axisTilt * Math.PI / 180;
@@ -74,6 +79,7 @@ export default class CelestialBody {
 					lightIntensity: child.ightIntensity, 
 					basicMat: child.basicMat,
 					ringData: child.ringData,
+					atmosphereOpacity: child.atmosphereOpacity,
 					children: child.children, 
 					parent: this,
 				});
@@ -100,6 +106,10 @@ export default class CelestialBody {
 		const scaleFactor = distance / 5000;
 		this.indicator.scale.set(scaleFactor, scaleFactor, scaleFactor);
 		this.indicator.lookAt(camera.position);
+		if(this.name == "Earth") {
+			// Move clouds slowly
+			this.mesh.children[1].rotateY(0.00001);
+		}
   }
 
 	createIndicator() {
@@ -116,6 +126,40 @@ export default class CelestialBody {
 		const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, color: 0x999999 });
 		const geometry = new THREE.SphereGeometry(this.radius + 0.0001, 80, 40);
 		const mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+	}
+
+	addClouds() {
+		const textureLoader = new THREE.TextureLoader();
+		const texture2 = textureLoader.load("/images/earth_clouds.png");
+		const material2 = new THREE.MeshStandardMaterial({ map: texture2, transparent: true });
+		const geometry2 = new THREE.SphereGeometry(this.radius + 0.03, 80, 40);
+		const mesh2 = new THREE.Mesh(geometry2, material2);
+		this.mesh.add(mesh2);
+	}
+
+	addAtmosphere() {
+		const material = new THREE.MeshStandardMaterial({ color: this.color, transparent: true, opacity: this.atmosphereOpacity });
+		const scaleFactor = 1.005;
+
+		let geometry = new THREE.SphereGeometry(this.radius + 0.05, 80, 40);
+		let mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+
+		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
+		mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+
+		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
+		mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+
+		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
+		mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+
+		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
+		mesh = new THREE.Mesh(geometry, material);
 		this.mesh.add(mesh);
 	}
 }

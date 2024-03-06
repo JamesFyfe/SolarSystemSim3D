@@ -40,6 +40,7 @@
         "startingPosition": { "x": 108209, "y": 0, "z": 0 },
         "rotationPeriod": -139982.4,
         "axisTilt" : 2.64,
+        "atmosphereOpacity": 0.3,
         "orbitData": {
           "parent": "Sun", 
           "L0": 181.97909950, 
@@ -55,12 +56,13 @@
         "name": "Earth",
         "mass": 5.9722,
         "radius": 6.371,
-        "color": "rgb(60, 90, 140)",
+        "color": "rgb(90, 120, 170)",
         "texturePath": "/images/earth_texture.jpg", 
         "startingPosition": { "x": 149598, "y": 0, "z": 0 },
         "rotationPeriod": 23.9345,
         "axisTilt": 23.44,
         "startingRotation" : 90,
+        "atmosphereOpacity": 0.04,
         "orbitData": {
           "parent": "Sun", 
           "L0": 100.46457166, 
@@ -68,7 +70,7 @@
           "semiMajorAxis": 149598, 
           "eccentricity": 0.01671022, 
           "argumentOfPeriapsis": 102.93768193, 
-          "inclination": 0, 
+          "inclination": 0,
           "longitudeOfAscendingNode" : 0
         },
         "children": [
@@ -99,12 +101,13 @@
         "name": "Mars",
         "mass": 0.64169,
         "radius": 3.3895,
-        "color": "rgb(150, 70, 60)",
+        "color": "rgb(130, 75, 30)",
         "texturePath": "/images/mars_texture.jpeg", 
         "startingPosition": { "x": 227956, "y": 0, "z": 0 },
         "rotationPeriod": 24.6229,
-        "axisTilt" : 25.19,
-        "startingRotation" : -12,
+        "axisTilt": 25.19,
+        "startingRotation": -12,
+        "atmosphereOpacity": 0.02,
         "orbitData": {
           "parent": "Sun", 
           "L0": -4.56813164,
