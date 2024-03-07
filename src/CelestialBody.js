@@ -45,12 +45,13 @@ export default class CelestialBody {
 			this.addAtmosphere();
 		}
 		
-		let tilt = axisTilt * Math.PI / 180;
+		this.tilt = axisTilt * Math.PI / 180;
 		if(this.orbitData != null) {
 			// subtract inclination from tilt since tilt is relative to inclination
-			tilt -= this.orbitData.inclination;
+			this.tilt -= this.orbitData.inclination;
 		}
-		this.mesh.rotation.x = -tilt;
+		this.mesh.rotation.reorder('ZXY');
+		this.mesh.rotateZ(-this.tilt);
 		this.container.add(this.mesh);
 
 		if(ringData != null) {
@@ -92,7 +93,7 @@ export default class CelestialBody {
   update(date, elapsed, camera) {
 		if(this.rotationPeriod !== 0) {
 			// 3.6e+6 ms per hour
-			this.mesh.rotation.y = this.startingRotation + ((date / 3.6e+6) / this.rotationPeriod) * 2 * Math.PI;
+			this.mesh.rotation.y = this.startingRotation + ((date / 3.6e+6) / this.rotationPeriod) * (2 * Math.PI);
 		}
 		if(this.orbitData != null) {
 			const position = this.orbitData.calculateEllipticalOrbitPosition(date);
@@ -141,7 +142,7 @@ export default class CelestialBody {
 	addAtmosphere() {
 		const opacityPerLayer = this.atmosphere.opacity / this.atmosphere.layers;
 		const layerScaleFactor = 1 + (this.atmosphere.thickness / this.atmosphere.layers);
-		const material = this.atmosphere.basic ? new THREE.MeshBasicMaterial({ color: this.atmosphere.color, transparent: true, opacity: opacityPerLayer }) : new THREE.MeshStandardMaterial({ color: this.atmosphere.color, transparent: true, opacity: opacityPerLayer });
+		const material = new THREE.MeshStandardMaterial({ color: this.atmosphere.color, transparent: true, opacity: opacityPerLayer });
 		let geometry = new THREE.SphereGeometry(this.radius, 80, 40);
 		let mesh;
 		for(let i=0; i<this.atmosphere.layers; i++) {

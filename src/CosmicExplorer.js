@@ -63,8 +63,8 @@ const CosmicExplorer = () => {
       date += elapsed * Constants.timeMultiple
       // setMyTimestamp(date);
 
-      // let dateStr = new Date(date).toLocaleDateString();
-      // console.log(dateStr);
+      // console.log(new Date(date).toLocaleString());
+
       let worldPos = new THREE.Vector3();
       selectedBody.container.getWorldPosition(worldPos);
 
@@ -86,7 +86,7 @@ const CosmicExplorer = () => {
 
       // make sun brighter when further away so outer planets are bright enough
       let distToSun = camera.position.distanceTo(sun.container.position);
-      sun.mesh.children[0].intensity = distToSun ** 1.8 * 5;
+      sun.mesh.children[0].intensity = distToSun ** 1.8 * 8;
 
       composerRef.current.render();
       previousTimestamp = timestamp;
@@ -171,7 +171,7 @@ const CosmicExplorer = () => {
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 1.9;
+      controls.minDistance = body.radius * 2;
       const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
     }

@@ -64,9 +64,9 @@
         "color": "rgb(90, 120, 170)",
         "texturePath": "/images/earth_texture.jpg", 
         "startingPosition": { "x": 149598, "y": 0, "z": 0 },
-        "rotationPeriod": 23.9345,
+        "startingRotation": 0,
+        "rotationPeriod": 23.93446958333,
         "axisTilt": 23.44,
-        "startingRotation" : 90,
         "orbitData": {
           "parent": "Sun", 
           "L0": 100.46457166,
@@ -79,9 +79,9 @@
         },
         "atmosphere": {
           "color": "rgb(90, 120, 170)",
-          "layers": 10,
+          "layers": 12,
           "thickness": 0.05,
-          "opacity": 0.2
+          "opacity": 0.3
         },
         "children": [
           {
