@@ -13,20 +13,17 @@ const CosmicExplorer = () => {
   const animationIdRef = useRef(null);
   const composerRef = useRef(null);
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
-  const selectedPlanet = Constants.selectedPlanet;
 
   useEffect(() => {
-    let date = Date.now();
-    // let date = Date.UTC(2000, 0, 1, 12);
-    const timeSpeed = 8 * Constants.timeMultiple;
-
+    const selectedPlanet = Constants.selectedPlanet;
+    let date = Constants.startDate;
     let previousTimestamp, sun, selectedBody;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
     camera.position.set(0, 0, 20000);
-    let relativePosition = new THREE.Vector3(0,5000,5000);
-    relativePosition = new THREE.Vector3(10,1,0);
+    let relativePosition = Constants.startingRelativePosition;
+    // relativePosition = new THREE.Vector3(1,0.1,0);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -73,7 +70,7 @@ const CosmicExplorer = () => {
 
       let selectedPos = new THREE.Vector3(...worldPos.toArray());
       //update all positions and rotations
-      updateBodyAndChildren(sun, date);
+      updateBodyAndChildren(sun, date, elapsed);
       
       let selectedPosAfter = new THREE.Vector3();
       selectedBody.container.getWorldPosition(selectedPosAfter);
@@ -117,19 +114,28 @@ const CosmicExplorer = () => {
     fetchData().then(() => {
       // render all objects then wait until textures are loaded before starting animation
       composerRef.current.render();
-      setTimeout(function() {
-        if(selectedPlanet == 0) {
+      // setTimeout(function() {
+        if(selectedPlanet === 0) {
           setSelectedBody(sun);
         } else {
           setSelectedBody(sun.children[selectedPlanet - 1]);
         }
         animationIdRef.current = requestAnimationFrame(animate);
-      }, 10);
+      // }, 10);
     });
 
-    // const grid = new THREE.GridHelper( 1000000, 25, 0x222222, 0x222222 );
-    // grid.renderOrder = -2;
+    // const grid = new THREE.GridHelper( 1000000, 100, 0x222222, 0x222222 );
+    // grid.renderOrder = 2;
     // scene.add( grid );
+
+    // const axesHelper = new THREE.AxesHelper( 50000 );
+    // scene.add( axesHelper );
+
+    // var geo = new THREE.PlaneGeometry(500000, 500000);
+    // var mat = new THREE.MeshBasicMaterial({ color: 0x111111, side: THREE.DoubleSide });
+    // var plane = new THREE.Mesh(geo, mat);
+    // plane.rotateX( - Math.PI / 2);
+    // scene.add(plane);
 
     const handleResize = () => {
       const newWidth = window.innerWidth;
@@ -153,10 +159,10 @@ const CosmicExplorer = () => {
 
     controls.addEventListener('change', handleZoomChange);
 
-    function updateBodyAndChildren(body, date) {
-      body.update(date, camera);
+    function updateBodyAndChildren(body, date, elapsed) {
+      body.update(date, elapsed, camera);
       body.children.forEach((child) => {
-        updateBodyAndChildren(child, date);
+        updateBodyAndChildren(child, date, elapsed);
       });
     }
 
@@ -165,7 +171,7 @@ const CosmicExplorer = () => {
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 1.5;
+      controls.minDistance = body.radius * 1.9;
       const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
       camera.position.set(...camPos.toArray());
     }

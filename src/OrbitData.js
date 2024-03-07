@@ -10,12 +10,12 @@ export default class OrbitData {
 		this.eccentricity = eccentricity;
 		this.inclination = inclination * Math.PI / 180;
 
-		if(argumentOfPeriapsis == null) {
-			argumentOfPeriapsis =  longitudeOfPeriapsis - longitudeOfAscendingNode;
+		if(longitudeOfPeriapsis == null) {
+			longitudeOfPeriapsis = longitudeOfAscendingNode + argumentOfPeriapsis;
 		}
-		this.argumentOfPeriapsis = argumentOfPeriapsis * Math.PI / 180;
+		this.longitudeOfPeriapsis = longitudeOfPeriapsis * Math.PI / 180;
 		this.longitudeOfAscendingNode = longitudeOfAscendingNode * Math.PI / 180;
-		this.longitudeOfPeriapsis = this.longitudeOfAscendingNode + this.argumentOfPeriapsis;
+		this.argumentOfPeriapsis = -(this.longitudeOfPeriapsis + this.longitudeOfAscendingNode);
 
 		this.cosInclination = Math.cos(this.inclination);
 		this.sinInclination = Math.sin(this.inclination);
@@ -37,7 +37,7 @@ export default class OrbitData {
 		// mean longitude
 		let L = this.L0 + this.Ldot * tCenturiesFromJ2000;
 		// mean anomaly
-		let M = L - this.longitudeOfPeriapsis;
+		let M = -(L - this.longitudeOfPeriapsis);
 
 		// Solve Kepler's equation for eccentric anomaly (E)
 		let E = M;
@@ -55,15 +55,17 @@ export default class OrbitData {
 		let Q = this.semiMajorAxis * Math.sin(E) * Math.sqrt(1 - Math.pow(this.eccentricity, 2));
 
 		// rotate by argument of periapsis
-		let x = -this.cosArgumentOfPeriapsis * P - this.sinArgumentOfPeriapsis * Q;
-		let z = -this.sinArgumentOfPeriapsis * P + this.cosArgumentOfPeriapsis * Q;
-		// // rotate by inclination
-		let y = this.sinInclination * z;
+		let x = -(this.cosArgumentOfPeriapsis * P - this.sinArgumentOfPeriapsis * Q);
+		let z = -(this.sinArgumentOfPeriapsis * P + this.cosArgumentOfPeriapsis * Q);
+		// // // rotate by inclination
+		let y = -this.sinInclination * z;
 				z = this.cosInclination * z;
-		// rotate by longitude of ascending node
+		// // rotate by longitude of ascending node
+		let cos1 = Math.cos(this.longitudeOfAscendingNode - Math.PI / 2);
+		let sin1 = Math.sin(this.longitudeOfAscendingNode - Math.PI / 2);
 		let xtemp = x;
-		x = this.cosLongitudeOfAscendingNode * xtemp - this.sinLongitudeOfAscendingNode * z;
-		z = this.sinLongitudeOfAscendingNode * xtemp + this.cosLongitudeOfAscendingNode * z;
+		x = cos1 * xtemp - sin1 * z;
+		z = sin1 * xtemp + cos1 * z;
 		return new THREE.Vector3(x, y, z);
 	}
 
@@ -71,11 +73,11 @@ export default class OrbitData {
 		const semiMinorAxis = this.semiMajorAxis * Math.sqrt(1 - this.eccentricity ** 2);
 		const parentPos = Math.sqrt(this.semiMajorAxis ** 2 - semiMinorAxis ** 2);
 		const curve = new THREE.EllipseCurve(
-			parentPos,  0,         // ax, aY
-			this.semiMajorAxis, semiMinorAxis,      // xRadius, yRadius
+			0,  -parentPos,         // ax, aY
+			semiMinorAxis, this.semiMajorAxis,      // xRadius, yRadius
 			0,  2 * Math.PI,   // aStartAngle, aEndAngle
 			false,              // aClockwise
-			0                  // aRotation
+			// Math.PI/2                  // aRotation
 		);
 		
 		const points = curve.getPoints( 5000 );
@@ -86,9 +88,9 @@ export default class OrbitData {
 		// Create the final object to add to the scene
 		const ellipse = new THREE.Line( ellipseGeometry, ellipseMaterial );
 		ellipse.rotateX(Math.PI / 2);
-		ellipse.rotateZ(this.longitudeOfAscendingNode);
-		ellipse.rotateX(-this.inclination);
-		ellipse.rotateZ(this.argumentOfPeriapsis);
+		ellipse.rotateZ(this.longitudeOfAscendingNode - Math.PI / 2);
+		ellipse.rotateX(this.inclination);
+		ellipse.rotateZ(this.argumentOfPeriapsis + Math.PI / 2);
 
 		return ellipse;
 	}

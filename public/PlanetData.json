@@ -26,9 +26,9 @@
           "Ldot": 149472.67411175, 
           "semiMajorAxis": 57909.22654, 
           "eccentricity": 0.20563593, 
-          "argumentOfPeriapsis": 29.124, 
           "inclination": 7.005, 
-          "longitudeOfAscendingNode" : 48.33
+          "longitudeOfAscendingNode" : 48.33,
+          "longitudeOfPeriapsis": 77.45779628
         }
       },
       {
@@ -40,16 +40,21 @@
         "startingPosition": { "x": 108209, "y": 0, "z": 0 },
         "rotationPeriod": -139982.4,
         "axisTilt" : 2.64,
-        "atmosphereOpacity": 0.3,
         "orbitData": {
           "parent": "Sun", 
           "L0": 181.97909950, 
           "Ldot": 58517.81538729, 
           "semiMajorAxis": 108209.4745374, 
           "eccentricity": 0.00677672, 
-          "argumentOfPeriapsis": 54.9226, 
           "inclination": 3.395, 
-          "longitudeOfAscendingNode" : 76.68069
+          "longitudeOfAscendingNode" : 76.68069,
+          "longitudeOfPeriapsis": 131.60246718
+        },
+        "atmosphere": {
+          "color": "rgb(142, 116, 72)",
+          "layers": 50,
+          "thickness": 0.05,
+          "opacity": 2
         }
       },
       {
@@ -62,16 +67,21 @@
         "rotationPeriod": 23.9345,
         "axisTilt": 23.44,
         "startingRotation" : 90,
-        "atmosphereOpacity": 0.04,
         "orbitData": {
           "parent": "Sun", 
-          "L0": 100.46457166, 
+          "L0": 100.46457166,
           "Ldot": 35999.37244981, 
           "semiMajorAxis": 149598, 
           "eccentricity": 0.01671022, 
-          "argumentOfPeriapsis": 102.93768193, 
           "inclination": 0,
-          "longitudeOfAscendingNode" : 0
+          "longitudeOfAscendingNode" : 0,
+          "longitudeOfPeriapsis": 102.93768193
+        },
+        "atmosphere": {
+          "color": "rgb(90, 120, 170)",
+          "layers": 10,
+          "thickness": 0.05,
+          "opacity": 0.2
         },
         "children": [
           {
@@ -90,9 +100,9 @@
               "Ldot": 481267.8855858, 
               "semiMajorAxis": 384.4, 
               "eccentricity": 0.0549, 
-              "argumentOfPeriapsis": 318.15, 
               "inclination": 5.145, 
-              "longitudeOfAscendingNode" : 125.08
+              "longitudeOfAscendingNode" : 125.08,
+              "longitudeOfPeriapsis": 83.23
             }
           }
         ]
@@ -107,16 +117,21 @@
         "rotationPeriod": 24.6229,
         "axisTilt": 25.19,
         "startingRotation": -12,
-        "atmosphereOpacity": 0.02,
         "orbitData": {
           "parent": "Sun", 
-          "L0": -4.56813164,
+          "L0": 355.44656795,
           "Ldot": 19140.29934243, 
           "semiMajorAxis": 227956, 
-          "eccentricity": 0.0935, 
-          "inclination": 3.395, 
+          "eccentricity": 0.0935,
+          "inclination": 1.84969142, 
           "longitudeOfAscendingNode" : 49.57854,
-          "longitudeOfPeriapsis" : 336.04084
+          "longitudeOfPeriapsis": 336.04084
+        },
+        "atmosphere": {
+          "color": "rgb(130, 85, 30)",
+          "layers": 5,
+          "thickness": 0.03,
+          "opacity": 0.2
         }
       },
       {
@@ -137,7 +152,7 @@
           "eccentricity": 0.00677672, 
           "inclination": 1.304, 
           "longitudeOfAscendingNode" : 100.55615,
-          "longitudeOfPeriapsis" : 14.75385
+          "longitudeOfPeriapsis": 14.75385
         }
       },
       {
@@ -157,7 +172,7 @@
           "eccentricity": 0.00677672, 
           "inclination": 2.486, 
           "longitudeOfAscendingNode" : 76.68069,
-          "longitudeOfPeriapsis" : 131.53298
+          "longitudeOfPeriapsis": 131.53298
         },
         "ringData": 
         {
@@ -185,7 +200,7 @@
           "eccentricity": 0.0469, 
           "inclination": 0.770, 
           "longitudeOfAscendingNode" : 74.22988,
-          "longitudeOfPeriapsis" : 170.96424
+          "longitudeOfPeriapsis": 170.96424
         }
       },
       {
@@ -205,7 +220,7 @@
           "eccentricity": 0.0097, 
           "inclination": 1.770, 
           "longitudeOfAscendingNode" : 131.72169,
-          "longitudeOfPeriapsis" : 44.97135
+          "longitudeOfPeriapsis": 44.97135
         }
       },
       {

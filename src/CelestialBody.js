@@ -3,7 +3,7 @@ import OrbitData from './OrbitData.js'
 import Ring from './Ring.js'
 
 export default class CelestialBody {
-  constructor({name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphereOpacity, children = [], parent = null }) {
+  constructor({name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
 		this.name = name;
 		this.container = new THREE.Object3D();
 		this.mass = mass;
@@ -20,7 +20,7 @@ export default class CelestialBody {
 		}) : new THREE.MeshStandardMaterial({ map: texture });
 		const geometry = new THREE.SphereGeometry(radius, 80, 40);
 		this.mesh = new THREE.Mesh(geometry, material);
-		this.container.position.set(Math.random() * 5000, Math.random() * 5000, Math.random() * 5000);
+		this.container.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
 		this.orbitData = orbitData;
 		this.orbitEllipse = null;
 		this.parent = parent;
@@ -36,12 +36,12 @@ export default class CelestialBody {
 			parent.container.add(this.orbitEllipse);
 		}
 
-		if(this.name == "Earth") {
+		if(this.name === "Earth") {
 			this.addNightLights();
 			this.addClouds();
 		}
-		if(atmosphereOpacity > 0) {
-			this.atmosphereOpacity = atmosphereOpacity;
+		if(atmosphere != null) {
+			this.atmosphere = atmosphere;
 			this.addAtmosphere();
 		}
 		
@@ -79,7 +79,7 @@ export default class CelestialBody {
 					lightIntensity: child.ightIntensity, 
 					basicMat: child.basicMat,
 					ringData: child.ringData,
-					atmosphereOpacity: child.atmosphereOpacity,
+					atmosphere: child.atmosphere,
 					children: child.children, 
 					parent: this,
 				});
@@ -89,8 +89,8 @@ export default class CelestialBody {
 		}
   }
 
-  update(date, camera) {
-		if(this.rotationPeriod != 0) {
+  update(date, elapsed, camera) {
+		if(this.rotationPeriod !== 0) {
 			// 3.6e+6 ms per hour
 			this.mesh.rotation.y = this.startingRotation + ((date / 3.6e+6) / this.rotationPeriod) * 2 * Math.PI;
 		}
@@ -106,9 +106,9 @@ export default class CelestialBody {
 		const scaleFactor = distance / 5000;
 		this.indicator.scale.set(scaleFactor, scaleFactor, scaleFactor);
 		this.indicator.lookAt(camera.position);
-		if(this.name == "Earth") {
+		if(this.name === "Earth") {
 			// Move clouds slowly
-			this.mesh.children[1].rotateY(0.00001);
+			this.mesh.children[1].rotateY(elapsed * 0.000002);
 		}
   }
 
@@ -139,27 +139,15 @@ export default class CelestialBody {
 	}
 
 	addAtmosphere() {
-		const material = new THREE.MeshStandardMaterial({ color: this.color, transparent: true, opacity: this.atmosphereOpacity });
-		const scaleFactor = 1.005;
-
-		let geometry = new THREE.SphereGeometry(this.radius + 0.05, 80, 40);
-		let mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-
-		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
-		mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-
-		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
-		mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-
-		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
-		mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-
-		geometry = geometry.clone().scale(scaleFactor, scaleFactor, scaleFactor);
-		mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
+		const opacityPerLayer = this.atmosphere.opacity / this.atmosphere.layers;
+		const layerScaleFactor = 1 + (this.atmosphere.thickness / this.atmosphere.layers);
+		const material = this.atmosphere.basic ? new THREE.MeshBasicMaterial({ color: this.atmosphere.color, transparent: true, opacity: opacityPerLayer }) : new THREE.MeshStandardMaterial({ color: this.atmosphere.color, transparent: true, opacity: opacityPerLayer });
+		let geometry = new THREE.SphereGeometry(this.radius, 80, 40);
+		let mesh;
+		for(let i=0; i<this.atmosphere.layers; i++) {
+			geometry = geometry.clone().scale(layerScaleFactor, layerScaleFactor, layerScaleFactor);
+			mesh = new THREE.Mesh(geometry, material);
+			this.mesh.add(mesh);
+		}
 	}
 }
