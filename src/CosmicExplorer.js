@@ -12,12 +12,14 @@ import Constants from './Constants.js';
 const CosmicExplorer = () => {
   const animationIdRef = useRef(null);
   const composerRef = useRef(null);
+  const sun = useRef(null);
+  // const selectedBody = useRef(null);
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
 
   useEffect(() => {
     const selectedPlanet = Constants.selectedPlanet;
     let date = Constants.startDate;
-    let previousTimestamp, sun, selectedBody;
+    let previousTimestamp, selectedBody, zoomingToTarget = false, zoomPercentage, zoomInitialDistance;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
@@ -29,7 +31,6 @@ const CosmicExplorer = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.shadowMap.enabled = true;
     // renderer.toneMapping = THREE.ReinhardToneMapping;
     // renderer.toneMappingExposure = 0.1;
 
@@ -52,6 +53,8 @@ const CosmicExplorer = () => {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
+    controls.zoomSpeed = 2;
+    controls.maxDistance = 10000000;
 
     const animate = (timestamp) => {
       if (!previousTimestamp) {
@@ -70,14 +73,32 @@ const CosmicExplorer = () => {
 
       let selectedPos = new THREE.Vector3(...worldPos.toArray());
       //update all positions and rotations
-      updateBodyAndChildren(sun, date, elapsed);
+      updateBodyAndChildren(sun.current, date, elapsed);
       
       let selectedPosAfter = new THREE.Vector3();
       selectedBody.container.getWorldPosition(selectedPosAfter);
       
-      const diff = new THREE.Vector3().subVectors(selectedPosAfter, selectedPos);
+      let diff = new THREE.Vector3().subVectors(selectedPosAfter, selectedPos);
       camera.position.add(diff);
       controls.target.set(...selectedPosAfter.toArray());
+
+      if(zoomingToTarget) {
+        let distLeft = new THREE.Vector3().subVectors(selectedPosAfter, camera.position);
+        let normal = distLeft.normalize();
+        zoomPercentage += 8/(1000 * Constants.zoomToBodyTime);
+        let nextDist = easeFunction(zoomPercentage) * zoomInitialDistance;
+        let distToMove = nextDist - (zoomInitialDistance - controls.getDistance()) ;
+
+        if((zoomInitialDistance - nextDist) <= selectedBody.radius * 3) {
+          const camPos = new THREE.Vector3().addVectors(selectedPosAfter, normal.multiplyScalar(selectedBody.radius * -3));
+          camera.position.set(...camPos.toArray());
+          zoomingToTarget = false;
+          controls.enableZoom = true;
+        } else 
+        {
+          camera.position.add(normal.multiplyScalar(distToMove));
+        }
+      }
 
       controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
       if(selectedBody.orbitEllipse != null) {
@@ -85,8 +106,8 @@ const CosmicExplorer = () => {
       }
 
       // make sun brighter when further away so outer planets are bright enough
-      let distToSun = camera.position.distanceTo(sun.container.position);
-      sun.mesh.children[0].intensity = distToSun ** 1.8 * 8;
+      let distToSun = camera.position.distanceTo(sun.current.container.position);
+      sun.current.mesh.children[0].intensity = distToSun ** 1.8 * 8;
 
       composerRef.current.render();
       previousTimestamp = timestamp;
@@ -101,10 +122,10 @@ const CosmicExplorer = () => {
         const data = await response.json();
 
         // Create CelestialBody instances based on the loaded data
-        sun = data.map(bodyData => new CelestialBody(bodyData))[0];
-
+        sun.current = data.map(bodyData => new CelestialBody(bodyData))[0];
+        selectedBody = sun.current;
         // Add celestial bodies to the scene
-        scene.add(sun.container);
+        scene.add(sun.current.container);
 
       } catch (error) {
         console.error('Error loading celestial data:', error);
@@ -115,11 +136,7 @@ const CosmicExplorer = () => {
       // render all objects then wait until textures are loaded before starting animation
       composerRef.current.render();
       // setTimeout(function() {
-        if(selectedPlanet === 0) {
-          setSelectedBody(sun);
-        } else {
-          setSelectedBody(sun.children[selectedPlanet - 1]);
-        }
+        setSelectedBody(Constants.selectedBody);
         animationIdRef.current = requestAnimationFrame(animate);
       // }, 10);
     });
@@ -136,6 +153,38 @@ const CosmicExplorer = () => {
     // var plane = new THREE.Mesh(geo, mat);
     // plane.rotateX( - Math.PI / 2);
     // scene.add(plane);
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    renderer.domElement.addEventListener('click', onMouseClick, false);
+
+    function onMouseClick(event) {
+      // Calculate mouse position in normalized device coordinates
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      // Update the raycaster with the camera and mouse position
+      raycaster.setFromCamera(mouse, camera);
+
+      // Calculate objects intersecting the ray
+      const intersects = raycaster.intersectObjects(scene.children, true);
+
+      // Check if any mesh was clicked
+      if (intersects.length > 0) {
+        const object = intersects[0].object;
+
+        // Call a function when the mesh is clicked
+        handleMeshClick(object);
+      }
+    }
+
+    function handleMeshClick(object) {
+      console.log(object);
+      if(object.bodyId != undefined) {
+        setSelectedBody(object.bodyId, {zoomIn: true});
+      }
+    }
 
     const handleResize = () => {
       const newWidth = window.innerWidth;
@@ -166,14 +215,34 @@ const CosmicExplorer = () => {
       });
     }
 
-    function setSelectedBody(body) {
+    function getBodyById(id) {
+      let indices = id.split('-');
+      indices = indices.slice(1);
+      let body = sun.current;
+      indices.forEach ((index) => {
+        body = body.children[parseInt(index)];
+      });
+      return body;
+    }
+
+    function setSelectedBody(id, zoomIn = false) {
+      if(selectedBody.orbitEllipse != null) {
+        selectedBody.orbitEllipse.visible = true;
+        selectedBody.orbitEllipse.material.opacity = 0.8;
+      }
+      selectedBody.indicator.visible = true;
+      selectedBody.indicator.material.opacity = 0.8;
+      let body = getBodyById(id);
       let worldPos = new THREE.Vector3();
       body.container.getWorldPosition(worldPos);
       selectedBody = body;
+
+      controls.enableZoom = false;
       controls.target.set(...worldPos.toArray());
       controls.minDistance = body.radius * 2;
-      const camPos = new THREE.Vector3().addVectors(worldPos, relativePosition);
-      camera.position.set(...camPos.toArray());
+      zoomingToTarget = zoomIn;
+      zoomPercentage = 0;
+      zoomInitialDistance = controls.getDistance();
     }
 
     function setOrbitEllipseOpac() {
@@ -192,6 +261,12 @@ const CosmicExplorer = () => {
         selectedBody.indicator.visible = true;
         selectedBody.indicator.material.opacity = 0.8;
       }
+    }
+
+    function easeFunction(x) {
+      const a = 10;
+      const b = 2;
+      return (-((Math.cos((Math.PI * x)/2)) ** a) + 1) ** b;
     }
 
     // Clean up on component unmount

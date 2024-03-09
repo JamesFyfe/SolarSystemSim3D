@@ -3,7 +3,8 @@ import OrbitData from './OrbitData.js'
 import Ring from './Ring.js'
 
 export default class CelestialBody {
-  constructor({name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
+  constructor({bodyId, name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
+		this.bodyId = bodyId;
 		this.name = name;
 		this.container = new THREE.Object3D();
 		this.mass = mass;
@@ -20,6 +21,7 @@ export default class CelestialBody {
 		}) : new THREE.MeshStandardMaterial({ map: texture });
 		const geometry = new THREE.SphereGeometry(radius, 80, 40);
 		this.mesh = new THREE.Mesh(geometry, material);
+		this.mesh.bodyId = bodyId;
 		this.container.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
 		this.orbitData = orbitData;
 		this.orbitEllipse = null;
@@ -67,6 +69,7 @@ export default class CelestialBody {
 		if(children.length !== 0) {
 			children.forEach((child) => {
 				let childBody = new CelestialBody({
+					bodyId: child.bodyId,
 					name: child.name,
 					mass: child.mass, 
 					radius: child.radius, 
@@ -118,6 +121,14 @@ export default class CelestialBody {
 		const indicatorMaterial = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 0.8, side: THREE.DoubleSide});
 		const indicatorMesh = new THREE.Mesh(indicatorGeometry, indicatorMaterial);
 		indicatorMesh.position.copy(this.mesh.position);
+		const transparentGeometry = new THREE.RingGeometry(0, 100);
+		const transparentMaterial = new THREE.MeshBasicMaterial({ visible: false});
+		const transparentMesh = new THREE.Mesh(transparentGeometry, transparentMaterial);
+		transparentMesh.bodyId = this.bodyId;
+		
+		indicatorMesh.add(transparentMesh);
+		indicatorMesh.userData.clickable = true;
+		indicatorMesh.bodyId = this.bodyId;
 		return indicatorMesh
 	}
 
@@ -148,6 +159,7 @@ export default class CelestialBody {
 		for(let i=0; i<this.atmosphere.layers; i++) {
 			geometry = geometry.clone().scale(layerScaleFactor, layerScaleFactor, layerScaleFactor);
 			mesh = new THREE.Mesh(geometry, material);
+			mesh.bodyId = this.bodyId;
 			this.mesh.add(mesh);
 		}
 	}

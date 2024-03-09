@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export default class Constants {
-  static selectedPlanet = 3;
+  static selectedBody = "0";
   // static timeMultiple = 1000000;
   static timeMultiple = 1;
   // static timeMultiple = 1;
@@ -11,4 +11,6 @@ export default class Constants {
   // static startDate = Date.UTC(2020, 6, 21, 20);
   // static startDate = Date.UTC(2024, 2, 21, 9);
   static startDate = Date.now();
+
+  static zoomToBodyTime = 3;
 }

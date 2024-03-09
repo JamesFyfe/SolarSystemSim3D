@@ -1,5 +1,6 @@
 [
   {
+    "bodyId": "0",
     "name": "Sun",
     "mass": 1989000,
     "radius": 696.34,
@@ -12,6 +13,7 @@
     "basicMat": true,
     "children": [
       {
+        "bodyId": "0-0",
         "name": "Mercury",
         "mass": 0.3285,
         "radius": 2.4397,
@@ -32,6 +34,7 @@
         }
       },
       {
+        "bodyId": "0-1",
         "name": "Venus",
         "mass": 4.8673,
         "radius": 6.0518,
@@ -58,6 +61,7 @@
         }
       },
       {
+        "bodyId": "0-2",
         "name": "Earth",
         "mass": 5.9722,
         "radius": 6.371,
@@ -85,6 +89,7 @@
         },
         "children": [
           {
+            "bodyId": "0-2-0",
             "name": "Moon",
             "mass": 0.07346,
             "radius": 1.7374,
@@ -108,6 +113,7 @@
         ]
       },
       {
+        "bodyId": "0-3",
         "name": "Mars",
         "mass": 0.64169,
         "radius": 3.3895,
@@ -135,6 +141,7 @@
         }
       },
       {
+        "bodyId": "0-4",
         "name": "Jupiter",
         "mass": 1898.13,
         "radius": 69.911,
@@ -156,6 +163,7 @@
         }
       },
       {
+        "bodyId": "0-5",
         "name": "Saturn",
         "mass": 568.32,
         "radius": 58.232,
@@ -184,6 +192,7 @@
         }
       },
       {
+        "bodyId": "0-6",
         "name": "Uranus",
         "mass": 86.811,
         "radius": 25.362,
@@ -204,6 +213,7 @@
         }
       },
       {
+        "bodyId": "0-7",
         "name": "Neptune",
         "mass": 102.409,
         "radius": 24.622,
@@ -224,6 +234,7 @@
         }
       },
       {
+        "bodyId": "0-8",
         "name": "Halley's Comet",
         "mass": 2.2e-10,
         "radius": 0.0055,
@@ -232,7 +243,6 @@
         "startingPosition": { "x": 5256869.2, "y": 0, "z": 0 },
         "rotationPeriod": 100,
         "axisTilt" : 0,
-        "basicMat": true,
         "orbitData": {
           "parent": "Sun", 
           "L0": 181.97909950, 
