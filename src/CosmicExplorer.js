@@ -170,8 +170,15 @@ const CosmicExplorer = () => {
       const intersects = raycaster.intersectObjects(scene.children, true);
 
       // Check if any mesh was clicked
+      let object;
       if (intersects.length > 0) {
-        const object = intersects[0].object;
+        for(let i=0; i<intersects.length; i++) {
+          object = intersects[i].object;
+          console.log(object);
+          if(object.type !== 'Line') {
+            break;
+          }
+        }
 
         // Call a function when the mesh is clicked
         handleMeshClick(object);
@@ -179,8 +186,10 @@ const CosmicExplorer = () => {
     }
 
     function handleMeshClick(object) {
+      console.log(object);
       if(object.bodyId !== undefined && object.bodyId != selectedBody.bodyId) {
-        if(object.bodyId.substring(0, 3) != selectedBody.bodyId) {
+        if(object.bodyId.substring(0, 3) != selectedBody.bodyId && 
+           object.bodyId.substring(0, 3) != selectedBody.parent.bodyId) {
           setSelectedBody(object.bodyId.substring(0, 3), {zoomIn: true});
         } else {
           setSelectedBody(object.bodyId, {zoomIn: true});
@@ -249,12 +258,14 @@ const CosmicExplorer = () => {
       newBody.container.getWorldPosition(worldPos);
       selectedBody = newBody;
 
-      controls.enableZoom = false;
-      controls.target.set(...worldPos.toArray());
-      controls.minDistance = newBody.radius * 2;
-      zoomingToTarget = zoomIn;
-      zoomPercentage = 0;
-      zoomInitialDistance = controls.getDistance();
+      if(zoomIn) {
+        controls.enableZoom = false;
+        controls.target.set(...worldPos.toArray());
+        controls.minDistance = newBody.radius * 2;
+        zoomingToTarget = true;
+        zoomPercentage = 0;
+        zoomInitialDistance = controls.getDistance();
+      }
     }
 
     function setOrbitEllipseOpac() {

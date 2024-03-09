@@ -23,7 +23,6 @@
         "rotationPeriod": 1407.6,
         "axisTilt" : 0.03,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 252.25032350, 
           "Ldot": 149472.67411175, 
           "semiMajorAxis": 57909.22654, 
@@ -44,7 +43,6 @@
         "rotationPeriod": -139982.4,
         "axisTilt" : 2.64,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 181.97909950, 
           "Ldot": 58517.81538729, 
           "semiMajorAxis": 108209.4745374, 
@@ -72,7 +70,6 @@
         "rotationPeriod": 23.93446958333,
         "axisTilt": 23.44,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 100.46457166,
           "Ldot": 35999.37244981, 
           "semiMajorAxis": 149598, 
@@ -100,9 +97,8 @@
             "axisTilt": 1.5,
             "startingRotation" : 180,
             "orbitData": {
-              "parent": "Earth", 
-              "L0": 0,
-              "Ldot": 481267.8855858, 
+              "L0": 224,
+              "Ldot": 481265.8070325053,
               "semiMajorAxis": 384.4, 
               "eccentricity": 0.0549, 
               "inclination": 5.145, 
@@ -124,7 +120,6 @@
         "axisTilt": 25.19,
         "startingRotation": -12,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 355.44656795,
           "Ldot": 19140.29934243, 
           "semiMajorAxis": 227956, 
@@ -138,7 +133,57 @@
           "layers": 5,
           "thickness": 0.03,
           "opacity": 0.2
-        }
+        },
+        "children": [
+          {
+            "bodyId": "0-3-0",
+            "name": "Phobos",
+            "mass": 1.0666298536488537e-08,
+            "radius": 0.01108,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 5256869.2,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 189.6,
+              "Ldot": 41215172.0981842,
+              "semiMajorAxis": 9.4,
+              "eccentricity": 0.015,
+              "argumentOfPeriapsis": 216.3,
+              "inclination": 1.1,
+              "longitudeOfAscendingNode": 169.2
+            }
+          },
+          {
+            "bodyId": "0-3-1",
+            "name": "Deimos",
+            "mass": 1.4685081141236327e-09,
+            "radius": 0.0062,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 5256869.2,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 205.0,
+              "Ldot": 10416196.317852024,
+              "semiMajorAxis": 23.5,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 1.8,
+              "longitudeOfAscendingNode": 54.4
+            }
+          }
+        ]
       },
       {
         "bodyId": "0-4",
@@ -152,7 +197,6 @@
         "axisTilt" : 3.13,
         "startingRotation" : 140,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 34.33479152, 
           "Ldot": 3034.90371757, 
           "semiMajorAxis": 778479, 
@@ -160,7 +204,225 @@
           "inclination": 1.304, 
           "longitudeOfAscendingNode" : 100.55615,
           "longitudeOfPeriapsis": 14.75385
-        }
+        },
+        "children" :   [
+          {
+            "bodyId": "0-4-0",
+            "name": "Io",
+            "mass": 0.0892993539938575,
+            "radius": 1.82149,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 330.9,
+              "Ldot": 7459443.636355385,
+              "semiMajorAxis": 421.8,
+              "eccentricity": 0.004,
+              "argumentOfPeriapsis": 49.1,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-4-1",
+            "name": "Europa",
+            "mass": 0.04798765303731091,
+            "radius": 1.5608,
+            "color": "rgb(140, 120, 60)",
+            "texturePath": "/images/europa_texture.jpeg",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 345.4,
+              "Ldot": 3729722.8761158464,
+              "semiMajorAxis": 671.1,
+              "eccentricity": 0.009,
+              "argumentOfPeriapsis": 45.0,
+              "inclination": 0.5,
+              "longitudeOfAscendingNode": 184.0
+            }
+          },
+          {
+            "bodyId": "0-4-2",
+            "name": "Ganymede",
+            "mass": 0.1481528307868716,
+            "radius": 2.6311999999999998,
+            "color": "rgb(150, 150, 100)",
+            "texturePath": "/images/ganymede_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 324.8,
+              "Ldot": 1837584.8357954652,
+              "semiMajorAxis": 1070.4,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 198.3,
+              "inclination": 0.2,
+              "longitudeOfAscendingNode": 58.5
+            }
+          },
+          {
+            "bodyId": "0-4-3",
+            "name": "Callisto",
+            "mass": 0.10757249532390255,
+            "radius": 2.4103000000000003,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 87.4,
+              "Ldot": 787816.2588883217,
+              "semiMajorAxis": 1882.7,
+              "eccentricity": 0.007,
+              "argumentOfPeriapsis": 43.8,
+              "inclination": 0.3,
+              "longitudeOfAscendingNode": 309.1
+            }
+          },
+          {
+            "bodyId": "0-4-4",
+            "name": "Amalthea",
+            "mass": 2.465710849552938e-06,
+            "radius": 0.0835,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 310.6,
+              "Ldot": 26302313.579427026,
+              "semiMajorAxis": 181.4,
+              "eccentricity": 0.003,
+              "argumentOfPeriapsis": 180.1,
+              "inclination": 0.4,
+              "longitudeOfAscendingNode": 282.9
+            }
+          },
+          {
+            "bodyId": "0-4-5",
+            "name": "Himalia",
+            "mass": 2.2706934804908986e-06,
+            "radius": 0.085,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 66.5,
+              "Ldot": 52477.985407296655,
+              "semiMajorAxis": 11440.6,
+              "eccentricity": 0.16,
+              "argumentOfPeriapsis": 328.4,
+              "inclination": 28.1,
+              "longitudeOfAscendingNode": 68.2
+            }
+          },
+          {
+            "bodyId": "0-4-13",
+            "name": "Thebe",
+            "mass": 4.517226597133636e-07,
+            "radius": 0.0493,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 182.1,
+              "Ldot": 19448162.637460157,
+              "semiMajorAxis": 221.9,
+              "eccentricity": 0.018,
+              "argumentOfPeriapsis": 26.6,
+              "inclination": 1.1,
+              "longitudeOfAscendingNode": 340.4
+            }
+          },
+          {
+            "bodyId": "0-4-14",
+            "name": "Adrastea",
+            "mass": 2.0827656066491343e-09,
+            "radius": 0.008199999999999999,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 214.5,
+              "Ldot": 44085697.04284852,
+              "semiMajorAxis": 129.0,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-4-15",
+            "name": "Metis",
+            "mass": 3.747511701991484e-08,
+            "radius": 0.0215,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 166.0,
+              "Ldot": 44606298.27769278,
+              "semiMajorAxis": 128.0,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          }
+        ]
       },
       {
         "bodyId": "0-5",
@@ -173,7 +435,6 @@
         "rotationPeriod": 10.656,
         "axisTilt" : 26.73,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 50.07571329, 
           "Ldot": 1222.11494724, 
           "semiMajorAxis": 1432041, 
@@ -189,7 +450,393 @@
           "color": "rgb(85, 85, 85)",
           "opacity": 0.95,
           "texturePath": "./images/saturn_rings.png"
-        }
+        },
+        "children": [
+          {
+            "bodyId": "0-5-0",
+            "name": "Mimas",
+            "mass": 3.750897212932284e-05,
+            "radius": 0.1982,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 275.3,
+              "Ldot": 13952348.31105386,
+              "semiMajorAxis": 186.0,
+              "eccentricity": 0.02,
+              "argumentOfPeriapsis": 160.4,
+              "inclination": 1.6,
+              "longitudeOfAscendingNode": 66.2
+            }
+          },
+          {
+            "bodyId": "0-5-1",
+            "name": "Enceladus",
+            "mass": 0.00010803191893445308,
+            "radius": 0.2521,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 57.0,
+              "Ldot": 9596283.219166586,
+              "semiMajorAxis": 238.4,
+              "eccentricity": 0.005,
+              "argumentOfPeriapsis": 119.5,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-5-2",
+            "name": "Tethys",
+            "mass": 0.0006174653790978631,
+            "radius": 0.5311,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 0.0,
+              "Ldot": 6965243.176985722,
+              "semiMajorAxis": 295.0,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 335.3,
+              "inclination": 1.1,
+              "longitudeOfAscendingNode": 273.0
+            }
+          },
+          {
+            "bodyId": "0-5-3",
+            "name": "Dione",
+            "mass": 0.0010954931118688966,
+            "radius": 0.5614,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 212.0,
+              "Ldot": 4804312.591252344,
+              "semiMajorAxis": 377.7,
+              "eccentricity": 0.002,
+              "argumentOfPeriapsis": 116.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-5-4",
+            "name": "Rhea",
+            "mass": 0.002306511608975552,
+            "radius": 0.7635,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 31.5,
+              "Ldot": 2910678.753284724,
+              "semiMajorAxis": 527.2,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 44.3,
+              "inclination": 0.3,
+              "longitudeOfAscendingNode": 133.7
+            }
+          },
+          {
+            "bodyId": "0-5-5",
+            "name": "Titan",
+            "mass": 0.1345178785892705,
+            "radius": 2.5747600000000004,
+            "color": "rgb(50, 200, 140)",
+            "texturePath": "/images/titan_texture.jpeg",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 11.7,
+              "Ldot": 824624.0557179704,
+              "semiMajorAxis": 1221.9,
+              "eccentricity": 0.029,
+              "argumentOfPeriapsis": 78.3,
+              "inclination": 0.3,
+              "longitudeOfAscendingNode": 78.6
+            }
+          },
+          {
+            "bodyId": "0-5-6",
+            "name": "Hyperion",
+            "mass": 5.550808745474568e-06,
+            "radius": 0.135,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 122.9,
+              "Ldot": 618001.191728513,
+              "semiMajorAxis": 1481.5,
+              "eccentricity": 0.105,
+              "argumentOfPeriapsis": 214.0,
+              "inclination": 0.6,
+              "longitudeOfAscendingNode": 87.1
+            }
+          },
+          {
+            "bodyId": "0-5-7",
+            "name": "Iapetus",
+            "mass": 0.0018055828326377261,
+            "radius": 0.7343,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 74.8,
+              "Ldot": 165748.5682583462,
+              "semiMajorAxis": 3561.7,
+              "eccentricity": 0.028,
+              "argumentOfPeriapsis": 254.5,
+              "inclination": 7.6,
+              "longitudeOfAscendingNode": 86.5
+            }
+          },
+          {
+            "bodyId": "0-5-8",
+            "name": "Phoebe",
+            "mass": 8.312317566763457e-06,
+            "radius": 0.1065,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 308.0,
+              "Ldot": 23894.06973321342,
+              "semiMajorAxis": 12929.4,
+              "eccentricity": 0.164,
+              "argumentOfPeriapsis": 240.3,
+              "inclination": 175.2,
+              "longitudeOfAscendingNode": 192.7
+            }
+          },
+          {
+            "bodyId": "0-5-9",
+            "name": "Janus",
+            "mass": 1.8970200324904313e-06,
+            "radius": 0.0892,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 111.7,
+              "Ldot": 18855586.7688244,
+              "semiMajorAxis": 151.5,
+              "eccentricity": 0.007,
+              "argumentOfPeriapsis": 11.1,
+              "inclination": 0.2,
+              "longitudeOfAscendingNode": 159.9
+            }
+          },
+          {
+            "bodyId": "0-5-10",
+            "name": "Epimetheus",
+            "mass": 5.264265109983035e-07,
+            "radius": 0.0582,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 197.2,
+              "Ldot": 18864811.509701412,
+              "semiMajorAxis": 151.4,
+              "eccentricity": 0.02,
+              "argumentOfPeriapsis": 96.3,
+              "inclination": 0.3,
+              "longitudeOfAscendingNode": 189.8
+            }
+          },
+          {
+            "bodyId": "0-5-11",
+            "name": "Helene",
+            "mass": 7.1283893416048904e-09,
+            "radius": 0.018,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": -64.5,
+              "Ldot": 4804312.591252344,
+              "semiMajorAxis": 377.6,
+              "eccentricity": 0.007,
+              "argumentOfPeriapsis": 194.3,
+              "inclination": 0.2,
+              "longitudeOfAscendingNode": 260.8
+            }
+          },
+          {
+            "bodyId": "0-5-14",
+            "name": "Atlas",
+            "mass": 5.552392778378409e-09,
+            "radius": 0.015099999999999999,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 289.1,
+              "Ldot": 21748191.372175414,
+              "semiMajorAxis": 137.7,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 82.3,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-5-15",
+            "name": "Prometheus",
+            "mass": 1.6043960746806972e-07,
+            "radius": 0.0431,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 135.4,
+              "Ldot": 21350007.631381538,
+              "semiMajorAxis": 139.4,
+              "eccentricity": 0.002,
+              "argumentOfPeriapsis": 341.9,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-5-16",
+            "name": "Pandora",
+            "mass": 1.387063683288819e-07,
+            "radius": 0.040600000000000004,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 123.9,
+              "Ldot": 20826172.966997113,
+              "semiMajorAxis": 141.7,
+              "eccentricity": 0.004,
+              "argumentOfPeriapsis": 217.9,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-5-17",
+            "name": "Pan",
+            "mass": 4.195324717505857e-09,
+            "radius": 0.014,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 146.6,
+              "Ldot": 22865797.990091313,
+              "semiMajorAxis": 133.6,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          }
+        ]
       },
       {
         "bodyId": "0-6",
@@ -202,7 +849,6 @@
         "rotationPeriod": -17.24,
         "axisTilt" : 97.77,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 314.20276625, 
           "Ldot": 428.49512595, 
           "semiMajorAxis": 2867043, 
@@ -210,7 +856,137 @@
           "inclination": 0.770, 
           "longitudeOfAscendingNode" : 74.22988,
           "longitudeOfPeriapsis": 170.96424
-        }
+        },
+        "ringData": 
+        {
+          "distance" : 41837,
+          "width": 9363,
+          "color": "rgb(85, 85, 85)",
+          "opacity": 0.95,
+          "texturePath": "./images/uranus_rings.png"
+        },
+        "children":  [
+          {
+            "bodyId": "0-6-0",
+            "name": "Ariel",
+            "mass": 0.0012506560197747957,
+            "radius": 0.5789,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 119.8,
+              "Ldot": 5216449.529492042,
+              "semiMajorAxis": 190.9,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 83.3,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-6-1",
+            "name": "Umbriel",
+            "mass": 0.0012752278656673484,
+            "radius": 0.5847,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 258.3,
+              "Ldot": 3172601.69263331,
+              "semiMajorAxis": 266.0,
+              "eccentricity": 0.004,
+              "argumentOfPeriapsis": 157.5,
+              "inclination": 0.1,
+              "longitudeOfAscendingNode": 195.5
+            }
+          },
+          {
+            "bodyId": "0-6-2",
+            "name": "Titania",
+            "mass": 0.0033995961681581627,
+            "radius": 0.7888999999999999,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 53.2,
+              "Ldot": 1510260.6758855856,
+              "semiMajorAxis": 436.3,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 202.0,
+              "inclination": 0.1,
+              "longitudeOfAscendingNode": 26.4
+            }
+          },
+          {
+            "bodyId": "0-6-3",
+            "name": "Oberon",
+            "mass": 0.0030766673919980763,
+            "radius": 0.7614,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 139.7,
+              "Ldot": 976632.8574974638,
+              "semiMajorAxis": 583.4,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 182.4,
+              "inclination": 0.1,
+              "longitudeOfAscendingNode": 30.5
+            }
+          },
+          {
+            "bodyId": "0-6-4",
+            "name": "Miranda",
+            "mass": 6.469419333007398e-05,
+            "radius": 0.2358,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 72.4,
+              "Ldot": 9300572.08173243,
+              "semiMajorAxis": 129.9,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 155.6,
+              "inclination": 4.4,
+              "longitudeOfAscendingNode": 100.7
+            }
+          }
+        ]
       },
       {
         "bodyId": "0-7",
@@ -223,7 +999,6 @@
         "rotationPeriod": 16.11,
         "axisTilt" : 28.32,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 304.22289287, 
           "Ldot": 218.46515314, 
           "semiMajorAxis": 4514953, 
@@ -231,10 +1006,298 @@
           "inclination": 1.770, 
           "longitudeOfAscendingNode" : 131.72169,
           "longitudeOfPeriapsis": 44.97135
-        }
+        },
+        "children": [
+          {
+            "bodyId": "0-7-0",
+            "name": "Triton",
+            "mass": 0.021404041425738114,
+            "radius": 1.3525999999999998,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 63.0,
+              "Ldot": 2237368.287257057,
+              "semiMajorAxis": 354.8,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 157.3,
+              "longitudeOfAscendingNode": 178.1
+            }
+          },
+          {
+            "bodyId": "0-7-2",
+            "name": "Naiad",
+            "mass": 1.2781288182540412e-07,
+            "radius": 0.029,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 89.7,
+              "Ldot": 44727532.48520307,
+              "semiMajorAxis": 48.2,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 4.7,
+              "longitudeOfAscendingNode": 41.4
+            }
+          },
+          {
+            "bodyId": "0-7-3",
+            "name": "Thalassa",
+            "mass": 3.534400643833842e-07,
+            "radius": 0.04,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 165.7,
+              "Ldot": 42269141.50148837,
+              "semiMajorAxis": 50.1,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.2,
+              "longitudeOfAscendingNode": 130.6
+            }
+          },
+          {
+            "bodyId": "0-7-4",
+            "name": "Despina",
+            "mass": 1.7489992309314684e-06,
+            "radius": 0.074,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 125.1,
+              "Ldot": 39291092.94320138,
+              "semiMajorAxis": 52.5,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-7-5",
+            "name": "Galatea",
+            "mass": 2.845276923665506e-06,
+            "radius": 0.079,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 86.7,
+              "Ldot": 30668650.756628662,
+              "semiMajorAxis": 62.0,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-7-6",
+            "name": "Larissa",
+            "mass": 3.818264487387735e-06,
+            "radius": 0.096,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 165.5,
+              "Ldot": 23692361.47022734,
+              "semiMajorAxis": 73.5,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 247.3,
+              "inclination": 0.2,
+              "longitudeOfAscendingNode": 312.0
+            }
+          },
+          {
+            "bodyId": "0-7-7",
+            "name": "Proteus",
+            "mass": 3.870853795375281e-05,
+            "radius": 0.208,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 276.8,
+              "Ldot": 11715962.096202938,
+              "semiMajorAxis": 117.6,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          }
+        ]
       },
       {
         "bodyId": "0-8",
+        "name": "Pluto",
+        "mass": 0.01303,
+        "radius": 1.188,
+        "color": "rgb(140, 80, 100)",
+        "texturePath": "/images/pluto_texture.jpeg", 
+        "startingPosition": { "x": 5869656, "y": 0, "z": 0 },
+        "rotationPeriod": -153.2928,
+        "axisTilt" : 119.51,
+        "orbitData": {
+          "L0": 238.92881, 
+          "Ldot": 145.196554770318021,
+          "semiMajorAxis": 5869656, 
+          "eccentricity": 0.24880766, 
+          "inclination": 17.14175, 
+          "longitudeOfAscendingNode": 110.30347,
+          "longitudeOfPeriapsis": 224.06676 
+        },
+        "children": [
+          {
+            "bodyId": "0-8-0",
+            "name": "Charon",
+            "mass": 0.0015864084012358725,
+            "radius": 0.606,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/charon_texture.jpeg",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 192.4,
+              "Ldot": 2058641.1340264776,
+              "semiMajorAxis": 19.6,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-8-1",
+            "name": "Nix",
+            "mass": 4.4949405032738175e-08,
+            "radius": 0.018,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 84.8,
+              "Ldot": 529034.3455502354,
+              "semiMajorAxis": 48.7,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.0,
+              "longitudeOfAscendingNode": 0.0
+            }
+          },
+          {
+            "bodyId": "0-8-2",
+            "name": "Hydra",
+            "mass": 4.79461982251721e-08,
+            "radius": 0.0185,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 330.6,
+              "Ldot": 341629.268407508,
+              "semiMajorAxis": 64.7,
+              "eccentricity": 0.006,
+              "argumentOfPeriapsis": 143.4,
+              "inclination": 0.3,
+              "longitudeOfAscendingNode": 114.2
+            }
+          },
+          {
+            "bodyId": "0-8-3",
+            "name": "Kerberos",
+            "mass": 1.6481448512004e-08,
+            "radius": 0.006,
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotationPeriod": 100,
+            "axisTilt": 0,
+            "orbitData": {
+              "L0": 303.5,
+              "Ldot": 412740.7148013767,
+              "semiMajorAxis": 57.8,
+              "eccentricity": 0.0,
+              "argumentOfPeriapsis": 0.0,
+              "inclination": 0.4,
+              "longitudeOfAscendingNode": 318.6
+            }
+          }
+        ]
+      },
+      {
+        "bodyId": "0-9",
         "name": "Halley's Comet",
         "mass": 2.2e-10,
         "radius": 0.0055,
@@ -244,7 +1307,6 @@
         "rotationPeriod": 100,
         "axisTilt" : 0,
         "orbitData": {
-          "parent": "Sun", 
           "L0": 181.97909950, 
           "Ldot": 474.24543,
           "semiMajorAxis": 2681963.35946026, 
