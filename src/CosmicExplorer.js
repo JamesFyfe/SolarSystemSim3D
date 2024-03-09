@@ -179,9 +179,12 @@ const CosmicExplorer = () => {
     }
 
     function handleMeshClick(object) {
-      console.log(object);
-      if(object.bodyId !== undefined) {
-        setSelectedBody(object.bodyId, {zoomIn: true});
+      if(object.bodyId !== undefined && object.bodyId != selectedBody.bodyId) {
+        if(object.bodyId.substring(0, 3) != selectedBody.bodyId) {
+          setSelectedBody(object.bodyId.substring(0, 3), {zoomIn: true});
+        } else {
+          setSelectedBody(object.bodyId, {zoomIn: true});
+        }
       }
     }
 
@@ -232,7 +235,6 @@ const CosmicExplorer = () => {
       selectedBody.indicator.visible = true;
       selectedBody.indicator.material.opacity = 0.8;
       let newBody = getBodyById(id);
-
       // if we aren't selecting the current objects parent, or child, or sibling,
       // make current objects moons not visible (should do this after completing zoom)
       if(newBody.parent !== selectedBody && 
