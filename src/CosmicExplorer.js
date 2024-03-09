@@ -17,14 +17,13 @@ const CosmicExplorer = () => {
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
 
   useEffect(() => {
-    const selectedPlanet = Constants.selectedPlanet;
     let date = Constants.startDate;
     let previousTimestamp, selectedBody, zoomingToTarget = false, zoomPercentage, zoomInitialDistance;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
-    camera.position.set(0, 0, 20000);
-    let relativePosition = Constants.startingRelativePosition;
+    camera.position.set(0, 2000, -20000);
+    // let relativePosition = Constants.startingRelativePosition;
     // relativePosition = new THREE.Vector3(1,0.1,0);
 
     const renderer = new THREE.WebGLRenderer({logarithmicDepthBuffer: true}); //{ antialias: true }
@@ -181,7 +180,7 @@ const CosmicExplorer = () => {
 
     function handleMeshClick(object) {
       console.log(object);
-      if(object.bodyId != undefined) {
+      if(object.bodyId !== undefined) {
         setSelectedBody(object.bodyId, {zoomIn: true});
       }
     }
@@ -232,14 +231,25 @@ const CosmicExplorer = () => {
       }
       selectedBody.indicator.visible = true;
       selectedBody.indicator.material.opacity = 0.8;
-      let body = getBodyById(id);
+      let newBody = getBodyById(id);
+
+      // if we aren't selecting the current objects parent, or child, or sibling,
+      // make current objects moons not visible (should do this after completing zoom)
+      if(newBody.parent !== selectedBody && 
+        selectedBody.parent !== newBody && 
+        selectedBody.parent !== newBody.parent) {
+        selectedBody.children.forEach((moon) => moon.container.visible = false);
+      }
+      newBody.children.forEach((moon) => moon.container.visible = true);
+
+
       let worldPos = new THREE.Vector3();
-      body.container.getWorldPosition(worldPos);
-      selectedBody = body;
+      newBody.container.getWorldPosition(worldPos);
+      selectedBody = newBody;
 
       controls.enableZoom = false;
       controls.target.set(...worldPos.toArray());
-      controls.minDistance = body.radius * 2;
+      controls.minDistance = newBody.radius * 2;
       zoomingToTarget = zoomIn;
       zoomPercentage = 0;
       zoomInitialDistance = controls.getDistance();

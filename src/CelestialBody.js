@@ -27,6 +27,10 @@ export default class CelestialBody {
 		this.orbitEllipse = null;
 		this.parent = parent;
 
+		if(this.parent != null && this.parent.parent != null) {
+			this.container.visible = false;
+		}
+
 		if (lightIntensity > 0) {
 			const light = new THREE.PointLight(0xffffff, lightIntensity);
 			this.mesh.add(light);
