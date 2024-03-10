@@ -2,14 +2,14 @@
 import * as THREE from 'three';
 
 export default class OrbitData {
-  constructor({parent, L0, Ldot, semiMajorAxis, eccentricity, argumentOfPeriapsis, longitudeOfPeriapsis, inclination, longitudeOfAscendingNode}) {
+  constructor({parent, frame, L0, Ldot, semiMajorAxis, eccentricity, argumentOfPeriapsis, longitudeOfPeriapsis, inclination, longitudeOfAscendingNode}) {
 		this.parent = parent;
+		this.frame = frame;
 		this.L0 = L0 * Math.PI / 180;
 		this.Ldot = Ldot * Math.PI / 180;
 		this.semiMajorAxis = semiMajorAxis;
 		this.eccentricity = eccentricity;
 		this.inclination = inclination * Math.PI / 180;
-
 		if(longitudeOfPeriapsis == null) {
 			longitudeOfPeriapsis = longitudeOfAscendingNode + argumentOfPeriapsis;
 		}
@@ -21,8 +21,10 @@ export default class OrbitData {
 		this.sinInclination = Math.sin(this.inclination);
 		this.cosArgumentOfPeriapsis = Math.cos(this.argumentOfPeriapsis);
 		this.sinArgumentOfPeriapsis = Math.sin(this.argumentOfPeriapsis);
-		this.cosLongitudeOfAscendingNode = Math.cos(this.longitudeOfAscendingNode);
-		this.sinLongitudeOfAscendingNode = Math.sin(this.longitudeOfAscendingNode);
+		this.cosLongitudeOfAscendingNodeMinusPi = Math.cos(this.longitudeOfAscendingNode - Math.PI / 2);
+		this.sinLongitudeOfAscendingNodeMinusPi = Math.sin(this.longitudeOfAscendingNode - Math.PI / 2);
+		this.cosParentTilt = Math.cos(-this.parent.tilt);
+		this.sinParentTilt = Math.sin(-this.parent.tilt);
   }
 
   getOrbitData(body) {
@@ -57,15 +59,20 @@ export default class OrbitData {
 		// rotate by argument of periapsis
 		let x = -(this.cosArgumentOfPeriapsis * P - this.sinArgumentOfPeriapsis * Q);
 		let z = -(this.sinArgumentOfPeriapsis * P + this.cosArgumentOfPeriapsis * Q);
-		// // // rotate by inclination
+		// rotate by inclination
 		let y = -this.sinInclination * z;
 				z = this.cosInclination * z;
-		// // rotate by longitude of ascending node
-		let cos1 = Math.cos(this.longitudeOfAscendingNode - Math.PI / 2);
-		let sin1 = Math.sin(this.longitudeOfAscendingNode - Math.PI / 2);
+		// rotate by longitude of ascending node
 		let xtemp = x;
-		x = cos1 * xtemp - sin1 * z;
-		z = sin1 * xtemp + cos1 * z;
+		x = this.cosLongitudeOfAscendingNodeMinusPi * xtemp - this.sinLongitudeOfAscendingNodeMinusPi * z;
+		z = this.sinLongitudeOfAscendingNodeMinusPi * xtemp + this.cosLongitudeOfAscendingNodeMinusPi * z;
+
+		//rotate to laplace plane
+		if(this.frame == "laplace") {
+			xtemp = x
+			x = this.cosParentTilt * xtemp - this.sinParentTilt * y;
+			y = this.sinParentTilt * xtemp + this.cosParentTilt * y;
+		}
 		return new THREE.Vector3(x, y, z);
 	}
 
@@ -87,7 +94,13 @@ export default class OrbitData {
 		
 		// Create the final object to add to the scene
 		const ellipse = new THREE.Line( ellipseGeometry, ellipseMaterial );
+		//rotate to ecliptic plane
 		ellipse.rotateX(Math.PI / 2);
+
+		//rotate to laplace plane
+		if(this.frame == "laplace") {
+			ellipse.rotateY(-this.parent.tilt)
+		}
 		ellipse.rotateZ(this.longitudeOfAscendingNode - Math.PI / 2);
 		ellipse.rotateX(this.inclination);
 		ellipse.rotateZ(this.argumentOfPeriapsis + Math.PI / 2);

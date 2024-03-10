@@ -28,7 +28,7 @@ with open('./moons.txt', 'r') as file:
             'mass': mass,
             'radius': radius,
             'color': 'rgb(100, 100, 100)',
-            'texturePath': '/images/comet_texture.png', 
+            'texturePath': '/images/' + name.lower() + '_texture.jpeg', 
             'startingPosition': { 'x': 0, 'y': 0, 'z': 0 },
             'rotationPeriod': 100,
             'axisTilt' : 0
@@ -44,6 +44,7 @@ with open('moon_orbits.txt', 'r') as orbit_file:
 
         # Extract the name and orbital data
         name = cols[1]
+        frame = cols[4].lower()
         planetId = int(cols[2][0]) - 1
         bodyId = '0-'
         bodyId = bodyId + str(planetId) + '-'
@@ -62,6 +63,7 @@ with open('moon_orbits.txt', 'r') as orbit_file:
                 if moon['bodyId'] == bodyId:
                     # Add the orbital data to the moon dictionary
                     moon['orbitData'] = {
+                        'frame': frame,
                         'L0': l0,
                         'Ldot': Ldot,
                         'semiMajorAxis': a, 

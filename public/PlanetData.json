@@ -94,9 +94,10 @@
             "texturePath": "/images/moon_texture.png", 
             "startingPosition": { "x": 149982.4, "y": 0, "z": 0 },
             "rotationPeriod": 655.7208,
-            "axisTilt": 1.5,
+            "axisTilt": 6.68,
             "startingRotation" : 180,
             "orbitData": {
+              "frame": "ecliptic",
               "L0": 224,
               "Ldot": 481265.8070325053,
               "semiMajorAxis": 384.4, 
@@ -143,13 +144,14 @@
             "color": "rgb(100, 100, 100)",
             "texturePath": "/images/comet_texture.png",
             "startingPosition": {
-              "x": 5256869.2,
+              "x": 0,
               "y": 0,
               "z": 0
             },
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 189.6,
               "Ldot": 41215172.0981842,
               "semiMajorAxis": 9.4,
@@ -167,13 +169,14 @@
             "color": "rgb(100, 100, 100)",
             "texturePath": "/images/comet_texture.png",
             "startingPosition": {
-              "x": 5256869.2,
+              "x": 0,
               "y": 0,
               "z": 0
             },
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 205.0,
               "Ldot": 10416196.317852024,
               "semiMajorAxis": 23.5,
@@ -205,14 +208,14 @@
           "longitudeOfAscendingNode" : 100.55615,
           "longitudeOfPeriapsis": 14.75385
         },
-        "children" :   [
+        "children": [
           {
             "bodyId": "0-4-0",
             "name": "Io",
             "mass": 0.0892993539938575,
             "radius": 1.82149,
             "color": "rgb(100, 100, 100)",
-            "texturePath": "/images/comet_texture.png",
+            "texturePath": "/images/io_texture.jpeg",
             "startingPosition": {
               "x": 0,
               "y": 0,
@@ -221,6 +224,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 330.9,
               "Ldot": 7459443.636355385,
               "semiMajorAxis": 421.8,
@@ -235,8 +239,8 @@
             "name": "Europa",
             "mass": 0.04798765303731091,
             "radius": 1.5608,
-            "color": "rgb(140, 120, 60)",
-            "texturePath": "/images/europa_texture.jpeg",
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
             "startingPosition": {
               "x": 0,
               "y": 0,
@@ -245,6 +249,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 345.4,
               "Ldot": 3729722.8761158464,
               "semiMajorAxis": 671.1,
@@ -259,8 +264,8 @@
             "name": "Ganymede",
             "mass": 0.1481528307868716,
             "radius": 2.6311999999999998,
-            "color": "rgb(150, 150, 100)",
-            "texturePath": "/images/ganymede_texture.png",
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
             "startingPosition": {
               "x": 0,
               "y": 0,
@@ -269,6 +274,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 324.8,
               "Ldot": 1837584.8357954652,
               "semiMajorAxis": 1070.4,
@@ -284,7 +290,7 @@
             "mass": 0.10757249532390255,
             "radius": 2.4103000000000003,
             "color": "rgb(100, 100, 100)",
-            "texturePath": "/images/comet_texture.png",
+            "texturePath": "/images/callisto_texture.jpeg",
             "startingPosition": {
               "x": 0,
               "y": 0,
@@ -293,6 +299,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 87.4,
               "Ldot": 787816.2588883217,
               "semiMajorAxis": 1882.7,
@@ -317,6 +324,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 310.6,
               "Ldot": 26302313.579427026,
               "semiMajorAxis": 181.4,
@@ -341,6 +349,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "ecliptic",
               "L0": 66.5,
               "Ldot": 52477.985407296655,
               "semiMajorAxis": 11440.6,
@@ -365,6 +374,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 182.1,
               "Ldot": 19448162.637460157,
               "semiMajorAxis": 221.9,
@@ -389,6 +399,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 214.5,
               "Ldot": 44085697.04284852,
               "semiMajorAxis": 129.0,
@@ -413,6 +424,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 166.0,
               "Ldot": 44606298.27769278,
               "semiMajorAxis": 128.0,
@@ -467,6 +479,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 275.3,
               "Ldot": 13952348.31105386,
               "semiMajorAxis": 186.0,
@@ -491,6 +504,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 57.0,
               "Ldot": 9596283.219166586,
               "semiMajorAxis": 238.4,
@@ -515,6 +529,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 0.0,
               "Ldot": 6965243.176985722,
               "semiMajorAxis": 295.0,
@@ -539,6 +554,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 212.0,
               "Ldot": 4804312.591252344,
               "semiMajorAxis": 377.7,
@@ -563,6 +579,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 31.5,
               "Ldot": 2910678.753284724,
               "semiMajorAxis": 527.2,
@@ -577,8 +594,8 @@
             "name": "Titan",
             "mass": 0.1345178785892705,
             "radius": 2.5747600000000004,
-            "color": "rgb(50, 200, 140)",
-            "texturePath": "/images/titan_texture.jpeg",
+            "color": "rgb(100, 100, 100)",
+            "texturePath": "/images/comet_texture.png",
             "startingPosition": {
               "x": 0,
               "y": 0,
@@ -587,6 +604,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 11.7,
               "Ldot": 824624.0557179704,
               "semiMajorAxis": 1221.9,
@@ -611,6 +629,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 122.9,
               "Ldot": 618001.191728513,
               "semiMajorAxis": 1481.5,
@@ -635,6 +654,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 74.8,
               "Ldot": 165748.5682583462,
               "semiMajorAxis": 3561.7,
@@ -659,6 +679,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 308.0,
               "Ldot": 23894.06973321342,
               "semiMajorAxis": 12929.4,
@@ -683,6 +704,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 111.7,
               "Ldot": 18855586.7688244,
               "semiMajorAxis": 151.5,
@@ -707,6 +729,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 197.2,
               "Ldot": 18864811.509701412,
               "semiMajorAxis": 151.4,
@@ -731,6 +754,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": -64.5,
               "Ldot": 4804312.591252344,
               "semiMajorAxis": 377.6,
@@ -755,6 +779,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 289.1,
               "Ldot": 21748191.372175414,
               "semiMajorAxis": 137.7,
@@ -779,6 +804,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 135.4,
               "Ldot": 21350007.631381538,
               "semiMajorAxis": 139.4,
@@ -803,6 +829,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 123.9,
               "Ldot": 20826172.966997113,
               "semiMajorAxis": 141.7,
@@ -827,6 +854,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 146.6,
               "Ldot": 22865797.990091313,
               "semiMajorAxis": 133.6,
@@ -865,7 +893,7 @@
           "opacity": 0.95,
           "texturePath": "./images/uranus_rings.png"
         },
-        "children":  [
+        "children": [
           {
             "bodyId": "0-6-0",
             "name": "Ariel",
@@ -881,6 +909,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 119.8,
               "Ldot": 5216449.529492042,
               "semiMajorAxis": 190.9,
@@ -905,6 +934,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 258.3,
               "Ldot": 3172601.69263331,
               "semiMajorAxis": 266.0,
@@ -929,6 +959,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 53.2,
               "Ldot": 1510260.6758855856,
               "semiMajorAxis": 436.3,
@@ -953,6 +984,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 139.7,
               "Ldot": 976632.8574974638,
               "semiMajorAxis": 583.4,
@@ -977,6 +1009,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 72.4,
               "Ldot": 9300572.08173243,
               "semiMajorAxis": 129.9,
@@ -1023,6 +1056,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 63.0,
               "Ldot": 2237368.287257057,
               "semiMajorAxis": 354.8,
@@ -1047,6 +1081,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 89.7,
               "Ldot": 44727532.48520307,
               "semiMajorAxis": 48.2,
@@ -1071,6 +1106,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 165.7,
               "Ldot": 42269141.50148837,
               "semiMajorAxis": 50.1,
@@ -1095,6 +1131,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 125.1,
               "Ldot": 39291092.94320138,
               "semiMajorAxis": 52.5,
@@ -1119,6 +1156,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 86.7,
               "Ldot": 30668650.756628662,
               "semiMajorAxis": 62.0,
@@ -1143,6 +1181,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 165.5,
               "Ldot": 23692361.47022734,
               "semiMajorAxis": 73.5,
@@ -1167,6 +1206,7 @@
             "rotationPeriod": 100,
             "axisTilt": 0,
             "orbitData": {
+              "frame": "laplace",
               "L0": 276.8,
               "Ldot": 11715962.096202938,
               "semiMajorAxis": 117.6,

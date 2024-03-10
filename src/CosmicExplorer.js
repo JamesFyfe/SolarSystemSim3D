@@ -22,7 +22,7 @@ const CosmicExplorer = () => {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 20000000);
-    camera.position.set(0, 2000, -20000);
+    camera.position.set(...Constants.startingRelativePosition.toArray());
     // let relativePosition = Constants.startingRelativePosition;
     // relativePosition = new THREE.Vector3(1,0.1,0);
 
@@ -174,7 +174,6 @@ const CosmicExplorer = () => {
       if (intersects.length > 0) {
         for(let i=0; i<intersects.length; i++) {
           object = intersects[i].object;
-          console.log(object);
           if(object.type !== 'Line') {
             break;
           }
@@ -186,7 +185,6 @@ const CosmicExplorer = () => {
     }
 
     function handleMeshClick(object) {
-      console.log(object);
       if(object.bodyId !== undefined && object.bodyId != selectedBody.bodyId) {
         if(object.bodyId.substring(0, 3) != selectedBody.bodyId && 
            object.bodyId.substring(0, 3) != selectedBody.parent.bodyId) {
@@ -265,6 +263,8 @@ const CosmicExplorer = () => {
         zoomingToTarget = true;
         zoomPercentage = 0;
         zoomInitialDistance = controls.getDistance();
+      } else {
+        camera.position.set(...(new THREE.Vector3().addVectors(selectedBody.container.position, Constants.startingRelativePosition)));
       }
     }
 
