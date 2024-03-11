@@ -92,24 +92,28 @@
           {
             "bodyId": "0-2-0",
             "name": "Moon",
-            "mass": 0.07346,
+            "mass": 0.07346057605083464,
             "radius": 1.7374,
             "color": "rgb(100, 100, 100)",
-            "texturePath": "/images/moon_texture.jpeg", 
-            "startingPosition": { "x": 149982.4, "y": 0, "z": 0 },
-            "rotationPeriod": 655.728,
+            "texturePath": "/images/moon_texture.jpeg",
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "startingRotation" : 295,
             "axisTilt": 1.5,
-            "startingRotation" : 180,
             "clickable": true,
+            "rotationPeriod": 655.728,
             "orbitData": {
               "frame": "ecliptic",
               "L0": 224,
-              "Ldot": 481265.8070325053,
-              "semiMajorAxis": 384.4, 
-              "eccentricity": 0.0549, 
-              "inclination": 5.145, 
-              "longitudeOfAscendingNode" : 125.08,
-              "longitudeOfPeriapsis": 83.23
+              "Ldot": 481260.5226557353,
+              "semiMajorAxis": 384.4,
+              "eccentricity": 0.0554,
+              "argumentOfPeriapsis": 318.15,
+              "inclination": 5.16,
+              "longitudeOfAscendingNode": 125.08
             }
           }
         ]

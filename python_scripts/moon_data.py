@@ -8,6 +8,8 @@ with open('./clickable_moons.json') as f:
 
 # Open the input file
 with open('./moons.txt', 'r') as file:
+    count = 0
+    oldPlanetId = 0
     # Read the file line by line
     for line in file:
         # Split the line into columns
@@ -16,9 +18,14 @@ with open('./moons.txt', 'r') as file:
         # Extract the relevant data
         name = cols[1]
         planetId = int(cols[2][0]) - 1
+        print(oldPlanetId, planetId)
+        if(planetId != oldPlanetId):
+            oldPlanetId = planetId
+            count = 0
+        print(count)
         bodyId = '0-'
         bodyId = bodyId + str(planetId) + '-'
-        bodyId = bodyId + str(int(cols[2][1:]) - 1)
+        bodyId = bodyId + str(count)
         radius = float(cols[6]) / 1000
         density = float(cols[9])
         mass = (4/3 * math.pi * math.pow(radius, 3) * density) * math.pow(10, -3)
@@ -34,12 +41,13 @@ with open('./moons.txt', 'r') as file:
             'name': name,
             'mass': mass,
             'radius': radius,
-            'color': 'rgb(100, 100, 100)',
+            'color': 'rgb(175, 175, 175)',
             'texturePath': texturePath, 
             'startingPosition': { 'x': 0, 'y': 0, 'z': 0 },
             'axisTilt': 0,
             'clickable': clickable
         })
+        count += 1
 
 # Open the orbital data file
 with open('moon_orbits.txt', 'r') as orbit_file:

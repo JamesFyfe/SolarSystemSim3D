@@ -12,13 +12,18 @@ export default class CelestialBody {
 		this.radius = radius;
 		this.rotationPeriod = rotationPeriod;
 		this.startingRotation = startingRotation * Math.PI / 180;
-    const textureLoader = new THREE.TextureLoader();
-		const texture = textureLoader.load(texturePath);
-		const material = basicMat ? new THREE.MeshStandardMaterial({ 
-			emissive: "rgb(160, 160, 90)",
-			emissiveMap: texture,
-			emissiveIntensity: 3
-		}) : new THREE.MeshStandardMaterial({ map: texture });
+		let material;
+		if(texturePath == null) {
+			material = new THREE.MeshStandardMaterial({ color: color});
+		} else {
+			const textureLoader = new THREE.TextureLoader();
+			const texture = textureLoader.load(texturePath);
+			material = basicMat ? new THREE.MeshStandardMaterial({ 
+				emissive: "rgb(160, 160, 90)",
+				emissiveMap: texture,
+				emissiveIntensity: 3
+			}) : new THREE.MeshStandardMaterial({ map: texture });
+		}
 		const geometry = new THREE.SphereGeometry(radius, 80, 40);
 		this.mesh = new THREE.Mesh(geometry, material);
 		this.mesh.bodyId = bodyId;

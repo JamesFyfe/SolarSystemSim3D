@@ -173,7 +173,7 @@
             "name": "Phobos",
             "mass": 1.0666298536488537e-08,
             "radius": 0.01108,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/phobos_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -199,7 +199,7 @@
             "name": "Deimos",
             "mass": 1.4685081141236327e-09,
             "radius": 0.0062,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/deimos_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -253,7 +253,7 @@
             "name": "Io",
             "mass": 0.0892993539938575,
             "radius": 1.82149,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/io_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -279,7 +279,7 @@
             "name": "Europa",
             "mass": 0.04798765303731091,
             "radius": 1.5608,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/europa_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -305,7 +305,7 @@
             "name": "Ganymede",
             "mass": 0.1481528307868716,
             "radius": 2.6311999999999998,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/ganymede_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -331,7 +331,7 @@
             "name": "Callisto",
             "mass": 0.10757249532390255,
             "radius": 2.4103000000000003,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/callisto_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -357,7 +357,7 @@
             "name": "Amalthea",
             "mass": 2.465710849552938e-06,
             "radius": 0.0835,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -383,7 +383,7 @@
             "name": "Himalia",
             "mass": 2.2706934804908986e-06,
             "radius": 0.085,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -405,11 +405,11 @@
             }
           },
           {
-            "bodyId": "0-4-13",
+            "bodyId": "0-4-6",
             "name": "Thebe",
             "mass": 4.517226597133636e-07,
             "radius": 0.0493,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -418,24 +418,24 @@
             },
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 16.22652,
+            "rotationPeriod": 6231.357216,
             "orbitData": {
-              "frame": "laplace",
-              "L0": 182.1,
-              "Ldot": 19448162.637460157,
-              "semiMajorAxis": 221.9,
-              "eccentricity": 0.018,
-              "argumentOfPeriapsis": 26.6,
-              "inclination": 1.1,
-              "longitudeOfAscendingNode": 340.4
+              "frame": "ecliptic",
+              "L0": 330.7,
+              "Ldot": 50643.22090053006,
+              "semiMajorAxis": 11712.3,
+              "eccentricity": 0.211,
+              "argumentOfPeriapsis": 140.1,
+              "inclination": 27.9,
+              "longitudeOfAscendingNode": 118.1
             }
           },
           {
-            "bodyId": "0-4-14",
+            "bodyId": "0-4-7",
             "name": "Adrastea",
             "mass": 2.0827656066491343e-09,
             "radius": 0.008199999999999999,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -444,24 +444,24 @@
             },
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.158240000000001,
+            "rotationPeriod": 17846.695703999998,
             "orbitData": {
-              "frame": "laplace",
-              "L0": 214.5,
-              "Ldot": 44085697.04284852,
-              "semiMajorAxis": 129.0,
-              "eccentricity": 0.0,
-              "argumentOfPeriapsis": 0.0,
-              "inclination": 0.0,
-              "longitudeOfAscendingNode": 0.0
+              "frame": "ecliptic",
+              "L0": 277.8,
+              "Ldot": 17682.60103909709,
+              "semiMajorAxis": 23468.2,
+              "eccentricity": 0.412,
+              "argumentOfPeriapsis": 264.8,
+              "inclination": 148.4,
+              "longitudeOfAscendingNode": 312.3
             }
           },
           {
-            "bodyId": "0-4-15",
+            "bodyId": "0-4-8",
             "name": "Metis",
             "mass": 3.747511701991484e-08,
             "radius": 0.0215,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -470,16 +470,16 @@
             },
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.074696,
+            "rotationPeriod": 18212.397672,
             "orbitData": {
-              "frame": "laplace",
-              "L0": 166.0,
-              "Ldot": 44606298.27769278,
-              "semiMajorAxis": 128.0,
-              "eccentricity": 0.0,
-              "argumentOfPeriapsis": 0.0,
-              "inclination": 0.0,
-              "longitudeOfAscendingNode": 0.0
+              "frame": "ecliptic",
+              "L0": 167.5,
+              "Ldot": 17327.537300877797,
+              "semiMajorAxis": 23683.9,
+              "eccentricity": 0.264,
+              "argumentOfPeriapsis": 96.6,
+              "inclination": 157.3,
+              "longitudeOfAscendingNode": 304.6
             }
           }
         ]
@@ -521,7 +521,7 @@
             "name": "Mimas",
             "mass": 3.750897212932284e-05,
             "radius": 0.1982,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/mimas_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -547,7 +547,7 @@
             "name": "Enceladus",
             "mass": 0.00010803191893445308,
             "radius": 0.2521,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/enceladus_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -573,7 +573,7 @@
             "name": "Tethys",
             "mass": 0.0006174653790978631,
             "radius": 0.5311,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/tethys_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -599,7 +599,7 @@
             "name": "Dione",
             "mass": 0.0010954931118688966,
             "radius": 0.5614,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/dione_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -625,7 +625,7 @@
             "name": "Rhea",
             "mass": 0.002306511608975552,
             "radius": 0.7635,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/rhea_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -651,7 +651,7 @@
             "name": "Titan",
             "mass": 0.1345178785892705,
             "radius": 2.5747600000000004,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/titan_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -677,7 +677,7 @@
             "name": "Hyperion",
             "mass": 5.550808745474568e-06,
             "radius": 0.135,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -703,7 +703,7 @@
             "name": "Iapetus",
             "mass": 0.0018055828326377261,
             "radius": 0.7343,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/iapetus_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -729,7 +729,7 @@
             "name": "Phoebe",
             "mass": 8.312317566763457e-06,
             "radius": 0.1065,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -755,7 +755,7 @@
             "name": "Janus",
             "mass": 1.8970200324904313e-06,
             "radius": 0.0892,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -781,7 +781,7 @@
             "name": "Epimetheus",
             "mass": 5.264265109983035e-07,
             "radius": 0.0582,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -807,7 +807,7 @@
             "name": "Helene",
             "mass": 7.1283893416048904e-09,
             "radius": 0.018,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -829,11 +829,63 @@
             }
           },
           {
-            "bodyId": "0-5-14",
+            "bodyId": "0-5-12",
             "name": "Atlas",
             "mass": 5.552392778378409e-09,
             "radius": 0.015099999999999999,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
+            "texturePath": null,
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "axisTilt": 0,
+            "clickable": false,
+            "rotationPeriod": 45.307248,
+            "orbitData": {
+              "frame": "laplace",
+              "L0": 360.0,
+              "Ldot": 6965243.176985722,
+              "semiMajorAxis": 295.0,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 66.2,
+              "inclination": 1.2,
+              "longitudeOfAscendingNode": 242.1
+            }
+          },
+          {
+            "bodyId": "0-5-13",
+            "name": "Prometheus",
+            "mass": 1.6043960746806972e-07,
+            "radius": 0.0431,
+            "color": "rgb(175, 175, 175)",
+            "texturePath": null,
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "axisTilt": 0,
+            "clickable": false,
+            "rotationPeriod": 45.307272,
+            "orbitData": {
+              "frame": "laplace",
+              "L0": -0.0,
+              "Ldot": 6965239.487382953,
+              "semiMajorAxis": 295.0,
+              "eccentricity": 0.001,
+              "argumentOfPeriapsis": 221.6,
+              "inclination": 1.5,
+              "longitudeOfAscendingNode": 326.6
+            }
+          },
+          {
+            "bodyId": "0-5-14",
+            "name": "Pandora",
+            "mass": 1.387063683288819e-07,
+            "radius": 0.040600000000000004,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -856,10 +908,10 @@
           },
           {
             "bodyId": "0-5-15",
-            "name": "Prometheus",
-            "mass": 1.6043960746806972e-07,
-            "radius": 0.0431,
-            "color": "rgb(100, 100, 100)",
+            "name": "Pan",
+            "mass": 4.195324717505857e-09,
+            "radius": 0.014,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -876,58 +928,6 @@
               "semiMajorAxis": 139.4,
               "eccentricity": 0.002,
               "argumentOfPeriapsis": 341.9,
-              "inclination": 0.0,
-              "longitudeOfAscendingNode": 0.0
-            }
-          },
-          {
-            "bodyId": "0-5-16",
-            "name": "Pandora",
-            "mass": 1.387063683288819e-07,
-            "radius": 0.040600000000000004,
-            "color": "rgb(100, 100, 100)",
-            "texturePath": null,
-            "startingPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "axisTilt": 0,
-            "clickable": false,
-            "rotationPeriod": 15.152856,
-            "orbitData": {
-              "frame": "laplace",
-              "L0": 123.9,
-              "Ldot": 20826172.966997113,
-              "semiMajorAxis": 141.7,
-              "eccentricity": 0.004,
-              "argumentOfPeriapsis": 217.9,
-              "inclination": 0.0,
-              "longitudeOfAscendingNode": 0.0
-            }
-          },
-          {
-            "bodyId": "0-5-17",
-            "name": "Pan",
-            "mass": 4.195324717505857e-09,
-            "radius": 0.014,
-            "color": "rgb(100, 100, 100)",
-            "texturePath": null,
-            "startingPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "axisTilt": 0,
-            "clickable": false,
-            "rotationPeriod": 13.801224,
-            "orbitData": {
-              "frame": "laplace",
-              "L0": 146.6,
-              "Ldot": 22865797.990091313,
-              "semiMajorAxis": 133.6,
-              "eccentricity": 0.0,
-              "argumentOfPeriapsis": 0.0,
               "inclination": 0.0,
               "longitudeOfAscendingNode": 0.0
             }
@@ -971,7 +971,7 @@
             "name": "Ariel",
             "mass": 0.0012506560197747957,
             "radius": 0.5789,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/ariel_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -997,7 +997,7 @@
             "name": "Umbriel",
             "mass": 0.0012752278656673484,
             "radius": 0.5847,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/umbriel_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1023,7 +1023,7 @@
             "name": "Titania",
             "mass": 0.0033995961681581627,
             "radius": 0.7888999999999999,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/titania_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1049,7 +1049,7 @@
             "name": "Oberon",
             "mass": 0.0030766673919980763,
             "radius": 0.7614,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/oberon_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1075,7 +1075,7 @@
             "name": "Miranda",
             "mass": 6.469419333007398e-05,
             "radius": 0.2358,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/miranda_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1128,7 +1128,7 @@
             "name": "Triton",
             "mass": 0.021404041425738114,
             "radius": 1.3525999999999998,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/triton_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1150,11 +1150,37 @@
             }
           },
           {
-            "bodyId": "0-7-2",
+            "bodyId": "0-7-1",
             "name": "Naiad",
             "mass": 1.2781288182540412e-07,
             "radius": 0.029,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
+            "texturePath": null,
+            "startingPosition": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "axisTilt": 0,
+            "clickable": false,
+            "rotationPeriod": 8643.367968,
+            "orbitData": {
+              "frame": "ecliptic",
+              "L0": 318.0,
+              "Ldot": 36510.76769707648,
+              "semiMajorAxis": 5504.0,
+              "eccentricity": 0.749,
+              "argumentOfPeriapsis": 290.3,
+              "inclination": 5.8,
+              "longitudeOfAscendingNode": 326.0
+            }
+          },
+          {
+            "bodyId": "0-7-2",
+            "name": "Thalassa",
+            "mass": 3.534400643833842e-07,
+            "radius": 0.04,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1177,10 +1203,10 @@
           },
           {
             "bodyId": "0-7-3",
-            "name": "Thalassa",
-            "mass": 3.534400643833842e-07,
-            "radius": 0.04,
-            "color": "rgb(100, 100, 100)",
+            "name": "Despina",
+            "mass": 1.7489992309314684e-06,
+            "radius": 0.074,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1203,10 +1229,10 @@
           },
           {
             "bodyId": "0-7-4",
-            "name": "Despina",
-            "mass": 1.7489992309314684e-06,
-            "radius": 0.074,
-            "color": "rgb(100, 100, 100)",
+            "name": "Galatea",
+            "mass": 2.845276923665506e-06,
+            "radius": 0.079,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1229,10 +1255,10 @@
           },
           {
             "bodyId": "0-7-5",
-            "name": "Galatea",
-            "mass": 2.845276923665506e-06,
-            "radius": 0.079,
-            "color": "rgb(100, 100, 100)",
+            "name": "Larissa",
+            "mass": 3.818264487387735e-06,
+            "radius": 0.096,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1255,10 +1281,10 @@
           },
           {
             "bodyId": "0-7-6",
-            "name": "Larissa",
-            "mass": 3.818264487387735e-06,
-            "radius": 0.096,
-            "color": "rgb(100, 100, 100)",
+            "name": "Proteus",
+            "mass": 3.870853795375281e-05,
+            "radius": 0.208,
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1277,32 +1303,6 @@
               "argumentOfPeriapsis": 247.3,
               "inclination": 0.2,
               "longitudeOfAscendingNode": 312.0
-            }
-          },
-          {
-            "bodyId": "0-7-7",
-            "name": "Proteus",
-            "mass": 3.870853795375281e-05,
-            "radius": 0.208,
-            "color": "rgb(100, 100, 100)",
-            "texturePath": null,
-            "startingPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "axisTilt": 0,
-            "clickable": false,
-            "rotationPeriod": 26.93556,
-            "orbitData": {
-              "frame": "laplace",
-              "L0": 276.8,
-              "Ldot": 11715962.096202938,
-              "semiMajorAxis": 117.6,
-              "eccentricity": 0.0,
-              "argumentOfPeriapsis": 0.0,
-              "inclination": 0.0,
-              "longitudeOfAscendingNode": 0.0
             }
           }
         ]
@@ -1337,7 +1337,7 @@
             "name": "Charon",
             "mass": 0.0015864084012358725,
             "radius": 0.606,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": "/images/charon_texture.jpeg",
             "startingPosition": {
               "x": 0,
@@ -1363,7 +1363,7 @@
             "name": "Nix",
             "mass": 4.4949405032738175e-08,
             "radius": 0.018,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1389,7 +1389,7 @@
             "name": "Hydra",
             "mass": 4.79461982251721e-08,
             "radius": 0.0185,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
@@ -1415,7 +1415,7 @@
             "name": "Kerberos",
             "mass": 1.6481448512004e-08,
             "radius": 0.006,
-            "color": "rgb(100, 100, 100)",
+            "color": "rgb(175, 175, 175)",
             "texturePath": null,
             "startingPosition": {
               "x": 0,
