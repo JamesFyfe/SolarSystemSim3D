@@ -190,6 +190,7 @@ const CosmicExplorer = () => {
            object.bodyId.substring(0, 3) != selectedBody.parent.bodyId) {
           setSelectedBody(object.bodyId.substring(0, 3), {zoomIn: true});
         } else {
+          console.log(object.bodyId);
           setSelectedBody(object.bodyId, {zoomIn: true});
         }
       }
@@ -248,6 +249,7 @@ const CosmicExplorer = () => {
         selectedBody.parent !== newBody && 
         selectedBody.parent !== newBody.parent) {
         selectedBody.children.forEach((moon) => moon.container.visible = false);
+        // make orbits/indicators nots visible
       }
       newBody.children.forEach((moon) => moon.container.visible = true);
 

@@ -3,7 +3,7 @@ import OrbitData from './OrbitData.js'
 import Ring from './Ring.js'
 
 export default class CelestialBody {
-  constructor({bodyId, name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
+  constructor({bodyId, name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, clickable, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
 		this.bodyId = bodyId;
 		this.name = name;
 		this.container = new THREE.Object3D();
@@ -25,6 +25,7 @@ export default class CelestialBody {
 		this.container.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
 		this.orbitData = orbitData;
 		this.orbitEllipse = null;
+		this.clickable = clickable;
 		this.parent = parent;
 
 		if(this.parent != null && this.parent.parent != null) {
@@ -36,7 +37,7 @@ export default class CelestialBody {
 			this.mesh.add(light);
 		}
 
-		if(orbitData != null) {
+		if(orbitData != null && clickable) {
 			this.orbitEllipse = this.orbitData.createOrbitEllipse();
 			this.orbitEllipse.material.color.set(this.color);
 			parent.container.add(this.orbitEllipse);
@@ -53,6 +54,9 @@ export default class CelestialBody {
 		
 		this.tilt = axisTilt * Math.PI / 180;
 		if(this.orbitData != null) {
+			if(this.orbitData.frame === "laplace") {
+				this.tilt += this.parent.tilt;
+			}
 			// subtract inclination from tilt since tilt is relative to inclination
 			this.tilt -= this.orbitData.inclination;
 		}
@@ -66,8 +70,10 @@ export default class CelestialBody {
 			this.ring = ring;
 		}
 
-		this.indicator = this.createIndicator();
-		this.container.add(this.indicator);
+		if(clickable) {
+			this.indicator = this.createIndicator();
+			this.container.add(this.indicator);
+		}
 
 		this.children = [];
 		if(children.length !== 0) {
@@ -83,6 +89,7 @@ export default class CelestialBody {
 					rotationPeriod: child.rotationPeriod, 
 					startingRotation: child.startingRotation, 
 					axisTilt: child.axisTilt, 
+					clickable: child.clickable, 
 					orbitData: new OrbitData({
 							parent: this, 
 							frame: child.orbitData.frame, 
@@ -118,13 +125,15 @@ export default class CelestialBody {
 			this.container.position.set(...position.toArray());
 		}
 
-		// Apply scale to indicator to maintain constant size on the screen
-		let worldPos = new THREE.Vector3();
-		this.container.getWorldPosition(worldPos);
-		const distance = worldPos.distanceTo(camera.position);
-		const scaleFactor = distance / 5000;
-		this.indicator.scale.set(scaleFactor, scaleFactor, scaleFactor);
-		this.indicator.lookAt(camera.position);
+		if(this.clickable) {
+			// Apply scale to indicator to maintain constant size on the screen
+			let worldPos = new THREE.Vector3();
+			this.container.getWorldPosition(worldPos);
+			const distance = worldPos.distanceTo(camera.position);
+			const scaleFactor = distance / 5000;
+			this.indicator.scale.set(scaleFactor, scaleFactor, scaleFactor);
+			this.indicator.lookAt(camera.position);
+		}
 		if(this.name === "Earth") {
 			// Move clouds slowly
 			this.mesh.children[1].rotateY(elapsed * 0.000002);

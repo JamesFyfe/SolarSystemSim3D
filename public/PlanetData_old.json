@@ -5,14 +5,10 @@
     "mass": 1989000,
     "radius": 696.34,
     "color": "rgb(130, 130, 70)",
-    "texturePath": "/images/star_texture_orange.jpeg",
-    "startingPosition": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
+    "texturePath": "/images/star_texture_orange.jpeg", 
+    "startingPosition": { "x": 0, "y": 0, "z": 0 },
     "rotationPeriod": 587.28,
-    "axisTilt": 7.25,
+    "axisTilt" : 7.25,
     "lightIntensity": 400000000000,
     "basicMat": true,
     "clickable": true,
@@ -23,25 +19,20 @@
         "mass": 0.3285,
         "radius": 2.4397,
         "color": "rgb(100, 100, 100)",
-        "texturePath": "/images/mercury_texture.jpeg",
-        "startingPosition": {
-          "x": 57909,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/mercury_texture.jpeg", 
+        "startingPosition": { "x": 57909, "y": 0, "z": 0 },
         "rotationPeriod": 1407.6,
-        "axisTilt": 0.03,
+        "axisTilt" : 0.03,
         "clickable": true,
         "orbitData": {
-          "L0": 252.2503235,
-          "Ldot": 149472.67411175,
-          "semiMajorAxis": 57909.22654,
-          "eccentricity": 0.20563593,
-          "inclination": 7.005,
-          "longitudeOfAscendingNode": 48.33,
+          "L0": 252.25032350, 
+          "Ldot": 149472.67411175, 
+          "semiMajorAxis": 57909.22654, 
+          "eccentricity": 0.20563593, 
+          "inclination": 7.005, 
+          "longitudeOfAscendingNode" : 48.33,
           "longitudeOfPeriapsis": 77.45779628
-        },
-        "children": []
+        }
       },
       {
         "bodyId": "0-1",
@@ -49,22 +40,18 @@
         "mass": 4.8673,
         "radius": 6.0518,
         "color": "rgb(142, 116, 72)",
-        "texturePath": "/images/venus_texture.jpeg",
-        "startingPosition": {
-          "x": 108209,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/venus_texture.jpeg", 
+        "startingPosition": { "x": 108209, "y": 0, "z": 0 },
         "rotationPeriod": -139982.4,
-        "axisTilt": 2.64,
+        "axisTilt" : 2.64,
         "clickable": true,
         "orbitData": {
-          "L0": 181.9790995,
-          "Ldot": 58517.81538729,
-          "semiMajorAxis": 108209.4745374,
-          "eccentricity": 0.00677672,
-          "inclination": 3.395,
-          "longitudeOfAscendingNode": 76.68069,
+          "L0": 181.97909950, 
+          "Ldot": 58517.81538729, 
+          "semiMajorAxis": 108209.4745374, 
+          "eccentricity": 0.00677672, 
+          "inclination": 3.395, 
+          "longitudeOfAscendingNode" : 76.68069,
           "longitudeOfPeriapsis": 131.60246718
         },
         "atmosphere": {
@@ -72,8 +59,7 @@
           "layers": 50,
           "thickness": 0.05,
           "opacity": 2
-        },
-        "children": []
+        }
       },
       {
         "bodyId": "0-2",
@@ -81,23 +67,19 @@
         "mass": 5.9722,
         "radius": 6.371,
         "color": "rgb(90, 120, 170)",
-        "texturePath": "/images/earth_texture.jpg",
-        "startingPosition": {
-          "x": 149598,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/earth_texture.jpg", 
+        "startingPosition": { "x": 149598, "y": 0, "z": 0 },
         "startingRotation": 0,
         "rotationPeriod": 23.93446958333,
         "axisTilt": 23.44,
         "clickable": true,
         "orbitData": {
           "L0": 100.46457166,
-          "Ldot": 35999.37244981,
-          "semiMajorAxis": 149598,
-          "eccentricity": 0.01671022,
+          "Ldot": 35999.37244981, 
+          "semiMajorAxis": 149598, 
+          "eccentricity": 0.01671022, 
           "inclination": 0,
-          "longitudeOfAscendingNode": 0,
+          "longitudeOfAscendingNode" : 0,
           "longitudeOfPeriapsis": 102.93768193
         },
         "atmosphere": {
@@ -110,28 +92,24 @@
           {
             "bodyId": "0-2-0",
             "name": "Moon",
-            "mass": 0.07346057605083464,
+            "mass": 0.07346,
             "radius": 1.7374,
             "color": "rgb(100, 100, 100)",
-            "texturePath": "/images/moon_texture.jpeg",
-            "startingPosition": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "startingRotation" : 295,
-            "axisTilt": 1.5,
-            "clickable": true,
+            "texturePath": "/images/moon_texture.jpeg", 
+            "startingPosition": { "x": 149982.4, "y": 0, "z": 0 },
             "rotationPeriod": 655.728,
+            "axisTilt": 1.5,
+            "startingRotation" : 180,
+            "clickable": true,
             "orbitData": {
               "frame": "ecliptic",
               "L0": 224,
-              "Ldot": 481260.5226557353,
-              "semiMajorAxis": 384.4,
-              "eccentricity": 0.0554,
-              "argumentOfPeriapsis": 318.15,
-              "inclination": 5.16,
-              "longitudeOfAscendingNode": 125.08
+              "Ldot": 481265.8070325053,
+              "semiMajorAxis": 384.4, 
+              "eccentricity": 0.0549, 
+              "inclination": 5.145, 
+              "longitudeOfAscendingNode" : 125.08,
+              "longitudeOfPeriapsis": 83.23
             }
           }
         ]
@@ -142,23 +120,19 @@
         "mass": 0.64169,
         "radius": 3.3895,
         "color": "rgb(130, 75, 30)",
-        "texturePath": "/images/mars_texture.jpeg",
-        "startingPosition": {
-          "x": 227956,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/mars_texture.jpeg", 
+        "startingPosition": { "x": 227956, "y": 0, "z": 0 },
         "rotationPeriod": 24.6229,
         "axisTilt": 25.19,
         "startingRotation": -12,
         "clickable": true,
         "orbitData": {
           "L0": 355.44656795,
-          "Ldot": 19140.29934243,
-          "semiMajorAxis": 227956,
+          "Ldot": 19140.29934243, 
+          "semiMajorAxis": 227956, 
           "eccentricity": 0.0935,
-          "inclination": 1.84969142,
-          "longitudeOfAscendingNode": 49.57854,
+          "inclination": 1.84969142, 
+          "longitudeOfAscendingNode" : 49.57854,
           "longitudeOfPeriapsis": 336.04084
         },
         "atmosphere": {
@@ -228,23 +202,19 @@
         "mass": 1898.13,
         "radius": 69.911,
         "color": "rgb(130, 100, 60)",
-        "texturePath": "/images/jupiter_texture.jpeg",
-        "startingPosition": {
-          "x": 778479,
-          "y": 0,
-          "z": 0
-        },
-        "rotationPeriod": 9.925,
-        "axisTilt": 3.13,
-        "startingRotation": 140,
+        "texturePath": "/images/jupiter_texture.jpeg", 
+        "startingPosition": { "x": 778479, "y": 0, "z": 0 },
+        "rotationPeriod": 9.9250,
+        "axisTilt" : 3.13,
+        "startingRotation" : 140,
         "clickable": true,
         "orbitData": {
-          "L0": 34.33479152,
-          "Ldot": 3034.90371757,
-          "semiMajorAxis": 778479,
-          "eccentricity": 0.00677672,
-          "inclination": 1.304,
-          "longitudeOfAscendingNode": 100.55615,
+          "L0": 34.33479152, 
+          "Ldot": 3034.90371757, 
+          "semiMajorAxis": 778479, 
+          "eccentricity": 0.00677672, 
+          "inclination": 1.304, 
+          "longitudeOfAscendingNode" : 100.55615,
           "longitudeOfPeriapsis": 14.75385
         },
         "children": [
@@ -260,9 +230,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 1.762732,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 42.305568,
             "orbitData": {
               "frame": "laplace",
               "L0": 330.9,
@@ -286,9 +256,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 84.61111199999999,
             "orbitData": {
               "frame": "laplace",
               "L0": 345.4,
@@ -312,9 +282,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 171.73411199999998,
             "orbitData": {
               "frame": "laplace",
               "L0": 324.8,
@@ -338,9 +308,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 400.57056,
             "orbitData": {
               "frame": "laplace",
               "L0": 87.4,
@@ -364,9 +334,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 11.998031999999998,
             "orbitData": {
               "frame": "laplace",
               "L0": 310.6,
@@ -390,9 +360,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 6013.493039999999,
             "orbitData": {
               "frame": "ecliptic",
               "L0": 66.5,
@@ -416,9 +386,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 16.22652,
             "orbitData": {
               "frame": "laplace",
               "L0": 182.1,
@@ -442,9 +412,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.158240000000001,
             "orbitData": {
               "frame": "laplace",
               "L0": 214.5,
@@ -468,9 +438,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.074696,
             "orbitData": {
               "frame": "laplace",
               "L0": 166.0,
@@ -490,26 +460,23 @@
         "mass": 568.32,
         "radius": 58.232,
         "color": "rgb(110, 120, 70)",
-        "texturePath": "/images/saturn_texture.jpeg",
-        "startingPosition": {
-          "x": 1432041,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/saturn_texture.jpeg", 
+        "startingPosition": { "x": 1432041, "y": 0, "z": 0 },
         "rotationPeriod": 10.656,
-        "axisTilt": 26.73,
+        "axisTilt" : 26.73,
         "clickable": true,
         "orbitData": {
-          "L0": 50.07571329,
-          "Ldot": 1222.11494724,
-          "semiMajorAxis": 1432041,
-          "eccentricity": 0.00677672,
-          "inclination": 2.486,
-          "longitudeOfAscendingNode": 76.68069,
+          "L0": 50.07571329, 
+          "Ldot": 1222.11494724, 
+          "semiMajorAxis": 1432041, 
+          "eccentricity": 0.00677672, 
+          "inclination": 2.486, 
+          "longitudeOfAscendingNode" : 76.68069,
           "longitudeOfPeriapsis": 131.53298
         },
-        "ringData": {
-          "distance": 66900,
+        "ringData": 
+        {
+          "distance" : 66900,
           "width": 73280,
           "color": "rgb(85, 85, 85)",
           "opacity": 0.95,
@@ -528,9 +495,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 22.618128,
             "orbitData": {
               "frame": "laplace",
               "L0": 275.3,
@@ -554,9 +521,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 32.885232,
             "orbitData": {
               "frame": "laplace",
               "L0": 57.0,
@@ -580,9 +547,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 45.307248,
             "orbitData": {
               "frame": "laplace",
               "L0": 0.0,
@@ -606,9 +573,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 65.68598399999999,
             "orbitData": {
               "frame": "laplace",
               "L0": 212.0,
@@ -632,9 +599,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 108.42007199999999,
             "orbitData": {
               "frame": "laplace",
               "L0": 31.5,
@@ -658,9 +625,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 382.69075200000003,
             "orbitData": {
               "frame": "laplace",
               "L0": 11.7,
@@ -684,9 +651,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 510.63979200000006,
             "orbitData": {
               "frame": "laplace",
               "L0": 122.9,
@@ -710,9 +677,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 1903.9440479999998,
             "orbitData": {
               "frame": "laplace",
               "L0": 74.8,
@@ -736,9 +703,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 13207.293839999998,
             "orbitData": {
               "frame": "laplace",
               "L0": 308.0,
@@ -762,9 +729,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 16.736472,
             "orbitData": {
               "frame": "laplace",
               "L0": 111.7,
@@ -788,9 +755,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 16.728288,
             "orbitData": {
               "frame": "laplace",
               "L0": 197.2,
@@ -814,9 +781,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 65.68598399999999,
             "orbitData": {
               "frame": "laplace",
               "L0": -64.5,
@@ -840,9 +807,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 14.510448,
             "orbitData": {
               "frame": "laplace",
               "L0": 289.1,
@@ -866,9 +833,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 14.781072000000002,
             "orbitData": {
               "frame": "laplace",
               "L0": 135.4,
@@ -892,9 +859,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 15.152856,
             "orbitData": {
               "frame": "laplace",
               "L0": 123.9,
@@ -918,9 +885,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 13.801224,
             "orbitData": {
               "frame": "laplace",
               "L0": 146.6,
@@ -940,26 +907,23 @@
         "mass": 86.811,
         "radius": 25.362,
         "color": "rgb(60, 90, 120)",
-        "texturePath": "/images/uranus_texture.jpeg",
-        "startingPosition": {
-          "x": 2867043,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/uranus_texture.jpeg", 
+        "startingPosition": { "x": 2867043, "y": 0, "z": 0 },
         "rotationPeriod": -17.24,
-        "axisTilt": 97.77,
+        "axisTilt" : 97.77,
         "clickable": true,
         "orbitData": {
-          "L0": 314.20276625,
-          "Ldot": 428.49512595,
-          "semiMajorAxis": 2867043,
-          "eccentricity": 0.0469,
-          "inclination": 0.77,
-          "longitudeOfAscendingNode": 74.22988,
+          "L0": 314.20276625, 
+          "Ldot": 428.49512595, 
+          "semiMajorAxis": 2867043, 
+          "eccentricity": 0.0469, 
+          "inclination": 0.770, 
+          "longitudeOfAscendingNode" : 74.22988,
           "longitudeOfPeriapsis": 170.96424
         },
-        "ringData": {
-          "distance": 41837,
+        "ringData": 
+        {
+          "distance" : 41837,
           "width": 9363,
           "color": "rgb(85, 85, 85)",
           "opacity": 0.95,
@@ -978,9 +942,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 60.49632,
             "orbitData": {
               "frame": "laplace",
               "L0": 119.8,
@@ -1004,9 +968,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 99.46915200000001,
             "orbitData": {
               "frame": "laplace",
               "L0": 258.3,
@@ -1030,9 +994,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 208.954656,
             "orbitData": {
               "frame": "laplace",
               "L0": 53.2,
@@ -1056,9 +1020,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 323.126544,
             "orbitData": {
               "frame": "laplace",
               "L0": 139.7,
@@ -1082,9 +1046,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 33.930816,
             "orbitData": {
               "frame": "laplace",
               "L0": 72.4,
@@ -1104,22 +1068,18 @@
         "mass": 102.409,
         "radius": 24.622,
         "color": "rgb(50, 70, 150)",
-        "texturePath": "/images/neptune_texture.jpeg",
-        "startingPosition": {
-          "x": 4514953,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/neptune_texture.jpeg", 
+        "startingPosition": { "x": 4514953, "y": 0, "z": 0 },
         "rotationPeriod": 16.11,
-        "axisTilt": 28.32,
+        "axisTilt" : 28.32,
         "clickable": true,
         "orbitData": {
-          "L0": 304.22289287,
-          "Ldot": 218.46515314,
-          "semiMajorAxis": 4514953,
-          "eccentricity": 0.0097,
-          "inclination": 1.77,
-          "longitudeOfAscendingNode": 131.72169,
+          "L0": 304.22289287, 
+          "Ldot": 218.46515314, 
+          "semiMajorAxis": 4514953, 
+          "eccentricity": 0.0097, 
+          "inclination": 1.770, 
+          "longitudeOfAscendingNode" : 131.72169,
           "longitudeOfPeriapsis": 44.97135
         },
         "children": [
@@ -1135,9 +1095,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 141.047856,
             "orbitData": {
               "frame": "laplace",
               "L0": 63.0,
@@ -1161,9 +1121,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.0555200000000005,
             "orbitData": {
               "frame": "laplace",
               "L0": 89.7,
@@ -1187,9 +1147,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 7.465872000000001,
             "orbitData": {
               "frame": "laplace",
               "L0": 165.7,
@@ -1213,9 +1173,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 8.031744,
             "orbitData": {
               "frame": "laplace",
               "L0": 125.1,
@@ -1239,9 +1199,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 10.289856,
             "orbitData": {
               "frame": "laplace",
               "L0": 86.7,
@@ -1265,9 +1225,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 13.319735999999999,
             "orbitData": {
               "frame": "laplace",
               "L0": 165.5,
@@ -1291,9 +1251,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 26.93556,
             "orbitData": {
               "frame": "laplace",
               "L0": 276.8,
@@ -1313,23 +1273,19 @@
         "mass": 0.01303,
         "radius": 1.188,
         "color": "rgb(140, 80, 100)",
-        "texturePath": "/images/pluto_texture.jpeg",
-        "startingPosition": {
-          "x": 5869656,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/pluto_texture.jpeg", 
+        "startingPosition": { "x": 5869656, "y": 0, "z": 0 },
         "rotationPeriod": -153.2928,
-        "axisTilt": 119.51,
+        "axisTilt" : 119.51,
         "clickable": true,
         "orbitData": {
-          "L0": 238.92881,
-          "Ldot": 145.19655477031802,
-          "semiMajorAxis": 5869656,
-          "eccentricity": 0.24880766,
-          "inclination": 17.14175,
+          "L0": 238.92881, 
+          "Ldot": 145.196554770318021,
+          "semiMajorAxis": 5869656, 
+          "eccentricity": 0.24880766, 
+          "inclination": 17.14175, 
           "longitudeOfAscendingNode": 110.30347,
-          "longitudeOfPeriapsis": 224.06676
+          "longitudeOfPeriapsis": 224.06676 
         },
         "children": [
           {
@@ -1344,9 +1300,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": true,
-            "rotationPeriod": 153.293352,
             "orbitData": {
               "frame": "equatorial",
               "L0": 192.4,
@@ -1370,9 +1326,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 596.513256,
             "orbitData": {
               "frame": "equatorial",
               "L0": 84.8,
@@ -1396,9 +1352,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 923.738184,
             "orbitData": {
               "frame": "equatorial",
               "L0": 330.6,
@@ -1422,9 +1378,9 @@
               "y": 0,
               "z": 0
             },
+            "rotationPeriod": 100,
             "axisTilt": 0,
             "clickable": false,
-            "rotationPeriod": 764.586552,
             "orbitData": {
               "frame": "equatorial",
               "L0": 303.5,
@@ -1444,25 +1400,21 @@
         "mass": 2.2e-10,
         "radius": 0.0055,
         "color": "rgb(100, 100, 100)",
-        "texturePath": "/images/comet_texture.png",
-        "startingPosition": {
-          "x": 5256869.2,
-          "y": 0,
-          "z": 0
-        },
+        "texturePath": "/images/comet_texture.png", 
+        "startingPosition": { "x": 5256869.2, "y": 0, "z": 0 },
         "rotationPeriod": 100,
-        "axisTilt": 0,
+        "axisTilt" : 0,
         "clickable": true,
         "orbitData": {
-          "L0": 181.9790995,
+          "L0": 181.97909950, 
           "Ldot": 474.24543,
-          "semiMajorAxis": 2681963.35946026,
-          "eccentricity": 0.9679427911271,
+          "semiMajorAxis": 2681963.35946026, 
+          "eccentricity": 0.9679427911271, 
           "argumentOfPeriapsis": 112.2578,
-          "inclination": 162.1878711908339,
-          "longitudeOfAscendingNode": 59.114483
+          "inclination": 162.1878711908339, 
+          "longitudeOfAscendingNode" : 59.114483
         }
       }
     ]
-  }
+	}
 ]
