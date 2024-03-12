@@ -18,11 +18,9 @@ with open('./moons.txt', 'r') as file:
         # Extract the relevant data
         name = cols[1]
         planetId = int(cols[2][0]) - 1
-        print(oldPlanetId, planetId)
         if(planetId != oldPlanetId):
             oldPlanetId = planetId
             count = 0
-        print(count)
         bodyId = '0-'
         bodyId = bodyId + str(planetId) + '-'
         bodyId = bodyId + str(count)

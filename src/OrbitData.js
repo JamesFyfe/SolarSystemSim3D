@@ -1,5 +1,16 @@
 
 import * as THREE from 'three';
+// import { FadeOutShader } from './FadeOutShader.js';
+
+// const fadeOutMaterial = new THREE.ShaderMaterial({
+//   uniforms: THREE.UniformsUtils.merge([
+//     THREE.UniformsLib['lights'],
+//     FadeOutShader.uniforms
+//   ]),
+//   vertexShader: FadeOutShader.vertexShader,
+//   fragmentShader: FadeOutShader.fragmentShader,
+//   lights: true
+// });
 
 export default class OrbitData {
   constructor({parent, frame, L0, Ldot, semiMajorAxis, eccentricity, argumentOfPeriapsis, longitudeOfPeriapsis, inclination, longitudeOfAscendingNode}) {
@@ -68,7 +79,7 @@ export default class OrbitData {
 		z = this.sinLongitudeOfAscendingNodeMinusPi * xtemp + this.cosLongitudeOfAscendingNodeMinusPi * z;
 
 		//rotate to laplace plane
-		if(this.frame == "laplace") {
+		if(this.frame === "laplace") {
 			xtemp = x
 			x = this.cosParentTilt * xtemp - this.sinParentTilt * y;
 			y = this.sinParentTilt * xtemp + this.cosParentTilt * y;
@@ -82,23 +93,29 @@ export default class OrbitData {
 		const curve = new THREE.EllipseCurve(
 			0,  -parentPos,         // ax, aY
 			semiMinorAxis, this.semiMajorAxis,      // xRadius, yRadius
-			0,  2 * Math.PI,   // aStartAngle, aEndAngle
+			0, 2 * Math.PI,   // aStartAngle, aEndAngle
 			false,              // aClockwise
 			// Math.PI/2                  // aRotation
 		);
 		
 		const points = curve.getPoints( 5000 );
-
-		const ellipseGeometry = new THREE.BufferGeometry().setFromPoints( points );
+		const ellipseGeometry = new THREE.BufferGeometry().setFromPoints(points);
 		const ellipseMaterial = new THREE.MeshBasicMaterial({color: "rgb(100, 100, 100)", transparent: true, opacity: 0.8});
-		
-		// Create the final object to add to the scene
-		const ellipse = new THREE.Line( ellipseGeometry, ellipseMaterial );
+		// const vertexIndices = Array.from({ length: points.length }, (_, i) => i);
+
+		// ellipseGeometry.setAttribute('vertexIndex', new THREE.BufferAttribute(new Float32Array(vertexIndices), 1));
+	
+		// const ellipseMaterial = fadeOutMaterial;
+		// ellipseMaterial.transparent = true;
+		// const curveLength = curve.getLength();
+		// ellipseMaterial.uniforms.totalLength.value = curveLength;
+	
+		const ellipse = new THREE.Line(ellipseGeometry, ellipseMaterial);
 		//rotate to ecliptic plane
 		ellipse.rotateX(Math.PI / 2);
 
 		//rotate to laplace plane
-		if(this.frame == "laplace") {
+		if(this.frame === "laplace") {
 			ellipse.rotateY(-this.parent.tilt)
 		}
 		ellipse.rotateZ(this.longitudeOfAscendingNode - Math.PI / 2);

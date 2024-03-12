@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import OrbitData from './OrbitData.js'
 import Ring from './Ring.js'
+import { loadedTextures } from './TexturePreloader.js';
 
 export default class CelestialBody {
   constructor({bodyId, name, mass, radius, color, texturePath, startingPosition = { x: 0, y: 0, z: 0 }, rotationPeriod = 0, startingRotation = 0, axisTilt = 0, clickable, orbitData = null, lightIntensity = 0, basicMat = false, ringData, atmosphere, children = [], parent = null }) {
@@ -16,8 +17,7 @@ export default class CelestialBody {
 		if(texturePath == null) {
 			material = new THREE.MeshStandardMaterial({ color: color});
 		} else {
-			const textureLoader = new THREE.TextureLoader();
-			const texture = textureLoader.load(texturePath);
+			const texture = loadedTextures[texturePath];
 			material = basicMat ? new THREE.MeshStandardMaterial({ 
 				emissive: "rgb(160, 160, 90)",
 				emissiveMap: texture,
@@ -45,6 +45,7 @@ export default class CelestialBody {
 		if(orbitData != null && clickable) {
 			this.orbitEllipse = this.orbitData.createOrbitEllipse();
 			this.orbitEllipse.material.color.set(this.color);
+			this.orbitEllipse.material.opacity = 0.5;
 			parent.container.add(this.orbitEllipse);
 		}
 

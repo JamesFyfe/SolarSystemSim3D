@@ -6,6 +6,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import CelestialBody from './CelestialBody.js';
 import Constants from './Constants.js';
+import { preloadTextures } from './TexturePreloader.js';
 // import OrbitData from './OrbitData.js'
 // import DateDisplay from './DateDisplay';
 
@@ -39,7 +40,7 @@ const CosmicExplorer = () => {
 
     // Set up bloom effect
     const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 1, 0.2, 0.01);    
+    const bloomPass = new UnrealBloomPass({x: 1, y: 1}, 1, 0.2, 0.01);    
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
@@ -131,13 +132,17 @@ const CosmicExplorer = () => {
       }
     };
 
-    fetchData().then(() => {
-      // render all objects then wait until textures are loaded before starting animation
-      composerRef.current.render();
-      // setTimeout(function() {
+    // Preload textures before starting sim
+    preloadTextures()
+    .then(() => {
+      fetchData().then(() => {
+        renderer.render(scene, camera)
         setSelectedBody(Constants.selectedBody);
         animationIdRef.current = requestAnimationFrame(animate);
-      // }, 10);
+      });
+    })
+    .catch(error => {
+      console.error('Error preloading textures:', error);
     });
 
     // const grid = new THREE.GridHelper( 1000000, 100, 0x222222, 0x222222 );
@@ -178,16 +183,15 @@ const CosmicExplorer = () => {
             break;
           }
         }
-
         // Call a function when the mesh is clicked
         handleMeshClick(object);
       }
     }
 
     function handleMeshClick(object) {
-      if(object.bodyId !== undefined && object.bodyId != selectedBody.bodyId) {
-        if(object.bodyId.substring(0, 3) != selectedBody.bodyId && 
-           object.bodyId.substring(0, 3) != selectedBody.parent.bodyId) {
+      if(object.bodyId !== undefined && object.bodyId !== selectedBody.bodyId) {
+        if(object.bodyId.substring(0, 3) !== selectedBody.bodyId && 
+           (selectedBody.parent !== null && object.bodyId.substring(0, 3) !== selectedBody.parent.bodyId)) {
           setSelectedBody(object.bodyId.substring(0, 3), {zoomIn: true});
         } else {
           console.log(object.bodyId);
