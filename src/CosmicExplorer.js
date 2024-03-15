@@ -190,8 +190,8 @@ const CosmicExplorer = () => {
 
     function handleMeshClick(object) {
       if(object.bodyId !== undefined && object.bodyId !== selectedBody.bodyId) {
-        if(object.bodyId.substring(0, 3) !== selectedBody.bodyId && 
-           (selectedBody.parent !== null && object.bodyId.substring(0, 3) !== selectedBody.parent.bodyId)) {
+        if(object.bodyId.substring(0, 3) !== selectedBody.bodyId && (selectedBody.parent === null ||
+           object.bodyId.substring(0, 3) !== selectedBody.parent.bodyId)) {
           setSelectedBody(object.bodyId.substring(0, 3), {zoomIn: true});
         } else {
           console.log(object.bodyId);
