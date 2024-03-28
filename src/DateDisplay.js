@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
-
-const DateDisplay = ({ timestamp }) => {
-  const [date, setDate] = useState(new Date(timestamp)); // Initial date
-
-  useEffect(() => {
-    // Update date when timestamp prop changes
-    setDate(new Date(timestamp));
-  }, [timestamp]);
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1; // Months are 0-indexed
-  const day = date.getDate();
+const DateDisplay = (props) => {
+  const twoDigitFormat = (num) => {
+    if(num < 10) {
+      num = '0' + num;
+    }
+    return num;
+  }
 
   const dateStyle = {
     position: 'absolute',
@@ -21,9 +15,17 @@ const DateDisplay = ({ timestamp }) => {
     fontSize: '20px',
   };
 
+  const date = new Date(props.date);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Months are 0-indexed
+  const day = date.getDate();
+  const hour = twoDigitFormat(date.getHours());
+  const minute = twoDigitFormat(date.getMinutes());
+  const second = twoDigitFormat(date.getSeconds());
+
   return (
     <div style={dateStyle}>
-      {month}/{day}/{year}
+      {month}/{day}/{year} {hour}:{minute}:{second}
     </div>
   );
 };

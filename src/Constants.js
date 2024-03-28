@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 export default class Constants {
   static selectedBody = "0";
-  // static timeMultiple = 10000;
+  // static timeMultiple = 1000;
   static timeMultiple = 1;
   // static startingRelativePosition = new THREE.Vector3(37000,45000,-150000);
   // static startingRelativePosition = new THREE.Vector3(0,3300,-1);

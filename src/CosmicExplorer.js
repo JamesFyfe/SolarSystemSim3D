@@ -8,9 +8,8 @@ import CelestialBody from './CelestialBody.js';
 import Constants from './Constants.js';
 import { preloadTextures } from './TexturePreloader.js';
 // import OrbitData from './OrbitData.js'
-// import DateDisplay from './DateDisplay';
 
-const CosmicExplorer = () => {
+const CosmicExplorer = (props) => {
   const animationIdRef = useRef(null);
   const composerRef = useRef(null);
   const sun = useRef(null);
@@ -18,7 +17,7 @@ const CosmicExplorer = () => {
   // const [myTimestamp, setMyTimestamp] = useState(Date.now());
 
   useEffect(() => {
-    let date = Constants.startDate;
+    let date = props.date;
     let previousTimestamp, selectedBody, zoomingToTarget = false, zoomPercentage, zoomInitialDistance;
 
     const scene = new THREE.Scene();
@@ -64,6 +63,7 @@ const CosmicExplorer = () => {
       const elapsed = timestamp - previousTimestamp;
       // date += timeSpeed;
       date += elapsed * Constants.timeMultiple
+      props.setDate(new Date(date));
       // setMyTimestamp(date);
 
       // console.log(new Date(date).toLocaleString());
