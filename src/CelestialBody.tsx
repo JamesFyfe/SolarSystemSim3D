@@ -7,8 +7,8 @@ import Rings from './components/Rings';
 import useCacheLoader from './TextureCacheUtils';
 import OrbitEllipse from './components/OrbitEllipse';
 import BodyIndicator from './components/Indicator';
-import AdditionalLayer from './components/AdditionalLayer';
 import Constants from './Constants';
+import { CityLights, Clouds } from './components/EarthLayers';
 
 interface physicalParams {
   mass: number;
@@ -136,7 +136,7 @@ export default class CelestialBody {
 
     // slowly rotate earths clouds
     if(this.name === "Earth") {
-      this.rotatingGroupRef.current?.children[2].rotateY(elapsed * 0.000002 * Constants.timeMultiple);
+      // this.rotatingGroupRef.current?.children[2].rotateY(elapsed * 0.000002 * Constants.timeMultiple);
     }
   }
 }
@@ -184,8 +184,8 @@ export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: Ce
         {body.ringData && <Rings body={body} />}
         {body.name === "Earth" && 
           <>
-            <AdditionalLayer body={body} textureName='earth_lights.png' distFromSurface={0.01} matType='cityLights'/>
-            <AdditionalLayer body={body} textureName='earth_clouds.png' distFromSurface={0.03}/>
+            <CityLights earth={body}/>
+            <Clouds earth={body} />
           </>
         }
       </group>

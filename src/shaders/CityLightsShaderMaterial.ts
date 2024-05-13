@@ -8,11 +8,11 @@ const CityLightsShaderMaterial = shaderMaterial(
   },
   // vertex shader
   /*glsl*/`
-	precision highp float;
-	precision highp int;
+		#include <common>
+		#include <logdepthbuf_pars_vertex>
+		precision highp float;
+		precision highp int;
 
-	#include <common>
-	#include <logdepthbuf_pars_vertex>
     uniform vec3 sunDirection;
 
     varying vec3 vNormal;
@@ -29,6 +29,8 @@ const CityLightsShaderMaterial = shaderMaterial(
   `,
   // fragment shader
   /*glsl*/`
+		#include <common>
+		#include <logdepthbuf_pars_fragment>
 		precision highp float;
 		precision highp int;
 
@@ -37,9 +39,6 @@ const CityLightsShaderMaterial = shaderMaterial(
     varying vec3 vNormal;
     varying vec3 vSunDirection;
     varying vec2 vUv;
-
-		#include <common>
-		#include <logdepthbuf_pars_fragment>
 
     void main() {
 			#include <logdepthbuf_fragment>
