@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
 import OrbitData from './OrbitData';
-import { createRef, memo, useEffect, useRef } from 'react';
+import { createRef, memo, useEffect } from 'react';
 import Atmosphere from './Atmosphere';
 import Rings from './Rings';
 import useCacheLoader from './TextureCacheUtils';
@@ -159,7 +159,6 @@ export function createCelestialBodyFromJSON(jsonData: any, parent?: CelestialBod
 
 export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: CelestialBody, setSelectedBody: Function}) => {
   const meshRef = useCacheLoader(body.physicalData.textureName);
-  const groupRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
     if(body.rotatingGroupRef.current) {
@@ -185,7 +184,7 @@ export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: Ce
         {body.ringData && <Rings body={body} />}
         {body.name === "Earth" && 
           <>
-            <AdditionalLayer body={body} textureName='earth_lights.png' distFromSurface={0.01} matType='basic'/>
+            <AdditionalLayer body={body} textureName='earth_lights.png' distFromSurface={0.01} matType='cityLights'/>
             <AdditionalLayer body={body} textureName='earth_clouds.png' distFromSurface={0.03}/>
           </>
         }

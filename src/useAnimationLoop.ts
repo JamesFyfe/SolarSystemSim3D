@@ -28,10 +28,6 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
   const raycaster = useRef<Raycaster>(new Raycaster());
   const mouse = useRef<Vector2>(new Vector2());
 
-  if(getBodyById(Constants.selectedBody).threeGroupRef.current) {
-    setSelectedBody(Constants.selectedBody);
-  }
-
   function addVisibleBodies(bodies: CelestialBody[]) {
     if(bodies.length !== 0) {
       setVisibleBodies([...visibleBodies, ...bodies]);
@@ -165,7 +161,8 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
     if(zoomIn) {
       // set up zoom animation
       controls.enableZoom = false;
-      controls.target.set(...worldPos.toArray());
+      controls.target.set(...newBody.position.toArray());
+      // controls.target.set(...worldPos.toArray());
       zoomingToTarget.current = true;
       zoomPercentage.current = 0;
       zoomInitialDistance.current = controls.getDistance();

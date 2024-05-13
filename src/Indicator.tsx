@@ -31,7 +31,7 @@ export default function BodyIndicator({ body, setSelectedBody }: BodyIndicatorPr
 
   return (
     // <Html occlude="blending">
-    <Html name={`${body.name} indicator`} userData={{ bodyId: body.id }}>
+    <Html name={`${body.name} indicator`} userData={{ bodyId: body.id }} occlude="blending">
       <div
         className="relative left-2 bottom-3 hover:scale-125 hover:cursor-pointer"
         onClick={handleClick}

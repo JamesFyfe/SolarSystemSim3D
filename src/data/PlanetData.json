@@ -61,7 +61,7 @@
         },
         "atmosphere": {
           "color": "rgb(142, 116, 72)",
-          "layers": 50,
+          "layers": 20,
           "thickness": 0.05,
           "opacity": 2
         }
@@ -92,7 +92,7 @@
           "color": "rgb(90, 120, 170)",
           "layers": 12,
           "thickness": 0.04,
-          "opacity": 0.35
+          "opacity": 0.5
         },
         "children": [
           {
@@ -146,8 +146,8 @@
         "atmosphere": {
           "color": "rgb(130, 85, 30)",
           "layers": 7,
-          "thickness": 0.03,
-          "opacity": 0.4
+          "thickness": 0.025,
+          "opacity": 0.6
         },
         "children": [
           {

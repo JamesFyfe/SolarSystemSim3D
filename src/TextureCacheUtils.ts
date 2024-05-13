@@ -28,7 +28,7 @@ export default function useCacheLoader(textureName: string | null, setWhite: boo
       const loadTextureAsync = async () => {
         const loadedTexture = await loadTexture(textureName);
         if (meshRef.current) {
-          const material = meshRef.current.material as THREE.MeshStandardMaterial;
+          const material = meshRef.current.material as any;
 
           material.map = loadedTexture;
           
