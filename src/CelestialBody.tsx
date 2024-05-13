@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
 import OrbitData from './OrbitData';
 import { createRef, memo, useEffect } from 'react';
-import Atmosphere from './Atmosphere';
-import Rings from './Rings';
+import Atmosphere from './components/Atmosphere';
+import Rings from './components/Rings';
 import useCacheLoader from './TextureCacheUtils';
-import OrbitEllipse from './OrbitEllipse';
-import BodyIndicator from './Indicator';
-import AdditionalLayer from './AdditionalLayer';
+import OrbitEllipse from './components/OrbitEllipse';
+import BodyIndicator from './components/Indicator';
+import AdditionalLayer from './components/AdditionalLayer';
 import Constants from './Constants';
 
 interface physicalParams {

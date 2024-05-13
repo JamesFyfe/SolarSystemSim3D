@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import CelestialBody from "./CelestialBody";
-import useCacheLoader from './TextureCacheUtils';
+import CelestialBody from "../CelestialBody";
+import useCacheLoader from '../TextureCacheUtils';
 
 export default function Rings({ body }: { body: CelestialBody }) {
 	const meshRef = useCacheLoader(body.ringData.textureName, false);

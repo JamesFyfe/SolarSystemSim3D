@@ -1,4 +1,4 @@
-import CelestialBody from "./CelestialBody";
+import CelestialBody from "../CelestialBody";
 
 export default function Atmosphere({ body }: { body: CelestialBody }) {
   const opacityPerLayer = body.atmosphereData.opacity / body.atmosphereData.layers;

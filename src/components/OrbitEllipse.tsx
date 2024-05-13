@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import CelestialBody from './CelestialBody';
+import CelestialBody from '../CelestialBody';
 import { Line } from "@react-three/drei";
 import { useLayoutEffect, useRef } from 'react';
 

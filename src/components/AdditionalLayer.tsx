@@ -1,6 +1,6 @@
-import CelestialBody from "./CelestialBody";
-import useCacheLoader from "./TextureCacheUtils";
-import CityLightsShaderMaterial from './shaders/CityLightsShaderMaterial';
+import CelestialBody from "../CelestialBody";
+import useCacheLoader from "../TextureCacheUtils";
+import CityLightsShaderMaterial from '../shaders/CityLightsShaderMaterial';
 import * as THREE from 'three';
 
 export default function AdditionalLayer({ body, textureName, distFromSurface, matType="standard" }: { body: CelestialBody, textureName: string, distFromSurface: number, matType?: string }) {
