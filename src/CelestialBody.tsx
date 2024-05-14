@@ -7,7 +7,6 @@ import Rings from './components/Rings';
 import useCacheLoader from './TextureCacheUtils';
 import OrbitEllipse from './components/OrbitEllipse';
 import BodyIndicator from './components/Indicator';
-import Constants from './Constants';
 import { CityLights, Clouds } from './components/EarthLayers';
 
 interface physicalParams {
@@ -117,6 +116,7 @@ export default class CelestialBody {
     if(!this.threeGroupRef.current) {
       return;
     }
+    // rotate bodies
     if(this.physicalData.rotationPeriod !== 0 && this.rotatingGroupRef.current) {
 			// 3.6e+6 ms per hour
 			this.rotatingGroupRef.current.rotation.y = this.physicalData.startingRotation + ((date.getTime() / 3.6e+6) / this.physicalData.rotationPeriod) * (2 * Math.PI);
@@ -132,11 +132,6 @@ export default class CelestialBody {
     if(this.parent && this.ellipseRef?.current) {
       const diff = new THREE.Vector3().subVectors(this.parent.position, this.position);
       this.ellipseRef.current.position.set(...diff.toArray());
-    }
-
-    // slowly rotate earths clouds
-    if(this.name === "Earth") {
-      // this.rotatingGroupRef.current?.children[2].rotateY(elapsed * 0.000002 * Constants.timeMultiple);
     }
   }
 }

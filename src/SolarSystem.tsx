@@ -26,7 +26,7 @@ export default function SolarSystem() {
     <Canvas camera={{ position: Constants.startingRelativePosition, far: 20000000, near: Constants.cameraNear }} gl={{logarithmicDepthBuffer: true}}>
       <Stats />
       <OrbitControls makeDefault ref={orbitControlsRef} enableDamping={true} dampingFactor={0.05} screenSpacePanning={false} zoomSpeed={0.7} maxDistance={10000000}/>
-      <ambientLight intensity={0.03}></ambientLight>
+      <ambientLight intensity={0.07}></ambientLight>
       <SolarSystemScene sun={sun} setVisibleBodies={setVisibleBodies} visibleBodies={visibleBodies} />
     </Canvas>
   );

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import CelestialBody from '../CelestialBody';
 import { Line } from "@react-three/drei";
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 type OrbitEllipseProps = {
   body: CelestialBody;
@@ -23,11 +23,6 @@ export default function OrbitEllipse({ body }: OrbitEllipseProps) {
   );
 
   const points = curve.getPoints(5000);
-  const lineRotation = [
-    orbitData.longitudeOfAscendingNode - Math.PI / 2,
-    orbitData.inclination,
-    orbitData.argumentOfPeriapsis
-  ];
 
   const lineRef = useRef<any>(null);
   const group = new THREE.Group();

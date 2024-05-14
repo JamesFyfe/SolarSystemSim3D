@@ -47,6 +47,9 @@ const CityLightsShaderMaterial = shaderMaterial(
 
       vec4 textureColor = texture2D(map, vUv);
       float textureOpacity = textureColor.a;
+      if(textureOpacity > 0.5) {
+        textureOpacity = 1.0;
+      }
 
       float finalOpacity = min(calculatedOpacity, textureOpacity);
 
