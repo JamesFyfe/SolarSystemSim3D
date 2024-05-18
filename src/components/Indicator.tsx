@@ -25,7 +25,6 @@ export default function BodyIndicator({ body, setSelectedBody }: BodyIndicatorPr
   const textColor = multiplyRGB(body.physicalData.color);
 
   const handleClick = () => {
-    console.log("got click");
     setSelectedBody(body.id, true);
   };
 

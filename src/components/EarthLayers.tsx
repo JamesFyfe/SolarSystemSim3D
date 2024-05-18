@@ -5,12 +5,12 @@ import CityLightsShaderMaterial from '../shaders/CityLightsShaderMaterial';
 import * as THREE from 'three';
 import { useEffect } from "react";
 
-export function Clouds({ earth, rotationSpeed = 0.01 }: { earth: CelestialBody, rotationSpeed?: number }) {
+export function Clouds({ earth, rotationSpeed = 0.002 }: { earth: CelestialBody, rotationSpeed?: number }) {
 const meshRef = useCacheLoader("earth_clouds.png");
 const distFromSurface = 0.02;
 
 useFrame(( state, delta ) => {
-	// meshRef.current?.rotateY(rotationSpeed * delta);
+	meshRef.current?.rotateY(-rotationSpeed * delta);
 });
 
   return (

@@ -1,26 +1,44 @@
 import * as THREE from 'three';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useContext } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Vector2, Raycaster } from 'three';
 import CelestialBody from './CelestialBody';
 import Constants from './Constants';
+import { DateContext } from './DateContext';
 
 
 interface AnimationLoopOptions {
-  sun: React.MutableRefObject<CelestialBody>;
   setVisibleBodies: React.Dispatch<React.SetStateAction<CelestialBody[]>>;
   visibleBodies: CelestialBody[];
+  dateRef: React.MutableRefObject<Date>;
+  // setDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: AnimationLoopOptions) {
+export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: AnimationLoopOptions) {
+  // const { date, setDate } = useContext(DateContext);
+  // Get date from context?
+  // console.log("USE ANIMATION LOOP");
   const camera = useThree((state) => state.camera);
   const scene = useThree((state) => state.scene);
   const gl = useThree((state) => state.gl);
   const controls = useThree((state) => state.controls) as any;
   const get = useThree((state) => state.get);
   
-  let date = Constants.startDate;
-  const selectedBodyRef = useRef<CelestialBody>(sun.current);
+  // let date: Date | undefined;
+  const selectedBodyRef = useRef<CelestialBody>(visibleBodies[0]);
+
+  const hasSetInitBody = useRef(false);
+  if (!hasSetInitBody.current) {
+    if(getBodyById(Constants.selectedBody).threeGroupRef.current) {
+      // call if selected body is ready to render
+      console.log("Setting initial body")
+      setSelectedBody(Constants.selectedBody, false);
+      // date = Constants.startDate;
+      hasSetInitBody.current = true;
+    }
+  }
+
+  // zoom animation variables
   const zoomingToTarget = useRef(false);
   const zoomPercentage = useRef(0);
   const zoomInitialDistance = useRef(0);
@@ -50,7 +68,7 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
       const intersects = raycaster.current.intersectObjects(scene.children, true);
 
       if (intersects.length > 0) {
-        console.log('Clicked on:', intersects[0].object.userData.bodyId);
+        // console.log('Clicked on:', intersects[0].object.userData.bodyId);
         if(intersects[0].object.userData.bodyId === undefined) {
           console.log(intersects[0].object, " does not have bodyId");
           return;
@@ -69,12 +87,18 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
   }, [handleMouseClick]);
 
 	useFrame(( state, delta ) => {
-    const selectedBody = selectedBodyRef.current;
-    if(controls === null || !selectedBody.threeGroupRef.current) {
+    if(!hasSetInitBody.current) {
       return;
     }
-    date = new Date(date.getTime() + delta * 1000 * Constants.timeMultiple);
-
+    const selectedBody = selectedBodyRef.current;
+    if(!selectedBody || controls === null || !selectedBody.threeGroupRef.current) {
+      return;
+    }
+    const date = dateRef.current;
+    dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * Constants.timeMultiple);
+    // setDate(new Date(date.getTime() + delta * 1000 * Constants.timeMultiple));
+    // date = new Date(date!.getTime() + delta * 1000 * Constants.timeMultiple);
+    // console.log(date.toISOString());
 
     //TODO move all camera movement into a new function
     let worldPos = new THREE.Vector3();
@@ -83,7 +107,9 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
     let selectedPos = new THREE.Vector3(...worldPos.toArray());
 
     // Update positions and rotations of celestial bodies
-    updateBodyAndChildren(sun.current, date, delta);
+    visibleBodies.forEach((body) => {
+      body.update(date, delta);
+    });
 
     let selectedPosAfterUpdate = new THREE.Vector3();
     selectedBody.threeGroupRef.current.getWorldPosition(selectedPosAfterUpdate);
@@ -112,8 +138,9 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
     }
 
       // make sun brighter when further away so outer planets are bright enough
-      let distToSun = camera.position.distanceTo(sun.current.position);
-      const sunLight = sun.current.threeGroupRef.current!.children[2] as THREE.PointLight;
+      // TODO move this to sun celestialBody
+      let distToSun = camera.position.distanceTo(visibleBodies[0].position);
+      const sunLight = visibleBodies[0].threeGroupRef.current!.children[2] as THREE.PointLight;
       sunLight.intensity = distToSun ** 1.8 * 10;
   });
 
@@ -151,6 +178,7 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
         selectedBody.parent !== newBody) {
           removeVisibleBodies([...selectedBody.children]);
       }
+      // console.log("adding bodies");
       addVisibleBodies([...newBody.children]);
     }
 
@@ -177,20 +205,26 @@ export function useAnimationLoop({ sun, visibleBodies, setVisibleBodies}: Animat
   }
 
   function getBodyById(id: string) {
-    let indices = id.split('-');
-    indices = indices.slice(1);
-    let body = sun.current;
-    indices.forEach ((index) => {
-      body = body?.children[parseInt(index)];
-    });
-    return body;
+    // let indices = id.split('-');
+    // indices = indices.slice(1);
+    // let body = sun.current;
+    // indices.forEach ((index) => {
+    //   body = body?.children[parseInt(index)];
+    // });
+    let selectedBody: CelestialBody = visibleBodies[0];
+    visibleBodies.forEach((body) => {
+      if(body.id === id) {
+        // console.log("returning: ", body.name);
+        selectedBody = body;
+      }
+    })
+    return selectedBody;
   }
-  return { setSelectedBody };
-}
 
-function updateBodyAndChildren(body: CelestialBody, date: Date, elapsed: number) {
-  body.update(date, elapsed);
-  body.children.forEach((child) => {
-    updateBodyAndChildren(child, date, elapsed);
-  });
+  // const setDate = (newDate: Date) => {
+  //   dateRef.current = newDate;
+  //   // update datedisplay
+  // }
+
+  return { setSelectedBody };
 }

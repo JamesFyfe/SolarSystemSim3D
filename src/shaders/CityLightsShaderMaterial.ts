@@ -42,18 +42,19 @@ const CityLightsShaderMaterial = shaderMaterial(
 
     void main() {
 			#include <logdepthbuf_fragment>
-      float dotProduct = dot(vNormal, vSunDirection) + 0.25;
-      float calculatedOpacity = 1.0 - max(dotProduct * 2.3, 0.0);
+      float dotProduct = dot(vNormal, vSunDirection) + 0.32;
+      float calculatedOpacity = 1.0 - max(dotProduct * 2.5, 0.0);
 
       vec4 textureColor = texture2D(map, vUv);
       float textureOpacity = textureColor.a;
-      if(textureOpacity > 0.5) {
+      textureOpacity = textureOpacity * 2.0;
+      if(textureOpacity > 1.0) {
         textureOpacity = 1.0;
       }
 
       float finalOpacity = min(calculatedOpacity, textureOpacity);
 
-			if (finalOpacity == 0.0) {
+			if (finalOpacity <= 0.0) {
 				discard;
 			}
 

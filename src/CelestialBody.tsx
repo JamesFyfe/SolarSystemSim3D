@@ -171,7 +171,7 @@ export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: Ce
       new THREE.MeshStandardMaterial({ color: new THREE.Color(body.physicalData.color) });
     return { geometry, material };
   };
-   
+
   return (
     <group ref={body.threeGroupRef} name={body.name} userData={{ bodyId: body.id }}>
       <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>

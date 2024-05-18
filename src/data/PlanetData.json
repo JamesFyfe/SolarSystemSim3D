@@ -63,7 +63,7 @@
           "color": "rgb(142, 116, 72)",
           "layers": 20,
           "thickness": 0.05,
-          "opacity": 2
+          "opacity": 1
         }
       },
       {
@@ -89,10 +89,10 @@
           "longitudeOfPeriapsis": 102.93768193
         },
         "atmosphere": {
-          "color": "rgb(90, 120, 170)",
+          "color": "rgb(90, 120, 160)",
           "layers": 12,
           "thickness": 0.04,
-          "opacity": 0.5
+          "opacity": 0.4
         },
         "children": [
           {
@@ -147,7 +147,7 @@
           "color": "rgb(130, 85, 30)",
           "layers": 7,
           "thickness": 0.025,
-          "opacity": 0.6
+          "opacity": 0.7
         },
         "children": [
           {
@@ -613,6 +613,12 @@
               "longitudeOfAscendingNode": 78.6,
               "argumentOfPeriapsis": 78.3,
               "frame": "laplace"
+            },
+            "atmosphere": {
+              "color": "rgb(132, 126, 82)",
+              "layers": 8,
+              "thickness": 0.04,
+              "opacity": 1
             }
           },
           {
