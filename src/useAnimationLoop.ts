@@ -4,7 +4,6 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Vector2, Raycaster } from 'three';
 import CelestialBody from './CelestialBody';
 import Constants from './Constants';
-import { DateContext } from './DateContext';
 
 
 interface AnimationLoopOptions {
