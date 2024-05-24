@@ -7,7 +7,7 @@
       "mass": 1989000,
       "radius": 696.34,
       "color": "rgb(130, 130, 70)",
-      "textureName": "star_texture_orange.jpeg",
+      "textureName": "sun_texture.jpeg",
       "axisTilt": 7.25,
       "rotationPeriod": 587.28,
       "startingRotation": 0,

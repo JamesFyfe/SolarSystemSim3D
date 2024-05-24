@@ -5,7 +5,7 @@
     "mass": 1989000,
     "radius": 696.34,
     "color": "rgb(130, 130, 70)",
-    "textureName": "star_texture_orange.jpeg",
+    "textureName": "sun_texture.jpeg",
     "startingPosition": {
       "x": 0,
       "y": 0,

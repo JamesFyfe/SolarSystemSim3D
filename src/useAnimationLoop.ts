@@ -136,11 +136,13 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
       }
     }
 
-      // make sun brighter when further away so outer planets are bright enough
-      // TODO move this to sun celestialBody
-      let distToSun = camera.position.distanceTo(visibleBodies[0].position);
-      const sunLight = visibleBodies[0].threeGroupRef.current!.children[2] as THREE.PointLight;
-      sunLight.intensity = distToSun ** 1.8 * 10;
+    setEllipseAndIndicatorOpacity(selectedBody);
+
+    // make sun brighter when further away so outer planets are bright enough
+    // TODO move this to sun celestialBody
+    let distToSun = camera.position.distanceTo(visibleBodies[0].position);
+    const sunLight = visibleBodies[0].lightRef!.current!;
+    sunLight.intensity = distToSun ** 1.8 * 10;
   });
 
   function easeFunction(x: number) {
@@ -220,10 +222,22 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     return selectedBody;
   }
 
-  // const setDate = (newDate: Date) => {
-  //   dateRef.current = newDate;
-  //   // update datedisplay
-  // }
+  function setEllipseAndIndicatorOpacity(selectedBody: CelestialBody) {
+    const indicator = selectedBody.indicatorRef.current as unknown as THREE.Object3D & {
+      fillOpacity?: number;
+    };
+    const distance = selectedBody.position.distanceTo(camera.position);
+    const radiiToTarget = distance / selectedBody.physicalData.radius;
+    if(radiiToTarget < 75) {
+      indicator.visible = false;
+    } else if(radiiToTarget < 400) {
+      indicator.visible = true;
+      indicator.fillOpacity = (radiiToTarget - 70) / 400;
+    } else {
+      indicator.visible = true;
+      indicator.fillOpacity = 0.8;
+    }
+  }
 
   return { setSelectedBody };
 }

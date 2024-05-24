@@ -32,7 +32,7 @@ export default function useCacheLoader(textureName: string | null, setWhite: boo
 
           material.map = loadedTexture;
           
-          if(textureName === "star_texture_orange.jpeg") {
+          if(textureName === "sun_texture.jpeg") {
             material.emissiveMap = loadedTexture;
           }
 

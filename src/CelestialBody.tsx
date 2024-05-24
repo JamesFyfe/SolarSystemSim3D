@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
 import OrbitData from './OrbitData';
-import { createRef, memo, useEffect } from 'react';
+import { createRef, memo, useEffect, useRef } from 'react';
 import Atmosphere from './components/Atmosphere';
 import Rings from './components/Rings';
 import useCacheLoader from './TextureCacheUtils';
 import OrbitEllipse from './components/OrbitEllipse';
-import BodyIndicator from './components/Indicator';
+import BodyIndicator from './components/BodyIndicator';
 import { CityLights, Clouds } from './components/EarthLayers';
 
 interface physicalParams {
@@ -40,12 +40,14 @@ export default class CelestialBody {
   physicalData: PhysicalData;
   threeGroupRef: React.RefObject<THREE.Group>;
   rotatingGroupRef: React.RefObject<THREE.Group>;
+  indicatorRef: React.RefObject<THREE.Object3D>;
   parent: CelestialBody | undefined;
   children: CelestialBody[];
   orbitData?: OrbitData;
   atmosphereData?: any;
   ringData?: any;
   ellipseRef?: React.RefObject<THREE.Group>;
+  lightRef?: React.RefObject<THREE.PointLight>;
 
   constructor(
     id: string,
@@ -96,7 +98,11 @@ export default class CelestialBody {
 
     this.threeGroupRef = createRef<THREE.Group>();
     this.rotatingGroupRef = createRef<THREE.Group>();
+    this.indicatorRef = createRef<THREE.Object3D>();
 
+    if(physicalData.lightIntensity) {
+      this.lightRef = createRef<THREE.PointLight>();
+    }
     if(atmosphere) {
       this.atmosphereData = atmosphere;
     }
@@ -184,12 +190,17 @@ export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: Ce
           </>
         }
       </group>
-      <BodyIndicator body={body} setSelectedBody={setSelectedBody}/>
+      <BodyIndicator ref={body.indicatorRef} body={body} setSelectedBody={setSelectedBody}/>
       {body.atmosphereData && <Atmosphere body={body} />}
       {body.physicalData.lightIntensity && 
+      <>
         <pointLight
+          ref={body.lightRef}
           intensity={body.physicalData.lightIntensity} position={body.position}>
-        </pointLight>}
+        </pointLight>
+        
+      </>
+      }
       {body.orbitData && <group ref={body.ellipseRef}><OrbitEllipse body={body} /></group>}
     </group>
   );
