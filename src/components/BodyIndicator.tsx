@@ -2,7 +2,7 @@ import { Text, useCursor } from '@react-three/drei';
 import CelestialBody from '../CelestialBody';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import useForwardedRef from '../hooks/useForwardedRef';
 
 interface BodyIndicatorProps {
@@ -72,18 +72,6 @@ const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyInd
     });
   
     return (
-      // <Html name={`${body.name} indicator`} userData={{ bodyId: body.id }} occlude="blending">
-      //   <div
-      //     className="relative left-2 bottom-3 hover:scale-125 hover:cursor-pointer"
-      //     onClick={handleClick}
-      //   >
-      //     <div style={{
-      //       color: textColor, 
-      //       textShadow: '0 0 2px rgba(0, 0, 0, 1), 0 0 4px rgba(0, 0, 0, 1), 0 0 6px rgba(0, 0, 0, 1)'
-      //     }} 
-      //     className="text-s select-none">{body.name}</div>
-      //   </div>
-      // </Html>
         <Text
           ref={indicatorRef}
           name={`${body.name} indicator`}

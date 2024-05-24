@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useEffect, useCallback, useRef, useContext } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Vector2, Raycaster } from 'three';
 import CelestialBody from './CelestialBody';
@@ -75,7 +75,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
         setSelectedBody(intersects[0].object.userData.bodyId, true);
       }
     },
-    [gl, camera, scene]
+    [gl, camera, scene ]
   );
 
   useEffect(() => {
@@ -118,7 +118,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     controls.target.set(...selectedPosAfterUpdate.toArray());
 
     //TODO move to a new function
-    if(zoomingToTarget.current == true) {
+    if(zoomingToTarget.current === true) {
       let distLeft = new THREE.Vector3().subVectors(selectedPosAfterUpdate, camera.position);
       let normal = distLeft.normalize();
       zoomPercentage.current += 8/(1000 * Constants.zoomToBodyTime);

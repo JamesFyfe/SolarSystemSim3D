@@ -3,7 +3,6 @@ import CelestialBody from "../CelestialBody";
 import useCacheLoader from "../TextureCacheUtils";
 import CityLightsShaderMaterial from '../shaders/CityLightsShaderMaterial';
 import * as THREE from 'three';
-import { useEffect } from "react";
 
 export function Clouds({ earth, rotationSpeed = 0.002 }: { earth: CelestialBody, rotationSpeed?: number }) {
 const meshRef = useCacheLoader("earth_clouds.png");
@@ -44,7 +43,7 @@ export function CityLights({ earth }: { earth: CelestialBody }) {
 			const earthRotation = new THREE.Quaternion().setFromEuler(earth.rotatingGroupRef.current.rotation);
 			
 			// Apply the inverse of the Earth's rotation to the sunDirection
-			const localSunDirection = sunDirection.applyQuaternion(earthRotation.invert());
+			sunDirection.applyQuaternion(earthRotation.invert());
 
 			cityLightsMat.uniforms.sunDirection.value.copy(sunDirection);
 		}

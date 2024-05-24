@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
 import OrbitData from './OrbitData';
-import { createRef, memo, useEffect, useRef } from 'react';
+import { createRef, memo, useEffect } from 'react';
 import Atmosphere from './components/Atmosphere';
 import Rings from './components/Rings';
 import useCacheLoader from './TextureCacheUtils';
