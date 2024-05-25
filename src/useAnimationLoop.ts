@@ -138,7 +138,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
       }
     }
 
-    autoSetEllipseAndIndicatorOpacity(selectedBody);
+    autoSetEllipseAndIndicatorOpacities(visibleBodies, selectedBody);
 
     // make sun brighter when further away so outer planets are bright enough
     // TODO move this to sun celestialBody
@@ -216,9 +216,9 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     return selectedBody;
   }
 
-  function autoSetEllipseAndIndicatorOpacity(selectedBody: CelestialBody) {
-    const distance = selectedBody.position.distanceTo(camera.position);
-    const radiiToTarget = distance / selectedBody.physicalData.radius;
+  function autoSetEllipseAndIndicatorOpacities(visibleBodies: CelestialBody[], selectedBody: CelestialBody) {
+    const distanceToTarget = selectedBody.position.distanceTo(camera.position);
+    const radiiToTarget = distanceToTarget / selectedBody.physicalData.radius;
 
     if(radiiToTarget < 75) {
       setEllipseAndIndicatorOpacity(selectedBody, 0);
@@ -227,6 +227,22 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     } else {
       setEllipseAndIndicatorOpacity(selectedBody, 0.8);
     }
+
+    visibleBodies.forEach((body) => {
+      if(!body.parent || body == selectedBody) {
+        return;
+      }
+      const distToParent = body.position.distanceTo(body.parent.position);
+      const camDistToParent = camera.position.distanceTo(body.parent.position);
+      const distMulitple = camDistToParent / distToParent;
+      if(distMulitple > 60) {
+        setEllipseAndIndicatorOpacity(body, 0);
+      } else if(distMulitple > 30) {
+        setEllipseAndIndicatorOpacity(body, (60 - distMulitple) / 37.5);
+      } else {
+        setEllipseAndIndicatorOpacity(body, 0.8);
+      }
+    });
   }
 
   function setEllipseAndIndicatorOpacity(body: CelestialBody, opacity: number) {
