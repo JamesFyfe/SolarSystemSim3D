@@ -123,7 +123,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     if(zoomingToTarget.current === true) {
       let distLeft = new THREE.Vector3().subVectors(selectedPosAfterUpdate, camera.position);
       let normal = distLeft.normalize();
-      zoomPercentage.current += 8/(1000 * Constants.zoomToBodyTime);
+      zoomPercentage.current += delta / 10 * Constants.zoomToBodyTime;
       let nextDist = easeFunction(zoomPercentage.current) * zoomInitialDistance.current;
       let distToMove = nextDist - (zoomInitialDistance.current - controls.getDistance()) ;
 
