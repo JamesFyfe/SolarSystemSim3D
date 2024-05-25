@@ -59,7 +59,7 @@ const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyInd
       const distanceScale = distance / 500;
       const scale = distanceScale / (1 + fovFactor * screenXOffset);
   
-      const distFromBody = scale * 18 + body.physicalData.radius * 1.1;
+      const distFromBody = scale * body.name.length * 4 + body.physicalData.radius * 1.1;
   
       // Calculate the direction vector pointing to the left of the camera
       const leftDirection = new THREE.Vector3(-1, 0, 0);
@@ -82,6 +82,7 @@ const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyInd
           fillOpacity={0.8}
           outlineColor="black"
           outlineWidth={0.15}
+          textAlign='right'
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
         >

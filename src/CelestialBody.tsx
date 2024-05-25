@@ -126,7 +126,7 @@ export default class CelestialBody {
     // rotate bodies
     if(this.physicalData.rotationPeriod !== 0 && this.rotatingGroupRef.current) {
 			// 3.6e+6 ms per hour
-			this.rotatingGroupRef.current.rotation.y = this.physicalData.startingRotation + ((date.getTime() / 3.6e+6) / this.physicalData.rotationPeriod) * (2 * Math.PI);
+			this.rotatingGroupRef.current.rotation.y = this.physicalData.startingRotation * Math.PI/180 + ((date.getTime() / 3.6e+6) / this.physicalData.rotationPeriod) * (2 * Math.PI);
 		}
 
     if(this.orbitData) {

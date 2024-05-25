@@ -48,7 +48,8 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
 
   function addVisibleBodies(bodies: CelestialBody[]) {
     if(bodies.length !== 0) {
-      setVisibleBodies([...visibleBodies, ...bodies]);
+      setVisibleBodies([...visibleBodies, ...bodies.filter(body => !visibleBodies.includes(body))]);
+      
     }
   }
 
@@ -137,7 +138,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
       }
     }
 
-    setEllipseAndIndicatorOpacity(selectedBody);
+    autoSetEllipseAndIndicatorOpacity(selectedBody);
 
     // make sun brighter when further away so outer planets are bright enough
     // TODO move this to sun celestialBody
@@ -157,36 +158,28 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     if(selectedBody.id === id) {
       return;
     }
-    const controls = get().controls as any;
-    // TODO make orbit ellipse and indicator fade away to invisble when close to planet
-    // if(selectedBody.orbitEllipse != null) {
-    //   selectedBody.orbitEllipse.visible = true;
-    //   selectedBody.orbitEllipse.material.opacity = 0.8;
-    // }
-    // selectedBody.indicator.visible = true;
-    // selectedBody.indicator.material.opacity = 0.8;
+
+    setEllipseAndIndicatorOpacity(selectedBody, 0.8);
+
     let newBody = getBodyById(id);
     console.log("newBody ", newBody);
     if(newBody === undefined || selectedBody === undefined) {
       return;
     }
 
-    if(newBody.name === "Sun") {
-      // remove moons when clicking from planet to sun
+    if(selectedBody.parent === newBody || selectedBody.parent == newBody.parent) {
+      // remove children when clicking from body to parent or sibling
       removeVisibleBodies([...selectedBody.children]);
-    } else {
-      // dont remove moons when clicking from parent to moon or moon to parent
-      if(newBody.parent !== selectedBody && 
-        selectedBody.parent !== newBody) {
-          removeVisibleBodies([...selectedBody.children]);
-      }
-      // console.log("adding bodies");
-      addVisibleBodies([...newBody.children]);
     }
+
+    addVisibleBodies([...newBody.children]);
+
 
     let worldPos = new THREE.Vector3();
     newBody.threeGroupRef.current!.getWorldPosition(worldPos);
     selectedBodyRef.current = newBody;
+
+    const controls = get().controls as any;
 
     if(zoomIn) {
       // set up zoom animation
@@ -203,7 +196,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
       controls.target.set(...(newBody.position).toArray());
       camera.position.set(camPos.x, camPos.y, camPos.z);
     }
-    controls.minDistance = Math.max(Constants.cameraNear, newBody.physicalData.radius * 1.1);
+    controls.minDistance = Math.max(Constants.cameraNear, newBody.physicalData.radius * 1.1);    
   }
 
   function getBodyById(id: string) {
@@ -223,33 +216,39 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     return selectedBody;
   }
 
-  function setEllipseAndIndicatorOpacity(selectedBody: CelestialBody) {
-    const indicator = selectedBody.indicatorRef.current as unknown as THREE.Object3D & {
-      fillOpacity?: number;
-    };
+  function autoSetEllipseAndIndicatorOpacity(selectedBody: CelestialBody) {
     const distance = selectedBody.position.distanceTo(camera.position);
     const radiiToTarget = distance / selectedBody.physicalData.radius;
+
     if(radiiToTarget < 75) {
-      indicator.visible = false;
+      setEllipseAndIndicatorOpacity(selectedBody, 0);
     } else if(radiiToTarget < 400) {
-      indicator.visible = true;
-      indicator.fillOpacity = (radiiToTarget - 70) / 400;
+      setEllipseAndIndicatorOpacity(selectedBody, (radiiToTarget - 70) / 400);
     } else {
-      indicator.visible = true;
-      indicator.fillOpacity = 0.8;
+      setEllipseAndIndicatorOpacity(selectedBody, 0.8);
+    }
+  }
+
+  function setEllipseAndIndicatorOpacity(body: CelestialBody, opacity: number) {
+    const ellipse = body.ellipseRef?.current?.children[0] as Line2;
+    if(ellipse) {
+      if(opacity <= 0) {
+        ellipse.visible = false;
+      } else {
+        ellipse.visible = true;
+        ellipse.material.opacity = opacity;
+      }
     }
 
-    const ellipse = selectedBody.ellipseRef?.current;
-    const line = ellipse?.children[0] as Line2;
-    if(ellipse) {
-      if(radiiToTarget < 75) {
-        line.visible = false;
-      } else if(radiiToTarget < 400) {
-        line.visible = true;
-        line.material.opacity = (radiiToTarget - 70) / 400;
+    const indicator = body.indicatorRef.current as unknown as THREE.Object3D & {
+      fillOpacity?: number;
+    };
+    if(indicator) {
+      if(opacity <= 0) {
+        indicator.visible = false;
       } else {
-        line.visible = true;
-        line.material.opacity = 0.8;
+        indicator.visible = true;
+        indicator.fillOpacity = opacity;
       }
     }
   }
