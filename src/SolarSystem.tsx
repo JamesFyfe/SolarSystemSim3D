@@ -7,6 +7,7 @@ import Constants from './Constants';
 import DateDisplay from './DateDisplay';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { Perf } from 'r3f-perf';
+import BackgroundStars from './components/BackgroudStars';
 
 extend({ UnrealBloomPass })
 
@@ -27,6 +28,7 @@ const SolarSystem = memo(() => {
         <OrbitControls makeDefault ref={orbitControlsRef} enableDamping={true} dampingFactor={0.05} screenSpacePanning={false} zoomSpeed={0.7} maxDistance={10000000}/>
         <ambientLight intensity={0.07}></ambientLight>
         <SolarSystemScene dateRef={dateRef} />
+        <BackgroundStars />
       </Canvas>
       <DateDisplay dateRef={dateRef} />
     </>

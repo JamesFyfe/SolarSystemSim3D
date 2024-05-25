@@ -32,7 +32,7 @@ const DateDisplay = ({ dateRef }: { dateRef: React.MutableRefObject<Date> }) => 
   // const second = twoDigitFormat(date.getSeconds());
 
   return (
-    <div className="absolute top-0 left-0 mt-20 ml-2 text-white text-xl">
+    <div className="absolute top-0 left-0 mt-2 ml-2 text-white text-xl">
       {`${month}/${day}/${year} ${hour}:${minute}`}
     </div>
   );
