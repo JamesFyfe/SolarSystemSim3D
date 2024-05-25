@@ -4,6 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Vector2, Raycaster } from 'three';
 import CelestialBody from './CelestialBody';
 import Constants from './Constants';
+import { Line2 } from 'three-stdlib';
 
 
 interface AnimationLoopOptions {
@@ -236,6 +237,20 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     } else {
       indicator.visible = true;
       indicator.fillOpacity = 0.8;
+    }
+
+    const ellipse = selectedBody.ellipseRef?.current;
+    const line = ellipse?.children[0] as Line2;
+    if(ellipse) {
+      if(radiiToTarget < 75) {
+        line.visible = false;
+      } else if(radiiToTarget < 400) {
+        line.visible = true;
+        line.material.opacity = (radiiToTarget - 70) / 400;
+      } else {
+        line.visible = true;
+        line.material.opacity = 0.8;
+      }
     }
   }
 

@@ -8,6 +8,7 @@ import useCacheLoader from './TextureCacheUtils';
 import OrbitEllipse from './components/OrbitEllipse';
 import BodyIndicator from './components/BodyIndicator';
 import { CityLights, Clouds } from './components/EarthLayers';
+import { Line2 } from 'three-stdlib';
 
 interface physicalParams {
   mass: number;
@@ -201,7 +202,7 @@ export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: Ce
         
       </>
       }
-      {body.orbitData && <group ref={body.ellipseRef}><OrbitEllipse body={body} /></group>}
+      {body.orbitData && <OrbitEllipse ref={body.ellipseRef} body={body} />}
     </group>
   );
   },
