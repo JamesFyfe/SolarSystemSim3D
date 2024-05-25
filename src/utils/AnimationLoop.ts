@@ -2,21 +2,19 @@ import * as THREE from 'three';
 import { useEffect, useCallback, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Vector2, Raycaster } from 'three';
-import CelestialBody from './CelestialBody';
-import Constants from './Constants';
+import CelestialBody from '../classes/CelestialBody';
+import Constants from '../Constants';
 import { Line2 } from 'three-stdlib';
+import { startTransition, updateTransition } from './Transition';
 
 
 interface AnimationLoopOptions {
   setVisibleBodies: React.Dispatch<React.SetStateAction<CelestialBody[]>>;
   visibleBodies: CelestialBody[];
   dateRef: React.MutableRefObject<Date>;
-  // setDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: AnimationLoopOptions) {
-  // const { date, setDate } = useContext(DateContext);
-  // Get date from context?
+export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: AnimationLoopOptions) {
   // console.log("USE ANIMATION LOOP");
   const camera = useThree((state) => state.camera);
   const scene = useThree((state) => state.scene);
@@ -24,40 +22,21 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
   const controls = useThree((state) => state.controls) as any;
   const get = useThree((state) => state.get);
   
-  // let date: Date | undefined;
   const selectedBodyRef = useRef<CelestialBody>(visibleBodies[0]);
 
+  // this block only runs on first render once selectedBody is loaded
   const hasSetInitBody = useRef(false);
   if (!hasSetInitBody.current) {
     if(getBodyById(Constants.selectedBody).threeGroupRef.current) {
       // call if selected body is ready to render
       console.log("Setting initial body")
       setSelectedBody(Constants.selectedBody, false);
-      // date = Constants.startDate;
       hasSetInitBody.current = true;
     }
   }
 
-  // zoom animation variables
-  const zoomingToTarget = useRef(false);
-  const zoomPercentage = useRef(0);
-  const zoomInitialDistance = useRef(0);
-
   const raycaster = useRef<Raycaster>(new Raycaster());
   const mouse = useRef<Vector2>(new Vector2());
-
-  function addVisibleBodies(bodies: CelestialBody[]) {
-    if(bodies.length !== 0) {
-      setVisibleBodies([...visibleBodies, ...bodies.filter(body => !visibleBodies.includes(body))]);
-      
-    }
-  }
-
-  function removeVisibleBodies(bodies: CelestialBody[]) {
-    if(bodies.length !== 0) {
-      setVisibleBodies(visibleBodies.filter(body => !bodies.includes(body)));
-    }
-  }
 
   const handleMouseClick = useCallback(
     (event: MouseEvent) => {
@@ -97,63 +76,52 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     }
     const date = dateRef.current;
     dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * Constants.timeMultiple);
-    // setDate(new Date(date.getTime() + delta * 1000 * Constants.timeMultiple));
-    // date = new Date(date!.getTime() + delta * 1000 * Constants.timeMultiple);
-    // console.log(date.toISOString());
 
-    //TODO move all camera movement into a new function
-    let worldPos = new THREE.Vector3();
-    selectedBody.threeGroupRef.current.getWorldPosition(worldPos);
-
-    let selectedPos = new THREE.Vector3(...worldPos.toArray());
+    const selectedPosBeforeUpdate = new THREE.Vector3();
+    selectedBody.threeGroupRef.current.getWorldPosition(selectedPosBeforeUpdate);
 
     // Update positions and rotations of celestial bodies
     visibleBodies.forEach((body) => {
       body.update(date, delta);
     });
 
+    // update camera position and target to follow selectedBody
     let selectedPosAfterUpdate = new THREE.Vector3();
     selectedBody.threeGroupRef.current.getWorldPosition(selectedPosAfterUpdate);
-    
-    let diff = new THREE.Vector3().subVectors(selectedPosAfterUpdate, selectedPos);
+    let diff = new THREE.Vector3().subVectors(selectedPosAfterUpdate, selectedPosBeforeUpdate);
     camera.position.add(diff);
     controls.target.set(...selectedPosAfterUpdate.toArray());
 
-    //TODO move to a new function
-    if(zoomingToTarget.current === true) {
-      let distLeft = new THREE.Vector3().subVectors(selectedPosAfterUpdate, camera.position);
-      let normal = distLeft.normalize();
-      zoomPercentage.current += delta / 10 * Constants.zoomToBodyTime;
-      let nextDist = easeFunction(zoomPercentage.current) * zoomInitialDistance.current;
-      let distToMove = nextDist - (zoomInitialDistance.current - controls.getDistance()) ;
+    updateTransition(delta, selectedPosAfterUpdate, selectedBody, camera, controls);
 
-      if((zoomInitialDistance.current - nextDist) <= selectedBody.physicalData.radius * 3) {
-        const camPos = new THREE.Vector3().addVectors(selectedPosAfterUpdate, normal.multiplyScalar(selectedBody.physicalData.radius * -3));
-        camera.position.set(...camPos.toArray());
-        zoomingToTarget.current = false;
-        controls.enableZoom = true;
-      } else 
-      {
-        camera.position.add(normal.multiplyScalar(distToMove));
-      }
-    }
+    updateEllipseAndIndicatorOpacities(visibleBodies, selectedBody);
 
-    autoSetEllipseAndIndicatorOpacities(visibleBodies, selectedBody);
-
-    // make sun brighter when further away so outer planets are bright enough
-    // TODO move this to sun celestialBody
-    let distToSun = camera.position.distanceTo(visibleBodies[0].position);
-    const sunLight = visibleBodies[0].lightRef!.current!;
-    sunLight.intensity = distToSun ** 1.8 * 10;
+    updateSunBrightness();
   });
 
-  function easeFunction(x: number) {
-    const a = 10;
-    const b = 2;
-    return (-((Math.cos((Math.PI * x)/2)) ** a) + 1) ** b;
+  function updateSunBrightness() {
+    // make sun brighter when further away so outer planets are bright enough
+    const sun = visibleBodies.find((body) => body.name === "Sun");
+    if(sun) {
+      let distToSun = camera.position.distanceTo(visibleBodies[0].position);
+      const sunLight = visibleBodies[0].lightRef!.current!;
+      sunLight.intensity = distToSun ** 1.8 * 10;
+    }
   }
 
-  function setSelectedBody(id: string, zoomIn = false) {
+  function addVisibleBodies(bodies: CelestialBody[]) {
+    if(bodies.length !== 0) {
+      setVisibleBodies([...visibleBodies, ...bodies.filter(body => !visibleBodies.includes(body))]);
+    }
+  }
+
+  function removeVisibleBodies(bodies: CelestialBody[]) {
+    if(bodies.length !== 0) {
+      setVisibleBodies(visibleBodies.filter(body => !bodies.includes(body)));
+    }
+  }
+
+  function setSelectedBody(id: string, transition = false) {
     const selectedBody = selectedBodyRef.current;
     if(selectedBody.id === id) {
       return;
@@ -167,13 +135,12 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
       return;
     }
 
-    if(selectedBody.parent === newBody || selectedBody.parent == newBody.parent) {
+    if(selectedBody.parent === newBody || selectedBody.parent === newBody.parent) {
       // remove children when clicking from body to parent or sibling
       removeVisibleBodies([...selectedBody.children]);
     }
 
     addVisibleBodies([...newBody.children]);
-
 
     let worldPos = new THREE.Vector3();
     newBody.threeGroupRef.current!.getWorldPosition(worldPos);
@@ -181,16 +148,10 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
 
     const controls = get().controls as any;
 
-    if(zoomIn) {
-      // set up zoom animation
-      controls.enableZoom = false;
-      controls.target.set(...newBody.position.toArray());
-      // controls.target.set(...worldPos.toArray());
-      zoomingToTarget.current = true;
-      zoomPercentage.current = 0;
-      zoomInitialDistance.current = controls.getDistance();
+    if(transition) {
+      startTransition(controls, newBody);
     } else {
-      // just move camera with no zoom animation
+      // just move camera with no transition animation
       const newRelativePos = new THREE.Vector3(newBody.physicalData.radius * 2, newBody.physicalData.radius / 2, 0);
       let camPos = new THREE.Vector3().addVectors(newBody.threeGroupRef.current!.position, newRelativePos);
       controls.target.set(...(newBody.position).toArray());
@@ -200,23 +161,16 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
   }
 
   function getBodyById(id: string) {
-    // let indices = id.split('-');
-    // indices = indices.slice(1);
-    // let body = sun.current;
-    // indices.forEach ((index) => {
-    //   body = body?.children[parseInt(index)];
-    // });
     let selectedBody: CelestialBody = visibleBodies[0];
     visibleBodies.forEach((body) => {
       if(body.id === id) {
-        // console.log("returning: ", body.name);
         selectedBody = body;
       }
     })
     return selectedBody;
   }
 
-  function autoSetEllipseAndIndicatorOpacities(visibleBodies: CelestialBody[], selectedBody: CelestialBody) {
+  function updateEllipseAndIndicatorOpacities(visibleBodies: CelestialBody[], selectedBody: CelestialBody) {
     const distanceToTarget = selectedBody.position.distanceTo(camera.position);
     const radiiToTarget = distanceToTarget / selectedBody.physicalData.radius;
 
@@ -229,7 +183,7 @@ export function useAnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: An
     }
 
     visibleBodies.forEach((body) => {
-      if(!body.parent || body == selectedBody) {
+      if(!body.parent || body === selectedBody) {
         return;
       }
       const distToParent = body.position.distanceTo(body.parent.position);

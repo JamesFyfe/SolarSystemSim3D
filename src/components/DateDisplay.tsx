@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useForceUpdate from './useForceUpdate';
+import useForceUpdate from '../hooks/useForceUpdate';
 
 const DateDisplay = ({ dateRef }: { dateRef: React.MutableRefObject<Date> }) => {
   const forceUpdate = useForceUpdate();

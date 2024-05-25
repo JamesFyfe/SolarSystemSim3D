@@ -1,5 +1,5 @@
 import { Text, useCursor } from '@react-three/drei';
-import CelestialBody from '../CelestialBody';
+import CelestialBody from '../classes/CelestialBody';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { forwardRef, useState } from 'react';

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import CelestialBody from "../CelestialBody";
+import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader from '../TextureCacheUtils';
 
 export default function Rings({ body }: { body: CelestialBody }) {

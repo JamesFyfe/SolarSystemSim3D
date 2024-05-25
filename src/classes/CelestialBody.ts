@@ -1,14 +1,7 @@
 import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
 import OrbitData from './OrbitData';
-import { createRef, memo, useEffect } from 'react';
-import Atmosphere from './components/Atmosphere';
-import Rings from './components/Rings';
-import useCacheLoader from './TextureCacheUtils';
-import OrbitEllipse from './components/OrbitEllipse';
-import BodyIndicator from './components/BodyIndicator';
-import { CityLights, Clouds } from './components/EarthLayers';
-import { Line2 } from 'three-stdlib';
+import { createRef } from 'react';
 
 interface physicalParams {
   mass: number;
@@ -158,53 +151,3 @@ export function createCelestialBodyFromJSON(jsonData: any, parent?: CelestialBod
   
   return celestialBody;
 }
-
-export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: CelestialBody, setSelectedBody: Function}) => {
-  const meshRef = useCacheLoader(body.physicalData.textureName);
-
-  useEffect(() => {
-    if(body.rotatingGroupRef.current) {
-      body.rotatingGroupRef.current.rotation.order = 'ZXY';
-      // rotate mesh by axis tilt
-      body.rotatingGroupRef.current!.rotation.z = -body.physicalData.axisTilt;
-    }
-  }, [body]);
-
-  const getMeshProps = () => {
-    // const geometry = new THREE.SphereGeometry(5000, 100, 50);
-    const geometry = new THREE.SphereGeometry(body.physicalData.radius, 100, 50);
-    const material = body.physicalData.lightIntensity ? 
-      new THREE.MeshStandardMaterial({ emissive: "rgb(160, 160, 90)", emissiveIntensity: 3 }) :
-      new THREE.MeshStandardMaterial({ color: new THREE.Color(body.physicalData.color) });
-    return { geometry, material };
-  };
-
-  return (
-    <group ref={body.threeGroupRef} name={body.name} userData={{ bodyId: body.id }}>
-      <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
-        <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
-        {body.ringData && <Rings body={body} />}
-        {body.name === "Earth" && 
-          <>
-            <CityLights earth={body}/>
-            <Clouds earth={body} />
-          </>
-        }
-      </group>
-      <BodyIndicator ref={body.indicatorRef} body={body} setSelectedBody={setSelectedBody}/>
-      {body.atmosphereData && <Atmosphere body={body} />}
-      {body.physicalData.lightIntensity && 
-      <>
-        <pointLight
-          ref={body.lightRef}
-          intensity={body.physicalData.lightIntensity} position={body.position}>
-        </pointLight>
-        
-      </>
-      }
-      {body.orbitData && <OrbitEllipse ref={body.ellipseRef} body={body} />}
-    </group>
-  );
-  },
-  (prevProps, nextProps) => prevProps.body.id === nextProps.body.id
-);

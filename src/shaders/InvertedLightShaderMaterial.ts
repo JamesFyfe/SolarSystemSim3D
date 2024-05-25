@@ -1,7 +1,7 @@
 import { shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-const CityLightsShaderMaterial = shaderMaterial(
+const InvertedLightShaderMaterial = shaderMaterial(
   {
     sunDirection: new THREE.Vector3(),
     map: new THREE.Texture(),
@@ -63,4 +63,4 @@ const CityLightsShaderMaterial = shaderMaterial(
   `
 );
 
-export default CityLightsShaderMaterial;
+export default InvertedLightShaderMaterial;

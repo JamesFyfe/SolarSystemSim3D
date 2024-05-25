@@ -10,8 +10,5 @@ export default class Constants {
   // static startDate = Date.UTC(2000, 0, 1, 12);
   // static startDate = Date.UTC(2024, 2, 24, 9);
   static startDate = new Date();
-
-  static zoomToBodyTime = 3;
-
   static cameraNear = 0.0005;
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import CelestialBody from '../CelestialBody';
+import CelestialBody from '../classes/CelestialBody';
 import { Line } from "@react-three/drei";
 import { forwardRef, useRef } from 'react';
 import useForwardedRef from '../hooks/useForwardedRef';

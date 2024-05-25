@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
-import CelestialBody from "../CelestialBody";
+import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader from "../TextureCacheUtils";
-import CityLightsShaderMaterial from '../shaders/CityLightsShaderMaterial';
+import InvertedLightShaderMaterial from '../shaders/InvertedLightShaderMaterial';
 import * as THREE from 'three';
 
 export function Clouds({ earth, rotationSpeed = 0.002 }: { earth: CelestialBody, rotationSpeed?: number }) {
@@ -24,7 +24,7 @@ export function CityLights({ earth }: { earth: CelestialBody }) {
 	const meshRef = useCacheLoader("earth_lights.png");
 	const distFromSurface = 0.01;
 
-	const cityLightsMat = new CityLightsShaderMaterial({
+	const cityLightsMat = new InvertedLightShaderMaterial({
     uniforms: {
       sunDirection: { value: new THREE.Vector3(-1, 0, 0) },
       map: { value: new THREE.Texture() },
