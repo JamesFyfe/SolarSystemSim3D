@@ -782,10 +782,10 @@
               "semiMajorAxis": 137.7,
               "eccentricity": 0.001,
               "inclination": 1.2,
-              "meanAnomaly": 90.0,
-              "meanAnomalyPerCentury": 6965243.176985722,
+              "meanAnomaly": 289.1,
+              "meanAnomalyPerCentury": 21748191.37217541457,
               "longitudeOfAscendingNode": 242.1,
-              "argumentOfPeriapsis": 66.2,
+              "argumentOfPeriapsis": 82.3,
               "frame": "laplace"
             }
           },
@@ -807,7 +807,7 @@
               "eccentricity": 0.001,
               "inclination": 1.5,
               "meanAnomaly": 0.0,
-              "meanAnomalyPerCentury": 6965239.487382953,
+              "meanAnomalyPerCentury": 21350007.63138153985,
               "longitudeOfAscendingNode": 326.6,
               "argumentOfPeriapsis": 221.6,
               "frame": "laplace"
@@ -827,13 +827,13 @@
               "startingRotation": 0
             },
             "orbitData": {
-              "semiMajorAxis": 137.7,
-              "eccentricity": 0.001,
+              "semiMajorAxis": 141.7,
+              "eccentricity": 0.004,
               "inclination": 0.0,
-              "meanAnomaly": 289.1,
-              "meanAnomalyPerCentury": 21748191.372175414,
+              "meanAnomaly": 123.9,
+              "meanAnomalyPerCentury": 20826172.96699711262,
               "longitudeOfAscendingNode": 0.0,
-              "argumentOfPeriapsis": 82.3,
+              "argumentOfPeriapsis": 217.9,
               "frame": "laplace"
             }
           },
@@ -851,13 +851,13 @@
               "startingRotation": 0
             },
             "orbitData": {
-              "semiMajorAxis": 139.4,
-              "eccentricity": 0.002,
+              "semiMajorAxis": 133.6,
+              "eccentricity": 0.0,
               "inclination": 0.0,
-              "meanAnomaly": 135.4,
-              "meanAnomalyPerCentury": 21350007.631381538,
+              "meanAnomaly": 146.6,
+              "meanAnomalyPerCentury": 22865797.99009131364,
               "longitudeOfAscendingNode": 0.0,
-              "argumentOfPeriapsis": 341.9,
+              "argumentOfPeriapsis": 0.0,
               "frame": "laplace"
             }
           }
