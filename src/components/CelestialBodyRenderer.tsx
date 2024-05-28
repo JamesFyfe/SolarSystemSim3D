@@ -10,7 +10,7 @@ import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
 
 export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: CelestialBody, setSelectedBody: (id: string, transition?: boolean) => void}) => {
-  const meshRef = useCacheLoader(body.physicalData.textureName);
+  const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
 
   useEffect(() => {
     if(body.rotatingGroupRef.current) {

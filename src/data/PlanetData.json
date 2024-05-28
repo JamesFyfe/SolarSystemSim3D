@@ -74,6 +74,7 @@
         "radius": 6.371,
         "color": "rgb(90, 120, 170)",
         "textureName": "earth_texture.jpg",
+        "normalMapName": "normalMap16kFlat.jpg",
         "axisTilt": 23.44,
         "rotationPeriod": 23.93446958333,
         "startingRotation": 0

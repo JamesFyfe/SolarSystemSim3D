@@ -22,14 +22,15 @@ export async function loadTexture(textureName: string): Promise<THREE.Texture> {
   return texture;
 }
 
-export default function useCacheLoader(textureName: string | null, setWhite: boolean = true) {
+export default function useCacheLoader(textureName: string | null, setWhite: boolean = true, normalMapName?: string) {
   const meshRef = useRef<THREE.Mesh | null>(null);
 
   useEffect(() => {
     if (textureName !== null && textureName !== undefined) {
       const loadTextureAsync = async () => {
-        const loadedTexture = await loadTexture(textureName);
         if (meshRef.current) {
+          const loadedTexture = await loadTexture(textureName);
+
           const material = meshRef.current.material as THREE.MeshStandardMaterial;
 
           material.map = loadedTexture;
@@ -40,6 +41,12 @@ export default function useCacheLoader(textureName: string | null, setWhite: boo
 
           if(setWhite) {
             material.color = new THREE.Color("rgb(255, 255, 255)")
+          }
+
+          if(normalMapName) {
+            const loadedNormal = await loadTexture(normalMapName);
+            material.normalMap = loadedNormal;
+            material.normalScale = new THREE.Vector2(1.5, 1.5);
           }
           
           material.needsUpdate = true;

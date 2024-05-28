@@ -130,7 +130,6 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
     setEllipseAndIndicatorOpacity(selectedBody, 0.8);
 
     const newBody = getBodyById(id);
-    console.log("newBody ", newBody);
     if(!newBody?.threeGroupRef.current || selectedBody === undefined) {
       return;
     }

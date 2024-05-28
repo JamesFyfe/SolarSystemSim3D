@@ -7,6 +7,7 @@ export default class PhysicalData {
   startingRotation: number; // in degrees
   axisTilt: number; // in degrees
   lightIntensity?: number;
+  normalMapName?: string;
 
   constructor(
     mass: number,
@@ -17,6 +18,7 @@ export default class PhysicalData {
     startingRotation: number,
     axisTilt: number,
     lightIntensity?: number,
+    normalMapName?: string,
   ) {
     this.mass = mass;
     this.radius = radius;
@@ -27,6 +29,9 @@ export default class PhysicalData {
     this.axisTilt = axisTilt * Math.PI / 180;
     if(lightIntensity) {
       this.lightIntensity = lightIntensity;
+    }
+    if(normalMapName) {
+      this.normalMapName = normalMapName;
     }
   }
 }

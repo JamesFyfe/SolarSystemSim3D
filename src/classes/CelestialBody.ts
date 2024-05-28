@@ -12,6 +12,7 @@ interface PhysicalDataParams {
   startingRotation: number;
   axisTilt: number;
   lightIntensity?: number;
+  normalMapName?: string;
 }
 
 export interface OrbitDataParams {
@@ -45,9 +46,9 @@ export interface CelestialBodyData {
   id: string;
   name: string;
   clickable: boolean;
-  physicalData: PhysicalData;
+  physicalData: PhysicalDataParams;
   children?: CelestialBodyData[];
-  orbitData?: OrbitData;
+  orbitData?: OrbitDataParams;
   atmosphere?: AtmosphereParams;
   ringData?: RingDataParams;
 }
@@ -93,7 +94,8 @@ export default class CelestialBody {
       physicalData.rotationPeriod,
       physicalData.startingRotation,
       physicalData.axisTilt,
-      physicalData.lightIntensity
+      physicalData.lightIntensity,
+      physicalData.normalMapName
     );
     if (orbitData) {
       this.orbitData = new OrbitData(
