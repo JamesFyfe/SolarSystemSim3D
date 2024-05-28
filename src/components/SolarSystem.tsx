@@ -11,7 +11,7 @@ import RenderedBodies from './RenderedBodies';
 extend({ UnrealBloomPass })
 
 const SolarSystem = memo(() => {
-  const orbitControlsRef = useRef<any>(null);
+  const orbitControlsRef = useRef(null);
   const dateRef = useRef(Constants.startDate);
 
   console.log("SOLAR SYSTEM");

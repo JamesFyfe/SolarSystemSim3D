@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import CelestialBody from '../classes/CelestialBody';
+import type { OrbitControls } from 'three-stdlib';
 
 const transitionToBodyTime = 3;
 let transitioningToTarget = false;
@@ -13,7 +14,7 @@ function easeFunction(x: number) {
 }
 
 export function startTransition(
-  controls: any,
+  controls: OrbitControls,
   newBody: CelestialBody,
 ) {
   controls.enableZoom = false;
@@ -28,14 +29,14 @@ export function updateTransition(
   selectedPosAfterUpdate: THREE.Vector3,
   selectedBody: CelestialBody,
   camera: THREE.Camera,
-  controls: any
+  controls: OrbitControls
 ) {
   if (transitioningToTarget === true) {
-    let distLeft = new THREE.Vector3().subVectors(selectedPosAfterUpdate, camera.position);
-    let normal = distLeft.normalize();
+    const distLeft = new THREE.Vector3().subVectors(selectedPosAfterUpdate, camera.position);
+    const normal = distLeft.normalize();
     transitionPercentage += delta / 10 * transitionToBodyTime;
-    let nextDist = easeFunction(transitionPercentage) * transitionInitialDistance;
-    let distToMove = nextDist - (transitionInitialDistance - controls.getDistance());
+    const nextDist = easeFunction(transitionPercentage) * transitionInitialDistance;
+    const distToMove = nextDist - (transitionInitialDistance - controls.getDistance());
 
     if ((transitionInitialDistance - nextDist) <= selectedBody.physicalData.radius * 3) {
       const camPos = new THREE.Vector3().addVectors(selectedPosAfterUpdate, normal.multiplyScalar(selectedBody.physicalData.radius * -3));

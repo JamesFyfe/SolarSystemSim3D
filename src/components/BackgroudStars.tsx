@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
-import { BufferGeometry, Float32BufferAttribute, ShaderMaterial, Color, Points } from 'three';
-import { extend, useFrame, useThree } from '@react-three/fiber';
+import { BufferGeometry, Float32BufferAttribute, Points } from 'three';
+import { useFrame, useThree } from '@react-three/fiber';
 import starData from '../data/StarData.json';
 import spectralTypeColors from '../data/SpectralTypeColors';
 import * as THREE from 'three';
-
-// extend(ShaderMaterial);
 
 interface Star {
   catalog_number: number;
@@ -46,7 +44,7 @@ const BackgroundStars: React.FC = () => {
   const sizes = new Float32Array(numStars);
 
   starData.forEach((star: Star, index: number) => {
-    let { ra, dec, spectral_type, magnitude, catalog_number } = star;
+    const { ra, dec, spectral_type, magnitude } = star;
     const phi = ra;
     const theta = Math.PI / 2 - dec;
     const x = Math.cos(phi) * Math.sin(theta) * radius;

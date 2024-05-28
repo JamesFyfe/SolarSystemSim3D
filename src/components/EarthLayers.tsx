@@ -32,10 +32,13 @@ export function CityLights({ earth }: { earth: CelestialBody }) {
     transparent: true,
   });
 
-	useFrame((state, delta) => {
+	useFrame(() => {
 		if(earth.rotatingGroupRef.current) {
+			if(!earth.parent) {
+				return;
+			}
 			const earthPosition = earth.position;
-			const sunPosition = earth.parent!.position;
+			const sunPosition = earth.parent.position;
 
 			const sunDirection = new THREE.Vector3().subVectors(sunPosition, earthPosition).normalize();
 

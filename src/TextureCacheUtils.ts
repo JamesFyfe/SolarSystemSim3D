@@ -7,9 +7,11 @@ const textureCache = new Map<string, THREE.Texture>();
 // load the texture or get it from cache
 export async function loadTexture(textureName: string): Promise<THREE.Texture> {
   if (textureCache.has(textureName)) {
-    const texture = textureCache.get(textureName)!;
+    const texture = textureCache.get(textureName);
     // console.log('GOT TEXTURE: ' + texture);
-    return texture;
+    if(texture) {
+      return texture;
+    }
   }
   const textureModule = await import(`./assets/images/${textureName}`);
   const loader = new THREE.TextureLoader();
@@ -28,7 +30,7 @@ export default function useCacheLoader(textureName: string | null, setWhite: boo
       const loadTextureAsync = async () => {
         const loadedTexture = await loadTexture(textureName);
         if (meshRef.current) {
-          const material = meshRef.current.material as any;
+          const material = meshRef.current.material as THREE.MeshStandardMaterial;
 
           material.map = loadedTexture;
           

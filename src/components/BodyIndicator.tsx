@@ -7,7 +7,7 @@ import useForwardedRef from '../hooks/useForwardedRef';
 
 interface BodyIndicatorProps {
   body: CelestialBody;
-  setSelectedBody: Function;
+  setSelectedBody: (id: string, transition?: boolean) => void;
 }
 
 const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyIndicatorProps>(

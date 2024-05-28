@@ -1,12 +1,13 @@
 import * as THREE from 'three'
-import CelestialBody from "../classes/CelestialBody";
+import CelestialBody, { RingDataParams } from "../classes/CelestialBody";
 import useCacheLoader from '../TextureCacheUtils';
 
 export default function Rings({ body }: { body: CelestialBody }) {
-	const meshRef = useCacheLoader(body.ringData.textureName, false);
+	const ringData = body.ringData as RingDataParams;
+	const meshRef = useCacheLoader(ringData.textureName, false);
 
-  const distance = body.ringData.distance / 1000;
-  const width = body.ringData.width / 1000;
+  const distance = ringData.distance / 1000;
+  const width = ringData.width / 1000;
 
   return <mesh
 		ref={meshRef}
@@ -15,9 +16,9 @@ export default function Rings({ body }: { body: CelestialBody }) {
 	>
 	<ringGeometry args={[distance, distance + width, 100]} />
 	<meshBasicMaterial
-		color={body.ringData.color} 
+		color={ringData.color} 
 		transparent={true}
-		opacity={body.ringData.opacity}
+		opacity={ringData.opacity}
 		side={THREE.DoubleSide}
 	/>
 </mesh>

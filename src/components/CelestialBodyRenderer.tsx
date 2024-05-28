@@ -9,14 +9,14 @@ import { CityLights } from "./EarthLayers";
 import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
 
-export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: CelestialBody, setSelectedBody: Function}) => {
+export const CelestialBodyRenderer = memo(({ body, setSelectedBody }: { body: CelestialBody, setSelectedBody: (id: string, transition?: boolean) => void}) => {
   const meshRef = useCacheLoader(body.physicalData.textureName);
 
   useEffect(() => {
     if(body.rotatingGroupRef.current) {
       body.rotatingGroupRef.current.rotation.order = 'ZXY';
       // rotate mesh by axis tilt
-      body.rotatingGroupRef.current!.rotation.z = -body.physicalData.axisTilt;
+      body.rotatingGroupRef.current.rotation.z = -body.physicalData.axisTilt;
     }
   }, [body]);
 
