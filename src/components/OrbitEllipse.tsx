@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import CelestialBody from '../classes/CelestialBody';
+import CelestialBody, { OrbitDataParams } from '../classes/CelestialBody';
 import { Line } from "@react-three/drei";
 import { forwardRef } from 'react';
 import useForwardedRef from '../hooks/useForwardedRef';
@@ -10,11 +10,8 @@ type OrbitEllipseProps = {
 
 const OrbitEllipse = forwardRef<THREE.Group, OrbitEllipseProps>(
   ({ body }, ref) => {
-    if(!body.orbitData) {
-      return;
-    }
     const ellipseRef = useForwardedRef(ref);
-    const orbitData = body.orbitData;
+    const orbitData = body.orbitData as OrbitDataParams;
     const semiMinorAxis = orbitData.semiMajorAxis * Math.sqrt(1 - orbitData.eccentricity ** 2);
     const parentPos = Math.sqrt(orbitData.semiMajorAxis ** 2 - semiMinorAxis ** 2);
 

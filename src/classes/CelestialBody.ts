@@ -14,7 +14,7 @@ interface PhysicalDataParams {
   lightIntensity?: number;
 }
 
-interface OrbitDataParams {
+export interface OrbitDataParams {
   semiMajorAxis: number;
   eccentricity: number;
   inclination: number;
