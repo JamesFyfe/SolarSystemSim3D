@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader from "../TextureCacheUtils";
 import Atmosphere from "./Atmosphere";
@@ -8,10 +8,11 @@ import { Clouds } from "./EarthLayers";
 import { CityLights } from "./EarthLayers";
 import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
+// import { multiplyRGB } from '../utils/UtilFunctions';
 
 export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSelectedBody }: { body: CelestialBody, fullyRendered?: boolean, setSelectedBody: (id: string, transition?: boolean) => void}) => {
   const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
-  console.log("RENDERING: ", body.name, fullyRendered);
+
   useEffect(() => {
     if(body.rotatingGroupRef.current) {
       body.rotatingGroupRef.current.rotation.order = 'ZXY';
@@ -41,18 +42,20 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
 
   return (
     <group ref={body.threeGroupRef} name={body.name} userData={{ bodyId: body.id }}>
-      {fullyRendered &&
-        <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
-          <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
-          {body.ringData && <Rings body={body} />}
-          {body.name === "Earth" && 
-            <>
-              <CityLights earth={body}/>
-              <Clouds earth={body} />
-            </>
-          }
-        </group>
-      }
+      <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
+        {fullyRendered && 
+          <>
+            <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
+            {body.ringData && <Rings body={body} />}
+            {body.name === "Earth" && 
+              <>
+                <CityLights earth={body}/>
+                <Clouds earth={body} />
+              </>
+            } 
+          </>
+        }
+      </group>
       <BodyIndicator ref={body.indicatorRef} body={body} setSelectedBody={setSelectedBody}/>
       {body.orbitData && <OrbitEllipse ref={body.ellipseRef} body={body} />}
       

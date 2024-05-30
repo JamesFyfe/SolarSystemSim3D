@@ -126,8 +126,6 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
     const currentBodies: CelestialBody[] = visibleBodies.map((object) => object.body);
     const newBodies = bodies.filter((body) => !currentBodies.includes(body));
 
-    console.log(updatedVisibleBodies);
-
     setVisibleBodies([...updatedVisibleBodies, ...newBodies.map((body) => ({ body, fullyRendered: true })),]);
   }
 

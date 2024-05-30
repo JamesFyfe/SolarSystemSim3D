@@ -16,7 +16,6 @@ export default function RenderedBodies({dateRef}: {dateRef: React.MutableRefObje
   );
   const { setSelectedBody } = AnimationLoop({visibleBodies, setVisibleBodies, dateRef});
   console.log("Returning Solar System Scene");
-  console.log(visibleBodies);
   return (
     <>
       {visibleBodies.map((object: BodyAndFullyRendered) => (
