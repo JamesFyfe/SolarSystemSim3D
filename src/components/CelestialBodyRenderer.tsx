@@ -74,5 +74,5 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
     </group>
   );
   },
-  (prevProps, nextProps) => prevProps.body.id === nextProps.body.id && prevProps.fullyRendered == nextProps.fullyRendered
+  (prevProps, nextProps) => prevProps.body.id === nextProps.body.id && prevProps.fullyRendered === nextProps.fullyRendered
 );

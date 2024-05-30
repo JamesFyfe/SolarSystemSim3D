@@ -13,9 +13,10 @@ interface AnimationLoopOptions {
   setVisibleBodies: React.Dispatch<React.SetStateAction<BodyAndFullyRendered[]>>;
   visibleBodies: BodyAndFullyRendered[];
   dateRef: React.MutableRefObject<Date>;
+  timeMultRef: React.MutableRefObject<number>;
 }
 
-export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: AnimationLoopOptions) {
+export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef, timeMultRef}: AnimationLoopOptions) {
   console.log("USE ANIMATION LOOP");
   const camera = useThree((state) => state.camera);
   const scene = useThree((state) => state.scene);
@@ -35,37 +36,6 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
     }
   }
 
-  const raycaster = useRef<Raycaster>(new Raycaster());
-  const mouse = useRef<Vector2>(new Vector2());
-
-  const handleMouseClick = useCallback(
-    (event: MouseEvent) => {
-      mouse.current.x = (event.clientX / gl.domElement.clientWidth) * 2 - 1;
-      mouse.current.y = -(event.clientY / gl.domElement.clientHeight) * 2 + 1;
-
-      raycaster.current.setFromCamera(mouse.current, camera);
-
-      const intersects = raycaster.current.intersectObjects(scene.children, true);
-
-      if (intersects.length > 0) {
-        // console.log('Clicked on:', intersects[0].object.userData.bodyId);
-        if(intersects[0].object.userData.bodyId === undefined) {
-          console.log(intersects[0].object, " does not have bodyId");
-          return;
-        }
-        setSelectedBody(intersects[0].object.userData.bodyId, true);
-      }
-    },
-    [gl, camera, scene ]
-  );
-
-  useEffect(() => {
-    window.addEventListener('click', handleMouseClick);
-    return () => {
-      window.removeEventListener('click', handleMouseClick);
-    };
-  }, [handleMouseClick]);
-
 	useFrame(( state, delta ) => {
     if(!hasSetInitBody.current) {
       return;
@@ -75,7 +45,8 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
       return;
     }
     const date = dateRef.current;
-    dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * Constants.timeMultiple);
+    // dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * Constants.timeMultiple);
+    dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * timeMultRef.current);
 
     const selectedPosBeforeUpdate = new THREE.Vector3();
     selectedBody.threeGroupRef.current.getWorldPosition(selectedPosBeforeUpdate);
@@ -303,6 +274,37 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
       }
     }
   }
+
+  const raycaster = useRef<Raycaster>(new Raycaster());
+  const mouse = useRef<Vector2>(new Vector2());
+
+  const handleMouseClick = useCallback(
+    (event: MouseEvent) => {
+      mouse.current.x = (event.clientX / gl.domElement.clientWidth) * 2 - 1;
+      mouse.current.y = -(event.clientY / gl.domElement.clientHeight) * 2 + 1;
+
+      raycaster.current.setFromCamera(mouse.current, camera);
+
+      const intersects = raycaster.current.intersectObjects(scene.children, true);
+
+      if (intersects.length > 0) {
+        // console.log('Clicked on:', intersects[0].object.userData.bodyId);
+        if(intersects[0].object.userData.bodyId === undefined) {
+          console.log(intersects[0].object, " does not have bodyId");
+          return;
+        }
+        setSelectedBody(intersects[0].object.userData.bodyId, true);
+      }
+    },
+    [gl, camera, scene ]
+  );
+
+  useEffect(() => {
+    window.addEventListener('click', handleMouseClick);
+    return () => {
+      window.removeEventListener('click', handleMouseClick);
+    };
+  }, [handleMouseClick]);
 
   return { setSelectedBody };
 }

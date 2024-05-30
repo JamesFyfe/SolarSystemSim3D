@@ -2,7 +2,7 @@ import { Canvas, extend } from '@react-three/fiber';
 import { OrbitControls, Effects } from '@react-three/drei';
 import { useRef, memo } from 'react';
 import Constants from '../Constants';
-import DateDisplay from './DateDisplay';
+import TimeControls from './TimeControls';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { Perf } from 'r3f-perf';
 import BackgroundStars from './BackgroudStars';
@@ -13,6 +13,7 @@ extend({ UnrealBloomPass })
 const SolarSystem = memo(() => {
   const orbitControlsRef = useRef(null);
   const dateRef = useRef(Constants.startDate);
+  const timeMultRef = useRef(1);
 
   console.log("SOLAR SYSTEM");
 
@@ -25,10 +26,10 @@ const SolarSystem = memo(() => {
         <Perf />
         <OrbitControls makeDefault ref={orbitControlsRef} enableDamping={true} dampingFactor={0.05} screenSpacePanning={false} zoomSpeed={0.7} maxDistance={20000000}/>
         <ambientLight intensity={0.07}></ambientLight>
-        <RenderedBodies dateRef={dateRef} />
+        <RenderedBodies dateRef={dateRef} timeMultRef={timeMultRef} />
         <BackgroundStars />
       </Canvas>
-      <DateDisplay dateRef={dateRef} />
+      <TimeControls dateRef={dateRef} timeMultRef={timeMultRef} />
     </div>
   );
 },

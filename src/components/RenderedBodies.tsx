@@ -9,12 +9,12 @@ export interface BodyAndFullyRendered {
   fullyRendered: boolean;
 }
 
-export default function RenderedBodies({dateRef}: {dateRef: React.MutableRefObject<Date>}) {
+export default function RenderedBodies({dateRef, timeMultRef}: {dateRef: React.MutableRefObject<Date>, timeMultRef: React.MutableRefObject<number>}) {
   const sun = createCelestialBodyFromJSON(data as CelestialBodyData);
   const [visibleBodies, setVisibleBodies] = useState<BodyAndFullyRendered[]>(
     [{ body: sun, fullyRendered: true }, ...sun.children.map((planet) => ({ body: planet, fullyRendered: false }))]
   );
-  const { setSelectedBody } = AnimationLoop({visibleBodies, setVisibleBodies, dateRef});
+  const { setSelectedBody } = AnimationLoop({visibleBodies, setVisibleBodies, dateRef, timeMultRef});
   console.log("Returning Solar System Scene");
   return (
     <>
