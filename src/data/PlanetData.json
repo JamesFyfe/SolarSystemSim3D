@@ -448,7 +448,7 @@
       "physicalData": {
         "mass": 568.32,
         "radius": 58.232,
-        "color": "rgb(110, 120, 70)",
+        "color": "rgb(120, 110, 90)",
         "textureName": "saturn_texture.jpeg",
         "axisTilt": 26.73,
         "rotationPeriod": 10.656,
@@ -1215,7 +1215,7 @@
       "physicalData": {
         "mass": 0.01303,
         "radius": 1.188,
-        "color": "rgb(140, 80, 100)",
+        "color": "rgb(120, 90, 110)",
         "textureName": "pluto_texture.jpeg",
         "axisTilt": 119.51,
         "rotationPeriod": -153.2928,

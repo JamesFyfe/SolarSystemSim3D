@@ -31,6 +31,11 @@ export default function useCacheLoader(textureName: string | null, setWhite: boo
         if (meshRef.current) {
           const loadedTexture = await loadTexture(textureName);
 
+          // make sure mesh still exists after loading texture
+          if (!meshRef.current) {
+            return;
+          }
+          
           const material = meshRef.current.material as THREE.MeshStandardMaterial;
 
           material.map = loadedTexture;

@@ -96,8 +96,29 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
 
     updateEllipseAndIndicatorOpacities(visibleBodies, selectedBody);
 
+    updateRenderQual(selectedBody, camera);
+
     updateSunBrightness();
   });
+
+  function updateRenderQual(body: CelestialBody, camera: THREE.Camera) {
+    if(body.name === "Sun") {
+      return;
+    }
+    const distanceToTarget = body.position.distanceTo(camera.position);
+    const radiiToTarget = distanceToTarget / body.physicalData.radius;
+
+    // kinda just guess and checked for this but seems ok
+    const apparentSize = body.physicalData.radius ** 0.5 * 100 / radiiToTarget;
+
+    const pointSize = body.physicalData.radius ** 0.5 / 5;
+  
+    if (apparentSize <= pointSize) {
+      setFullyRendered(body, false);
+    } else {
+      setFullyRendered(body, true);
+    }
+  }
 
   function updateSunBrightness() {
     // make sun brighter when further away so outer planets are bright enough
@@ -115,9 +136,14 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
       return
     }
 
+    let needsUpdate = false;
+
     // set fullyRendered = true to all bodies already in visibleBodies
     const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
       if (bodies.includes(object.body)) {
+        if(object.fullyRendered === false) {
+          needsUpdate = true;
+        }
         return { body: object.body, fullyRendered: true };
       }
       return object;
@@ -125,26 +151,55 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
 
     const currentBodies: CelestialBody[] = visibleBodies.map((object) => object.body);
     const newBodies = bodies.filter((body) => !currentBodies.includes(body));
+    if(newBodies.length > 0) {
+      needsUpdate = true;
+    }
 
-    setVisibleBodies([...updatedVisibleBodies, ...newBodies.map((body) => ({ body, fullyRendered: true })),]);
-  }
-
-  function removeVisibleBodies(bodies: CelestialBody[]) {
-    if(bodies.length !== 0) {
-      setVisibleBodies(visibleBodies.filter(object => !bodies.includes(object.body)));
+    if(needsUpdate) {
+      setVisibleBodies([...updatedVisibleBodies, ...newBodies.map((body) => ({ body, fullyRendered: true })),]);
     }
   }
 
-  // function setFullyRendered(body: CelestialBody, fullyRendered: boolean) {
-  //   const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
-  //     if (body === object.body) {
-  //       return { body: object.body, fullyRendered: true };
-  //     }
-  //     return object;
-  //   });
-
-  //   setVisibleBodies([...updatedVisibleBodies]);
+  // function removeVisibleBodies(bodies: CelestialBody[]) {
+  //   if(bodies.length !== 0) {
+  //     setVisibleBodies(visibleBodies.filter(object => !bodies.includes(object.body)));
+  //   }
   // }
+
+  function removeChildrenAndSetLowRenderQual(body: CelestialBody) {
+    let needsUpdate = false;
+    const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
+      if (body === object.body) {
+        if(object.fullyRendered === true) {
+          needsUpdate = true;
+        }
+        return { body: object.body, fullyRendered: false };
+      } else {
+        return object;
+      }
+    });
+
+    if(needsUpdate) {
+      setVisibleBodies(updatedVisibleBodies.filter(object => !body.children.includes(object.body)));
+    }
+  }
+
+  function setFullyRendered(body: CelestialBody, fullyRendered: boolean) {
+    let needsUpdate = false;
+    const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
+      if (body === object.body) {
+        if(object.fullyRendered !== fullyRendered) {
+          needsUpdate = true;
+        }
+        return { body: object.body, fullyRendered: fullyRendered };
+      }
+      return object;
+    });
+
+    if(needsUpdate) {
+      setVisibleBodies([...updatedVisibleBodies]);
+    }
+  }
 
   function setSelectedBody(id: string, transition = false) {
     const selectedBody = selectedBodyRef.current;
@@ -161,10 +216,12 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
 
     if(selectedBody.parent === newBody || selectedBody.parent === newBody.parent) {
       // remove children when clicking from body to parent or sibling
-      removeVisibleBodies([...selectedBody.children]);
+      removeChildrenAndSetLowRenderQual(selectedBody);
     }
 
-    addVisibleBodies([newBody, ...newBody.children]);
+    if(newBody.name !== "Sun") {
+      addVisibleBodies([newBody, ...newBody.children]);
+    }
 
     const worldPos = new THREE.Vector3();
     newBody.threeGroupRef.current.getWorldPosition(worldPos);

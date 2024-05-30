@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader from "../TextureCacheUtils";
 import Atmosphere from "./Atmosphere";
@@ -8,7 +8,7 @@ import { Clouds } from "./EarthLayers";
 import { CityLights } from "./EarthLayers";
 import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
-// import { multiplyRGB } from '../utils/UtilFunctions';
+import { multiplyRGB } from '../utils/UtilFunctions';
 
 export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSelectedBody }: { body: CelestialBody, fullyRendered?: boolean, setSelectedBody: (id: string, transition?: boolean) => void}) => {
   const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
@@ -29,21 +29,21 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
     return { geometry, material };
   };
 
-  // const getPointProps = () => {
-  //   const geometry = new THREE.BufferGeometry();
-  //   geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0], 3));
-  //   const material = new THREE.PointsMaterial({ 
-  //       color: new THREE.Color(multiplyRGB(body.physicalData.color, 2)), 
-  //       size: body.physicalData.radius ** 0.5 / 5, 
-  //       sizeAttenuation: false 
-  //     });
-  //   return { geometry, material };
-  // };
+  const getPointProps = () => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0], 3));
+    const material = new THREE.PointsMaterial({ 
+        color: new THREE.Color(multiplyRGB(body.physicalData.color, 1.5)),
+        size: body.physicalData.radius ** 0.5 / 5, 
+        sizeAttenuation: false 
+      });
+    return { geometry, material };
+  };
 
   return (
     <group ref={body.threeGroupRef} name={body.name} userData={{ bodyId: body.id }}>
       <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
-        {fullyRendered && 
+        {fullyRendered ? 
           <>
             <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
             {body.ringData && <Rings body={body} />}
@@ -53,7 +53,9 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
                 <Clouds earth={body} />
               </>
             } 
-          </>
+          </> 
+          : 
+          <points {...getPointProps()} />
         }
       </group>
       <BodyIndicator ref={body.indicatorRef} body={body} setSelectedBody={setSelectedBody}/>
