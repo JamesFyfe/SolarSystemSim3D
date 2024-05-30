@@ -11,7 +11,8 @@ import Rings from "./Rings";
 import { multiplyRGB } from '../utils/UtilFunctions';
 
 export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSelectedBody }: { body: CelestialBody, fullyRendered?: boolean, setSelectedBody: (id: string, transition?: boolean) => void}) => {
-  const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
+  // const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
+  const meshRef = useCacheLoader(body.physicalData.textureName, true);
 
   useEffect(() => {
     if(body.rotatingGroupRef.current) {
