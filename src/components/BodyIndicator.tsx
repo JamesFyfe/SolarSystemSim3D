@@ -4,6 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { forwardRef, useState } from 'react';
 import useForwardedRef from '../hooks/useForwardedRef';
+import { multiplyRGB } from '../utils/UtilFunctions';
 
 interface BodyIndicatorProps {
   body: CelestialBody;
@@ -13,7 +14,7 @@ interface BodyIndicatorProps {
 const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyIndicatorProps>(
   ({ body, setSelectedBody }, ref) => {
     const indicatorRef = useForwardedRef(ref);
-    const textColor = multiplyRGB(body.physicalData.color);
+    const textColor = multiplyRGB(body.physicalData.color, 1.75);
     const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera;
     const halfWidth = useThree((state) => state.size).width / 2;
     const fovFactor = Math.tan(camera.fov * (Math.PI / 180) / 4);
@@ -24,21 +25,6 @@ const BodyIndicator = forwardRef<THREE.Object3D<THREE.Object3DEventMap>, BodyInd
     const handleClick = () => {
       setSelectedBody(body.id, true);
     };
-  
-    function multiplyRGB(colorString: string): string {
-      const rgbValues = colorString.substring(4, colorString.length - 1).split(", ");
-      let [r, g, b] = rgbValues.map(Number);
-    
-      r = Math.floor(r * 1.75);
-      g = Math.floor(g * 1.75);
-      b = Math.floor(b * 1.75);
-    
-      r = Math.min(r, 255);
-      g = Math.min(g, 255);
-      b = Math.min(b, 255);
-    
-      return `rgb(${r}, ${g}, ${b})`;
-    }
   
     useFrame(() => {
       if(!indicatorRef.current) {

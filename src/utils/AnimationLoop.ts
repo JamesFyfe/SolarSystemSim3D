@@ -7,23 +7,23 @@ import Constants from '../Constants';
 import { Line2 } from 'three-stdlib';
 import { startTransition, updateTransition } from './Transition';
 import type { OrbitControls } from 'three-stdlib';
-
+import { BodyAndFullyRendered } from '../components/RenderedBodies';
 
 interface AnimationLoopOptions {
-  setVisibleBodies: React.Dispatch<React.SetStateAction<CelestialBody[]>>;
-  visibleBodies: CelestialBody[];
+  setVisibleBodies: React.Dispatch<React.SetStateAction<BodyAndFullyRendered[]>>;
+  visibleBodies: BodyAndFullyRendered[];
   dateRef: React.MutableRefObject<Date>;
 }
 
 export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: AnimationLoopOptions) {
-  // console.log("USE ANIMATION LOOP");
+  console.log("USE ANIMATION LOOP");
   const camera = useThree((state) => state.camera);
   const scene = useThree((state) => state.scene);
   const gl = useThree((state) => state.gl);
   const controls = useThree((state) => state.controls) as OrbitControls;
   const get = useThree((state) => state.get);
   
-  const selectedBodyRef = useRef<CelestialBody>(visibleBodies[0]);
+  const selectedBodyRef = useRef<CelestialBody>(visibleBodies[0].body);
 
   // this block only runs on first render once selectedBody is loaded
   const hasSetInitBody = useRef(false);
@@ -81,8 +81,8 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
     selectedBody.threeGroupRef.current.getWorldPosition(selectedPosBeforeUpdate);
 
     // Update positions and rotations of celestial bodies
-    visibleBodies.forEach((body) => {
-      body.update(date);
+    visibleBodies.forEach((object) => {
+      object.body.update(date);
     });
 
     // update camera position and target to follow selectedBody
@@ -101,7 +101,7 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
 
   function updateSunBrightness() {
     // make sun brighter when further away so outer planets are bright enough
-    const sun = visibleBodies.find((body) => body.name === "Sun");
+    const sun = visibleBodies.find((object) => object.body.name === "Sun")?.body;
     if(sun?.lightRef?.current) {
       const distToSun = camera.position.distanceTo(sun.position);
       const sunLight = sun.lightRef.current;
@@ -110,16 +110,43 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
   }
 
   function addVisibleBodies(bodies: CelestialBody[]) {
-    if(bodies.length !== 0) {
-      setVisibleBodies([...visibleBodies, ...bodies.filter(body => !visibleBodies.includes(body))]);
+    // This function may be over complicated but I want to make sure visibleBodies stays in order
+    if(bodies.length === 0) {
+      return
     }
+
+    // set fullyRendered = true to all bodies already in visibleBodies
+    const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
+      if (bodies.includes(object.body)) {
+        return { body: object.body, fullyRendered: true };
+      }
+      return object;
+    });
+
+    const currentBodies: CelestialBody[] = visibleBodies.map((object) => object.body);
+    const newBodies = bodies.filter((body) => !currentBodies.includes(body));
+
+    console.log(updatedVisibleBodies);
+
+    setVisibleBodies([...updatedVisibleBodies, ...newBodies.map((body) => ({ body, fullyRendered: true })),]);
   }
 
   function removeVisibleBodies(bodies: CelestialBody[]) {
     if(bodies.length !== 0) {
-      setVisibleBodies(visibleBodies.filter(body => !bodies.includes(body)));
+      setVisibleBodies(visibleBodies.filter(object => !bodies.includes(object.body)));
     }
   }
+
+  // function setFullyRendered(body: CelestialBody, fullyRendered: boolean) {
+  //   const updatedVisibleBodies: BodyAndFullyRendered[] = visibleBodies.map((object) => {
+  //     if (body === object.body) {
+  //       return { body: object.body, fullyRendered: true };
+  //     }
+  //     return object;
+  //   });
+
+  //   setVisibleBodies([...updatedVisibleBodies]);
+  // }
 
   function setSelectedBody(id: string, transition = false) {
     const selectedBody = selectedBodyRef.current;
@@ -139,7 +166,7 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
       removeVisibleBodies([...selectedBody.children]);
     }
 
-    addVisibleBodies([...newBody.children]);
+    addVisibleBodies([newBody, ...newBody.children]);
 
     const worldPos = new THREE.Vector3();
     newBody.threeGroupRef.current.getWorldPosition(worldPos);
@@ -160,15 +187,15 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
   }
 
   function getBodyById(id: string): CelestialBody | null {
-    for (const body of visibleBodies) {
-      if (body.id === id) {
-        return body;
+    for (const object of visibleBodies) {
+      if (object.body.id === id) {
+        return object.body;
       }
     }
     return null;
   }
 
-  function updateEllipseAndIndicatorOpacities(visibleBodies: CelestialBody[], selectedBody: CelestialBody) {
+  function updateEllipseAndIndicatorOpacities(visibleBodies: BodyAndFullyRendered[], selectedBody: CelestialBody) {
     const distanceToTarget = selectedBody.position.distanceTo(camera.position);
     const radiiToTarget = distanceToTarget / selectedBody.physicalData.radius;
 
@@ -180,7 +207,8 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef}: Anima
       setEllipseAndIndicatorOpacity(selectedBody, 0.8);
     }
 
-    visibleBodies.forEach((body) => {
+    visibleBodies.forEach((object) => {
+      const body = object.body;
       if(!body.parent || body === selectedBody) {
         return;
       }
