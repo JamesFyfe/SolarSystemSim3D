@@ -57,13 +57,11 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef, timeMu
     });
 
     // update camera position and target to follow selectedBody
-    const selectedPosAfterUpdate = new THREE.Vector3();
-    selectedBody.threeGroupRef.current.getWorldPosition(selectedPosAfterUpdate);
-    const diff = new THREE.Vector3().subVectors(selectedPosAfterUpdate, selectedPosBeforeUpdate);
+    const diff = new THREE.Vector3().subVectors(selectedBody.position, selectedPosBeforeUpdate);
     camera.position.add(diff);
-    controls.target.set(...selectedPosAfterUpdate.toArray());
+    controls.target.set(...selectedBody.position.toArray());
 
-    updateTransition(delta, selectedPosAfterUpdate, selectedBody, camera, controls);
+    updateTransition(delta, selectedBody.position, selectedBody, camera, controls);
 
     updateEllipseAndIndicatorOpacities(visibleBodies, selectedBody);
 

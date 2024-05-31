@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import useForceUpdate from '../hooks/useForceUpdate';
 import Constants from '../Constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faForward, faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import Clock from './Clock';
 
 const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObject<Date>, timeMultRef: React.MutableRefObject<number> }) => {
   const [isPaused, setIsPaused] = useState(false);
@@ -99,6 +102,7 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
   return (
     <div className="absolute top-0 left-0 mt-2 ml-2 text-white text-xl">
       <div className="clock-ui">
+        <Clock dateRef={dateRef} />
         <div className="clock-face">
           <div className="date-time">{`${month}/${day}/${year} ${hour}:${minute}:${second}`}</div>
         </div>
@@ -113,9 +117,15 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
         />
         <div className={`${isPaused ? "text-gray-400" : "text-white"}`}>{`${timeMultOptionsText[timeMultIndexRef.current]}/sec`}</div>
         <div className="space-x-2">
-          <button onClick={rewind} className={"p-1 border rounded-md"}>Rewind</button>
-          <button onClick={togglePause} className={"p-1 border rounded-md"}>{isPaused ? 'Play' : 'Pause'}</button>
-          <button onClick={fastForward} className={"p-1 border rounded-md"}>Fast Forward</button>
+          <button onClick={rewind} className={"p-2 border rounded-md"}>
+            <FontAwesomeIcon icon={faBackward} size="sm" />
+          </button>
+          <button onClick={togglePause} className={"p-2 border rounded-md"}>
+            <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="sm" />
+          </button>
+          <button onClick={fastForward} className={"p-2 border rounded-md"}>
+            <FontAwesomeIcon icon={faForward} size="sm" />
+          </button>
         </div>
       </div>
     </div>
