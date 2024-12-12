@@ -23,7 +23,7 @@ const SolarSystem = memo(() => {
         <Effects multisamping={8} renderIndex={1} disableGamma={true}>
           <unrealBloomPass threshold={0.4} strength={1.5} radius={0.7} />
         </Effects>
-        <Perf />
+        {/* <Perf /> */}
         <OrbitControls makeDefault ref={orbitControlsRef} enableDamping={true} dampingFactor={0.05} screenSpacePanning={false} zoomSpeed={0.7} maxDistance={20000000}/>
         <ambientLight intensity={0.07}></ambientLight>
         <RenderedBodies dateRef={dateRef} timeMultRef={timeMultRef} />

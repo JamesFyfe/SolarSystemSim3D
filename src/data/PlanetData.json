@@ -225,6 +225,54 @@
       "children": [
         {
           "id": "0-4-0",
+          "name": "Metis",
+          "clickable": false,
+          "physicalData": {
+            "mass": 3.747511701991484e-08,
+            "radius": 0.0215,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 18212.397672,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 128,
+            "eccentricity": 0,
+            "inclination": 0,
+            "meanAnomaly": 166,
+            "meanAnomalyPerCentury": 44606298.27769278,
+            "longitudeOfAscendingNode": 0,
+            "argumentOfPeriapsis": 0,
+            "frame": "ecliptic"
+          }
+        },
+        {
+          "id": "0-4-1",
+          "name": "Adrastea",
+          "clickable": false,
+          "physicalData": {
+            "mass": 2.0827656066491343e-09,
+            "radius": 0.008199999999999999,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 17846.695703999998,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 129,
+            "eccentricity": 0,
+            "inclination": 0,
+            "meanAnomaly": 214.5,
+            "meanAnomalyPerCentury": 44085697.04284852,
+            "longitudeOfAscendingNode": 0,
+            "argumentOfPeriapsis": 0,
+            "frame": "ecliptic"
+          }
+        },
+        {
+          "id": "0-4-2",
           "name": "Io",
           "clickable": true,
           "physicalData": {
@@ -248,7 +296,7 @@
           }
         },
         {
-          "id": "0-4-1",
+          "id": "0-4-3",
           "name": "Europa",
           "clickable": true,
           "physicalData": {
@@ -272,7 +320,7 @@
           }
         },
         {
-          "id": "0-4-2",
+          "id": "0-4-4",
           "name": "Ganymede",
           "clickable": true,
           "physicalData": {
@@ -296,7 +344,7 @@
           }
         },
         {
-          "id": "0-4-3",
+          "id": "0-4-5",
           "name": "Callisto",
           "clickable": true,
           "physicalData": {
@@ -320,7 +368,7 @@
           }
         },
         {
-          "id": "0-4-4",
+          "id": "0-4-6",
           "name": "Amalthea",
           "clickable": false,
           "physicalData": {
@@ -344,7 +392,7 @@
           }
         },
         {
-          "id": "0-4-5",
+          "id": "0-4-7",
           "name": "Himalia",
           "clickable": false,
           "physicalData": {
@@ -368,7 +416,7 @@
           }
         },
         {
-          "id": "0-4-6",
+          "id": "0-4-8",
           "name": "Thebe",
           "clickable": false,
           "physicalData": {
@@ -388,54 +436,6 @@
             "meanAnomalyPerCentury": 50643.22090053006,
             "longitudeOfAscendingNode": 118.1,
             "argumentOfPeriapsis": 140.1,
-            "frame": "ecliptic"
-          }
-        },
-        {
-          "id": "0-4-7",
-          "name": "Adrastea",
-          "clickable": false,
-          "physicalData": {
-            "mass": 2.0827656066491343e-09,
-            "radius": 0.008199999999999999,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 17846.695703999998,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 23468.2,
-            "eccentricity": 0.412,
-            "inclination": 148.4,
-            "meanAnomaly": 277.8,
-            "meanAnomalyPerCentury": 17682.60103909709,
-            "longitudeOfAscendingNode": 312.3,
-            "argumentOfPeriapsis": 264.8,
-            "frame": "ecliptic"
-          }
-        },
-        {
-          "id": "0-4-8",
-          "name": "Metis",
-          "clickable": false,
-          "physicalData": {
-            "mass": 3.747511701991484e-08,
-            "radius": 0.0215,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 18212.397672,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 23683.9,
-            "eccentricity": 0.264,
-            "inclination": 157.3,
-            "meanAnomaly": 167.5,
-            "meanAnomalyPerCentury": 17327.537300877797,
-            "longitudeOfAscendingNode": 304.6,
-            "argumentOfPeriapsis": 96.6,
             "frame": "ecliptic"
           }
         }
