@@ -273,102 +273,6 @@
         },
         {
           "id": "0-4-2",
-          "name": "Io",
-          "clickable": true,
-          "physicalData": {
-            "mass": 0.0892993539938575,
-            "radius": 1.82149,
-            "color": "rgb(175, 175, 175)",
-            "textureName": "io_texture.jpeg",
-            "axisTilt": 0,
-            "rotationPeriod": 42.305568,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 421.8,
-            "eccentricity": 0.004,
-            "inclination": 0.0,
-            "meanAnomaly": 330.9,
-            "meanAnomalyPerCentury": 7459443.636355385,
-            "longitudeOfAscendingNode": 0.0,
-            "argumentOfPeriapsis": 49.1,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-4-3",
-          "name": "Europa",
-          "clickable": true,
-          "physicalData": {
-            "mass": 0.04798765303731091,
-            "radius": 1.5608,
-            "color": "rgb(175, 175, 175)",
-            "textureName": "europa_texture.jpeg",
-            "axisTilt": 0,
-            "rotationPeriod": 84.61111199999999,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 671.1,
-            "eccentricity": 0.009,
-            "inclination": 0.5,
-            "meanAnomaly": 345.4,
-            "meanAnomalyPerCentury": 3729722.8761158464,
-            "longitudeOfAscendingNode": 184.0,
-            "argumentOfPeriapsis": 45.0,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-4-4",
-          "name": "Ganymede",
-          "clickable": true,
-          "physicalData": {
-            "mass": 0.1481528307868716,
-            "radius": 2.6311999999999998,
-            "color": "rgb(175, 175, 175)",
-            "textureName": "ganymede_texture.jpeg",
-            "axisTilt": 0,
-            "rotationPeriod": 171.73411199999998,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 1070.4,
-            "eccentricity": 0.001,
-            "inclination": 0.2,
-            "meanAnomaly": 324.8,
-            "meanAnomalyPerCentury": 1837584.8357954652,
-            "longitudeOfAscendingNode": 58.5,
-            "argumentOfPeriapsis": 198.3,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-4-5",
-          "name": "Callisto",
-          "clickable": true,
-          "physicalData": {
-            "mass": 0.10757249532390255,
-            "radius": 2.4103000000000003,
-            "color": "rgb(175, 175, 175)",
-            "textureName": "callisto_texture.jpeg",
-            "axisTilt": 0,
-            "rotationPeriod": 400.57056,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 1882.7,
-            "eccentricity": 0.007,
-            "inclination": 0.3,
-            "meanAnomaly": 87.4,
-            "meanAnomalyPerCentury": 787816.2588883217,
-            "longitudeOfAscendingNode": 309.1,
-            "argumentOfPeriapsis": 43.8,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-4-6",
           "name": "Amalthea",
           "clickable": false,
           "physicalData": {
@@ -392,7 +296,127 @@
           }
         },
         {
+          "id": "0-4-3",
+          "name": "Thebe",
+          "clickable": false,
+          "physicalData": {
+            "mass": 4.517226597133636e-07,
+            "radius": 0.0493,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 6231.357216,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 11712.3,
+            "eccentricity": 0.018	,
+            "inclination": 1.1	,
+            "meanAnomaly": 182.1,
+            "meanAnomalyPerCentury": 19448162.63746016,
+            "longitudeOfAscendingNode": 340.4	,
+            "argumentOfPeriapsis": 26.6	,
+            "frame": "ecliptic"
+          }
+        },
+        {
+          "id": "0-4-4",
+          "name": "Io",
+          "clickable": true,
+          "physicalData": {
+            "mass": 0.0892993539938575,
+            "radius": 1.82149,
+            "color": "rgb(175, 175, 175)",
+            "textureName": "io_texture.jpeg",
+            "axisTilt": 0,
+            "rotationPeriod": 42.305568,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 421.8,
+            "eccentricity": 0.004,
+            "inclination": 0.0,
+            "meanAnomaly": 330.9,
+            "meanAnomalyPerCentury": 7459443.636355385,
+            "longitudeOfAscendingNode": 0.0,
+            "argumentOfPeriapsis": 49.1,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-4-5",
+          "name": "Europa",
+          "clickable": true,
+          "physicalData": {
+            "mass": 0.04798765303731091,
+            "radius": 1.5608,
+            "color": "rgb(175, 175, 175)",
+            "textureName": "europa_texture.jpeg",
+            "axisTilt": 0,
+            "rotationPeriod": 84.61111199999999,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 671.1,
+            "eccentricity": 0.009,
+            "inclination": 0.5,
+            "meanAnomaly": 345.4,
+            "meanAnomalyPerCentury": 3729722.8761158464,
+            "longitudeOfAscendingNode": 184.0,
+            "argumentOfPeriapsis": 45.0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-4-6",
+          "name": "Ganymede",
+          "clickable": true,
+          "physicalData": {
+            "mass": 0.1481528307868716,
+            "radius": 2.6311999999999998,
+            "color": "rgb(175, 175, 175)",
+            "textureName": "ganymede_texture.jpeg",
+            "axisTilt": 0,
+            "rotationPeriod": 171.73411199999998,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 1070.4,
+            "eccentricity": 0.001,
+            "inclination": 0.2,
+            "meanAnomaly": 324.8,
+            "meanAnomalyPerCentury": 1837584.8357954652,
+            "longitudeOfAscendingNode": 58.5,
+            "argumentOfPeriapsis": 198.3,
+            "frame": "laplace"
+          }
+        },
+        {
           "id": "0-4-7",
+          "name": "Callisto",
+          "clickable": true,
+          "physicalData": {
+            "mass": 0.10757249532390255,
+            "radius": 2.4103000000000003,
+            "color": "rgb(175, 175, 175)",
+            "textureName": "callisto_texture.jpeg",
+            "axisTilt": 0,
+            "rotationPeriod": 400.57056,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 1882.7,
+            "eccentricity": 0.007,
+            "inclination": 0.3,
+            "meanAnomaly": 87.4,
+            "meanAnomalyPerCentury": 787816.2588883217,
+            "longitudeOfAscendingNode": 309.1,
+            "argumentOfPeriapsis": 43.8,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-4-8",
           "name": "Himalia",
           "clickable": false,
           "physicalData": {
@@ -412,30 +436,6 @@
             "meanAnomalyPerCentury": 52477.985407296655,
             "longitudeOfAscendingNode": 68.2,
             "argumentOfPeriapsis": 328.4,
-            "frame": "ecliptic"
-          }
-        },
-        {
-          "id": "0-4-8",
-          "name": "Thebe",
-          "clickable": false,
-          "physicalData": {
-            "mass": 4.517226597133636e-07,
-            "radius": 0.0493,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 6231.357216,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 11712.3,
-            "eccentricity": 0.211,
-            "inclination": 27.9,
-            "meanAnomaly": 330.7,
-            "meanAnomalyPerCentury": 50643.22090053006,
-            "longitudeOfAscendingNode": 118.1,
-            "argumentOfPeriapsis": 140.1,
             "frame": "ecliptic"
           }
         }
@@ -1040,6 +1040,150 @@
       "children": [
         {
           "id": "0-7-0",
+          "name": "Naiad",
+          "clickable": false,
+          "physicalData": {
+            "mass": 1.2781288182540412e-07,
+            "radius": 0.029,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 8643.367968,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 48.2,
+            "eccentricity": 0,
+            "inclination": 4.7,
+            "meanAnomaly": 0,
+            "meanAnomalyPerCentury": 44727532.48520308,
+            "longitudeOfAscendingNode": 326.0,
+            "argumentOfPeriapsis": 0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-1",
+          "name": "Thalassa",
+          "clickable": false,
+          "physicalData": {
+            "mass": 3.534400643833842e-07,
+            "radius": 0.04,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 7.0555200000000005,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 50.1,
+            "eccentricity": 0.0,
+            "inclination": 0.2,
+            "meanAnomaly": 165.7,
+            "meanAnomalyPerCentury": 42269141.50148837,
+            "longitudeOfAscendingNode": 130.6,
+            "argumentOfPeriapsis": 0.0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-2",
+          "name": "Despina",
+          "clickable": false,
+          "physicalData": {
+            "mass": 1.7489992309314684e-06,
+            "radius": 0.074,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 7.465872000000001,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 52.5,
+            "eccentricity": 0.0,
+            "inclination": 0.2,
+            "meanAnomaly": 125.1,
+            "meanAnomalyPerCentury": 39291092.94320138,
+            "longitudeOfAscendingNode": 0,
+            "argumentOfPeriapsis": 0.0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-3",
+          "name": "Galatea",
+          "clickable": false,
+          "physicalData": {
+            "mass": 2.845276923665506e-06,
+            "radius": 0.079,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 8.031744,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 62,
+            "eccentricity": 0.0,
+            "inclination": 0.0,
+            "meanAnomaly": 86.7,
+            "meanAnomalyPerCentury": 30668650.75662866,
+            "longitudeOfAscendingNode": 0.0,
+            "argumentOfPeriapsis": 0.0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-4",
+          "name": "Larissa",
+          "clickable": false,
+          "physicalData": {
+            "mass": 3.818264487387735e-06,
+            "radius": 0.096,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 10.289856,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 73.5,
+            "eccentricity": 0.0,
+            "inclination": 0.2,
+            "meanAnomaly": 165.5,
+            "meanAnomalyPerCentury": 23692361.47022734,
+            "longitudeOfAscendingNode": 312,
+            "argumentOfPeriapsis": 247.3,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-5",
+          "name": "Proteus",
+          "clickable": false,
+          "physicalData": {
+            "mass": 3.870853795375281e-05,
+            "radius": 0.208,
+            "color": "rgb(175, 175, 175)",
+            "textureName": null,
+            "axisTilt": 0,
+            "rotationPeriod": 13.319735999999999,
+            "startingRotation": 0
+          },
+          "orbitData": {
+            "semiMajorAxis": 117.6,
+            "eccentricity": 0,
+            "inclination": 0,
+            "meanAnomaly": 276.8,
+            "meanAnomalyPerCentury": 11715962.09620294,
+            "longitudeOfAscendingNode": 0,
+            "argumentOfPeriapsis": 0,
+            "frame": "laplace"
+          }
+        },
+        {
+          "id": "0-7-6",
           "name": "Triton",
           "clickable": true,
           "physicalData": {
@@ -1063,128 +1207,8 @@
           }
         },
         {
-          "id": "0-7-1",
-          "name": "Naiad",
-          "clickable": false,
-          "physicalData": {
-            "mass": 1.2781288182540412e-07,
-            "radius": 0.029,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 8643.367968,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 5504.0,
-            "eccentricity": 0.749,
-            "inclination": 5.8,
-            "meanAnomaly": 318.0,
-            "meanAnomalyPerCentury": 36510.76769707648,
-            "longitudeOfAscendingNode": 326.0,
-            "argumentOfPeriapsis": 290.3,
-            "frame": "ecliptic"
-          }
-        },
-        {
-          "id": "0-7-2",
-          "name": "Thalassa",
-          "clickable": false,
-          "physicalData": {
-            "mass": 3.534400643833842e-07,
-            "radius": 0.04,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 7.0555200000000005,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 48.2,
-            "eccentricity": 0.0,
-            "inclination": 4.7,
-            "meanAnomaly": 89.7,
-            "meanAnomalyPerCentury": 44727532.48520307,
-            "longitudeOfAscendingNode": 41.4,
-            "argumentOfPeriapsis": 0.0,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-7-3",
-          "name": "Despina",
-          "clickable": false,
-          "physicalData": {
-            "mass": 1.7489992309314684e-06,
-            "radius": 0.074,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 7.465872000000001,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 50.1,
-            "eccentricity": 0.0,
-            "inclination": 0.2,
-            "meanAnomaly": 165.7,
-            "meanAnomalyPerCentury": 42269141.50148837,
-            "longitudeOfAscendingNode": 130.6,
-            "argumentOfPeriapsis": 0.0,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-7-4",
-          "name": "Galatea",
-          "clickable": false,
-          "physicalData": {
-            "mass": 2.845276923665506e-06,
-            "radius": 0.079,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 8.031744,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 52.5,
-            "eccentricity": 0.0,
-            "inclination": 0.0,
-            "meanAnomaly": 125.1,
-            "meanAnomalyPerCentury": 39291092.94320138,
-            "longitudeOfAscendingNode": 0.0,
-            "argumentOfPeriapsis": 0.0,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-7-5",
-          "name": "Larissa",
-          "clickable": false,
-          "physicalData": {
-            "mass": 3.818264487387735e-06,
-            "radius": 0.096,
-            "color": "rgb(175, 175, 175)",
-            "textureName": null,
-            "axisTilt": 0,
-            "rotationPeriod": 10.289856,
-            "startingRotation": 0
-          },
-          "orbitData": {
-            "semiMajorAxis": 62.0,
-            "eccentricity": 0.0,
-            "inclination": 0.0,
-            "meanAnomaly": 86.7,
-            "meanAnomalyPerCentury": 30668650.756628662,
-            "longitudeOfAscendingNode": 0.0,
-            "argumentOfPeriapsis": 0.0,
-            "frame": "laplace"
-          }
-        },
-        {
-          "id": "0-7-6",
-          "name": "Proteus",
+          "id": "0-7-7",
+          "name": "Neso",
           "clickable": false,
           "physicalData": {
             "mass": 3.870853795375281e-05,
@@ -1196,14 +1220,14 @@
             "startingRotation": 0
           },
           "orbitData": {
-            "semiMajorAxis": 73.5,
-            "eccentricity": 0.001,
-            "inclination": 0.2,
-            "meanAnomaly": 165.5,
-            "meanAnomalyPerCentury": 23692361.47022734,
-            "longitudeOfAscendingNode": 312.0,
-            "argumentOfPeriapsis": 247.3,
-            "frame": "laplace"
+            "semiMajorAxis": 49897.8,
+            "eccentricity": 0.455,
+            "inclination": 128.4,
+            "meanAnomaly": 13.8,
+            "meanAnomalyPerCentury": 1341.05048445,
+            "longitudeOfAscendingNode": 55.4,
+            "argumentOfPeriapsis": 89.8,
+            "frame": "ecliptic"
           }
         }
       ]
@@ -1248,8 +1272,8 @@
             "semiMajorAxis": 19.6,
             "eccentricity": 0.0,
             "inclination": 0.0,
-            "meanAnomaly": 192.4,
-            "meanAnomalyPerCentury": 2058641.1340264776,
+            "meanAnomaly": 304.1,
+            "meanAnomalyPerCentury": 2058641.45633266,
             "longitudeOfAscendingNode": 0.0,
             "argumentOfPeriapsis": 0.0,
             "frame": "equatorial"
@@ -1269,13 +1293,13 @@
             "startingRotation": 0
           },
           "orbitData": {
-            "semiMajorAxis": 48.7,
-            "eccentricity": 0.0,
+            "semiMajorAxis": 49.3,
+            "eccentricity": 0.015,
             "inclination": 0.0,
-            "meanAnomaly": 84.8,
-            "meanAnomalyPerCentury": 529034.3455502354,
+            "meanAnomaly": 338.2	,
+            "meanAnomalyPerCentury": 529134.80885312,
             "longitudeOfAscendingNode": 0.0,
-            "argumentOfPeriapsis": 0.0,
+            "argumentOfPeriapsis": 31.4,
             "frame": "equatorial"
           }
         },
@@ -1293,13 +1317,13 @@
             "startingRotation": 0
           },
           "orbitData": {
-            "semiMajorAxis": 64.7,
-            "eccentricity": 0.006,
+            "semiMajorAxis": 65.2,
+            "eccentricity": 0.009,
             "inclination": 0.3,
-            "meanAnomaly": 330.6,
-            "meanAnomalyPerCentury": 341629.268407508,
-            "longitudeOfAscendingNode": 114.2,
-            "argumentOfPeriapsis": 143.4,
+            "meanAnomaly": 335.0,
+            "meanAnomalyPerCentury": 344214.65968586,
+            "longitudeOfAscendingNode": 114.3,
+            "argumentOfPeriapsis": 139.3,
             "frame": "equatorial"
           }
         },
@@ -1317,13 +1341,13 @@
             "startingRotation": 0
           },
           "orbitData": {
-            "semiMajorAxis": 57.8,
-            "eccentricity": 0.0,
+            "semiMajorAxis": 58.3,
+            "eccentricity": 0.01,
             "inclination": 0.4,
-            "meanAnomaly": 303.5,
-            "meanAnomalyPerCentury": 412740.7148013767,
-            "longitudeOfAscendingNode": 318.6,
-            "argumentOfPeriapsis": 0.0,
+            "meanAnomaly": 276.1,
+            "meanAnomalyPerCentury": 408734.84612993,
+            "longitudeOfAscendingNode": 314.3,
+            "argumentOfPeriapsis": 32.1,
             "frame": "equatorial"
           }
         }
