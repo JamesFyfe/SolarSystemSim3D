@@ -7,6 +7,7 @@ import BodyIndicator from "./BodyIndicator";
 import { Clouds, CityLights, EarthSurface } from "./EarthLayers";
 import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
+import SunGlow from "./SunGlow";
 import { multiplyRGB } from '../utils/UtilFunctions';
 
 export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSelectedBody }: { body: CelestialBody, fullyRendered?: boolean, setSelectedBody: (id: string, transition?: boolean) => void}) => {
@@ -64,6 +65,7 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
       {body.orbitData && <OrbitEllipse ref={body.ellipseRef} body={body} />}
       
       {fullyRendered && body.atmosphereData && <Atmosphere body={body} />}
+      {body.physicalData.lightIntensity && <SunGlow body={body} />}
       {fullyRendered && body.physicalData.lightIntensity && 
       <>
         <pointLight
