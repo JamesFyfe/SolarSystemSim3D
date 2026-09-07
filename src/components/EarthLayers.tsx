@@ -3,11 +3,12 @@ import { useFrame } from "@react-three/fiber";
 import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader, { loadTexture } from "../TextureCacheUtils";
 import InvertedLightShaderMaterial from '../shaders/InvertedLightShaderMaterial';
-import EarthSurfaceMaterial from '../shaders/EarthSurfaceMaterial';
+import EarthSurfaceMaterial, { configureOceanNormal } from '../shaders/EarthSurfaceMaterial';
 import { getSunDirection } from '../utils/UtilFunctions';
 import * as THREE from 'three';
 
 const OCEAN_MASK_TEXTURE = "earth_specular.jpg";
+const OCEAN_NORMAL_TEXTURE = "ocean-normal.jpg";
 
 /** Earth's surface: day texture plus shader-driven ocean specular / sky reflection. */
 export function EarthSurface({ earth }: { earth: CelestialBody }) {
@@ -16,13 +17,16 @@ export function EarthSurface({ earth }: { earth: CelestialBody }) {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const [dayMap, oceanMask] = await Promise.all([
+      const [dayMap, oceanMask, oceanNormal] = await Promise.all([
         loadTexture(earth.physicalData.textureName),
         loadTexture(OCEAN_MASK_TEXTURE),
+        loadTexture(OCEAN_NORMAL_TEXTURE),
       ]);
       if (cancelled) return;
+      configureOceanNormal(oceanNormal);
       material.map = dayMap;
       material.oceanUniforms.oceanMask.value = oceanMask;
+      material.oceanUniforms.oceanNormal.value = oceanNormal;
       material.needsUpdate = true;
     };
     load();
