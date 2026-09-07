@@ -5,7 +5,6 @@ import { ToneMappingMode } from 'postprocessing';
 import { useRef, memo } from 'react';
 import Constants from '../Constants';
 import TimeControls from './TimeControls';
-import { Perf } from 'r3f-perf';
 import BackgroundStars from './BackgroudStars';
 import RenderedBodies from './RenderedBodies';
 
@@ -25,7 +24,6 @@ const SolarSystem = memo(() => {
           <Bloom mipmapBlur luminanceThreshold={0.4} luminanceSmoothing={0.2} intensity={1.2} radius={0.7} levels={8} />
           <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
         </EffectComposer>
-        {/* <Perf /> */}
         <OrbitControls makeDefault ref={orbitControlsRef} enableDamping={true} dampingFactor={0.05} screenSpacePanning={false} zoomSpeed={0.7} maxDistance={20000000}/>
         <ambientLight intensity={0.07}></ambientLight>
         <RenderedBodies dateRef={dateRef} timeMultRef={timeMultRef} />

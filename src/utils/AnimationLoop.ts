@@ -212,6 +212,9 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef, timeMu
     controls.minDistance = Math.max(Constants.cameraNear, newBody.physicalData.radius * 1.1);    
   }
 
+  const setSelectedBodyRef = useRef(setSelectedBody);
+  setSelectedBodyRef.current = setSelectedBody;
+
   function getBodyById(id: string): CelestialBody | null {
     for (const object of visibleBodies) {
       if (object.body.id === id) {
@@ -293,10 +296,10 @@ export function AnimationLoop({ visibleBodies, setVisibleBodies, dateRef, timeMu
           console.log(intersects[0].object, " does not have bodyId");
           return;
         }
-        setSelectedBody(intersects[0].object.userData.bodyId, true);
+        setSelectedBodyRef.current(intersects[0].object.userData.bodyId, true);
       }
     },
-    [gl, camera, scene ]
+    [gl, camera, scene]
   );
 
   useEffect(() => {

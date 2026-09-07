@@ -26,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "node -e \"const fs=require('fs');const s='node_modules/@mediapipe/tasks-vision/vision_bundle.mjs.map';const d='node_modules/@mediapipe/tasks-vision/vision_bundle_mjs.js.map';if(fs.existsSync(s)&&!fs.existsSync(d))fs.copyFileSync(s,d);\""
   },
   "eslintConfig": {
     "extends": [
