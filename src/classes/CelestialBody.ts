@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import PhysicalData from './PhysicalData';
-import OrbitData from './OrbitData';
+import OrbitData, { OrbitModel } from './OrbitData';
 import { createRef } from 'react';
 
 interface PhysicalDataParams {
@@ -25,6 +25,8 @@ export interface OrbitDataParams {
   longitudeOfPeriapsis: number;
   longitudeOfAscendingNode: number;
   frame: string;
+  /** "kepler" (default) or "moon" for the ELP/Meeus lunar theory */
+  model?: OrbitModel;
 }
 
 export interface AtmosphereParams {
@@ -109,6 +111,7 @@ export default class CelestialBody {
         orbitData.longitudeOfPeriapsis,
         orbitData.longitudeOfAscendingNode,
         orbitData.frame,
+        orbitData.model,
       );
       if (this.orbitData.frame === "laplace" && this.parent) {
         this.physicalData.axisTilt += this.parent.physicalData.axisTilt;
@@ -152,14 +155,18 @@ export default class CelestialBody {
 
     if (this.orbitData && this.parent) {
       //calculate orbit position and add parent position
-      this.position.set(...this.orbitData.calculateEllipticalOrbitPosition(date)).add(this.parent.position);
+      this.position.set(...this.orbitData.calculatePosition(date)).add(this.parent.position);
     }
     this.threeGroupRef.current.position.set(...this.position.toArray());
 
     // move orbit ellipse to be centered at parent
-    if (this.parent && this.ellipseRef?.current) {
+    if (this.parent && this.orbitData && this.ellipseRef?.current) {
       const diff = new THREE.Vector3().subVectors(this.parent.position, this.position);
       this.ellipseRef.current.position.set(...diff.toArray());
+      if (this.orbitData.model === "moon") {
+        // lunar node and perigee precess quickly; keep the drawn orbit in step
+        this.orbitData.orientEllipse(this.ellipseRef.current, date);
+      }
     }
   }
 }

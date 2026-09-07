@@ -76,8 +76,8 @@
         "textureName": "earth_texture.jpg",
         "normalMapName": "normalMap16kFlat.jpg",
         "axisTilt": 23.44,
-        "rotationPeriod": 23.93446958333,
-        "startingRotation": 0
+        "rotationPeriod": 23.9344719177,
+        "startingRotation": 10.613972
       },
       "orbitData": {
         "semiMajorAxis": 149598,
@@ -109,13 +109,14 @@
             "startingRotation": 295
           },
           "orbitData": {
+            "model": "moon",
             "semiMajorAxis": 384.4,
-            "eccentricity": 0.0554,
-            "inclination": 5.16,
-            "meanAnomaly": 224,
-            "meanAnomalyPerCentury": 481260.5226557353,
-            "longitudeOfAscendingNode": 125.08,
-            "argumentOfPeriapsis": 318.15,
+            "eccentricity": 0.0549,
+            "inclination": 5.145,
+            "meanAnomaly": 218.3164477,
+            "meanAnomalyPerCentury": 481267.88123421,
+            "longitudeOfAscendingNode": 125.0445479,
+            "longitudeOfPeriapsis": 83.3532465,
             "frame": "ecliptic"
           }
         }
@@ -215,7 +216,7 @@
       },
       "orbitData": {
         "semiMajorAxis": 778479,
-        "eccentricity": 0.00677672,
+        "eccentricity": 0.04838624,
         "inclination": 1.304,
         "meanAnomaly": 34.33479152,
         "meanAnomalyPerCentury": 3034.90371757,
@@ -456,11 +457,11 @@
       },
       "orbitData": {
         "semiMajorAxis": 1432041,
-        "eccentricity": 0.00677672,
+        "eccentricity": 0.05386179,
         "inclination": 2.486,
         "meanAnomaly": 50.07571329,
         "meanAnomalyPerCentury": 1222.11494724,
-        "longitudeOfAscendingNode": 76.68069,
+        "longitudeOfAscendingNode": 113.66242448,
         "longitudeOfPeriapsis": 131.53298
       },
       "ringData": {

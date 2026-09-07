@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import CelestialBody, { OrbitDataParams } from '../classes/CelestialBody';
+import CelestialBody from '../classes/CelestialBody';
+import OrbitData from '../classes/OrbitData';
 import { Line } from "@react-three/drei";
 import { forwardRef } from 'react';
 import useForwardedRef from '../hooks/useForwardedRef';
@@ -11,31 +12,27 @@ type OrbitEllipseProps = {
 const OrbitEllipse = forwardRef<THREE.Group, OrbitEllipseProps>(
   ({ body }, ref) => {
     const ellipseRef = useForwardedRef(ref);
-    const orbitData = body.orbitData as OrbitDataParams;
-    const semiMinorAxis = orbitData.semiMajorAxis * Math.sqrt(1 - orbitData.eccentricity ** 2);
-    const parentPos = Math.sqrt(orbitData.semiMajorAxis ** 2 - semiMinorAxis ** 2);
+    const orbitData = body.orbitData as OrbitData;
+    const a = orbitData.semiMajorAxis;
+    const b = a * Math.sqrt(1 - orbitData.eccentricity ** 2);
+    const focalDistance = Math.sqrt(a ** 2 - b ** 2);
 
+    // Drawn in the group's local xy-plane with the parent (focus) at the origin
+    // and periapsis on +x, matching the basis used by OrbitData.orientEllipse.
     const curve = new THREE.EllipseCurve(
-      0,						// ax
-      -parentPos, 	// aY
-      semiMinorAxis,	//xRadius
-      orbitData.semiMajorAxis, // yRadius
-      0,						// aStartAngle
-      2 * Math.PI, 	// aEndAngle
-      false 				// aClockwise
+      -focalDistance, // aX (ellipse centre)
+      0,              // aY
+      a,              // xRadius
+      b,              // yRadius
+      0,              // aStartAngle
+      2 * Math.PI,    // aEndAngle
+      false           // aClockwise
     );
 
     const points = curve.getPoints(5000);
 
     const group = new THREE.Group();
-
-    group.rotateX(Math.PI / 2);
-    if (orbitData.frame === "laplace" && body.parent) {
-      group.rotateY(-body.parent.physicalData.axisTilt);
-    }
-    group.rotateZ(orbitData.longitudeOfAscendingNode - Math.PI / 2);
-    group.rotateX(orbitData.inclination);
-    group.rotateZ(orbitData.argumentOfPeriapsis + Math.PI / 2);
+    orbitData.orientEllipse(group, new Date());
 
     return (
       <primitive object={group} ref={ellipseRef}>
