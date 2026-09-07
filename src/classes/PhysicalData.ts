@@ -5,7 +5,7 @@ export default class PhysicalData {
   textureName: string;
   rotationPeriod: number; // in hours
   startingRotation: number; // in degrees
-  axisTilt: number; // in degrees
+  axisTilt: number; // obliquity to the orbital plane, radians (JSON is degrees)
   lightIntensity?: number;
   normalMapName?: string;
 

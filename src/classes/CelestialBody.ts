@@ -76,6 +76,8 @@ export default class CelestialBody {
   physicalData: PhysicalData;
   threeGroupRef: React.RefObject<THREE.Group | null>;
   rotatingGroupRef: React.RefObject<THREE.Group | null>;
+  /** Local +Y → spin axis in the scene. Does not include the daily spin. */
+  equatorQuaternion: THREE.Quaternion;
   indicatorRef: React.RefObject<IndicatorMesh | null>;
   parent: CelestialBody | undefined;
   children: CelestialBody[];
@@ -128,14 +130,10 @@ export default class CelestialBody {
         orbitData.frame,
         orbitData.model,
       );
-      if (this.orbitData.frame === 'laplace' && this.parent) {
-        this.physicalData.axisTilt += this.parent.physicalData.axisTilt;
-      }
-      // subtract inclination from tilt since tilt is relative to inclination
-      this.physicalData.axisTilt -= this.orbitData.inclination;
       this.ellipseRef = createRef<THREE.Group>();
     }
 
+    this.equatorQuaternion = computeEquatorQuaternion(this);
     this.threeGroupRef = createRef<THREE.Group>();
     this.rotatingGroupRef = createRef<THREE.Group>();
     this.indicatorRef = createRef<IndicatorMesh>();
@@ -167,12 +165,15 @@ export default class CelestialBody {
     if (!this.threeGroupRef.current) {
       return;
     }
-    // rotate bodies
-    if (this.physicalData.rotationPeriod !== 0 && this.rotatingGroupRef.current) {
-      // 3.6e+6 ms per hour
-      this.rotatingGroupRef.current.rotation.y =
-        (this.physicalData.startingRotation * Math.PI) / 180 +
-        (date.getTime() / 3.6e6 / this.physicalData.rotationPeriod) * (2 * Math.PI);
+    if (this.rotatingGroupRef.current) {
+      let spin = (this.physicalData.startingRotation * Math.PI) / 180;
+      if (this.physicalData.rotationPeriod !== 0) {
+        // 3.6e+6 ms per hour
+        spin += (date.getTime() / 3.6e6 / this.physicalData.rotationPeriod) * (2 * Math.PI);
+      }
+      this.rotatingGroupRef.current.quaternion
+        .copy(this.equatorQuaternion)
+        .multiply(_spinQuat.setFromAxisAngle(_yAxis, spin));
     }
 
     if (this.orbitData && this.parent) {
@@ -219,4 +220,33 @@ export function collectBodiesById(root: CelestialBody): Map<string, CelestialBod
   };
   visit(root);
   return bodies;
+}
+
+const _yAxis = new THREE.Vector3(0, 1, 0);
+const _spinQuat = new THREE.Quaternion();
+const _orbitNormal = new THREE.Vector3();
+const _toward = new THREE.Vector3();
+const _pole = new THREE.Vector3();
+
+/**
+ * Spin-axis orientation: JSON `axisTilt` is obliquity to the orbital plane.
+ * Tip the orbit normal toward scene +X (ecliptic longitude 90°), matching
+ * Earth's pole. The Sun and the Moon have no Kepler basis at construction, so
+ * they tip ecliptic north the same way.
+ */
+function computeEquatorQuaternion(body: CelestialBody): THREE.Quaternion {
+  const obliquity = body.physicalData.axisTilt;
+  const n =
+    body.orbitData && body.orbitData.model !== 'moon'
+      ? body.orbitData.getOrbitNormal(_orbitNormal)
+      : _orbitNormal.set(0, 1, 0);
+
+  _toward.set(1, 0, 0).addScaledVector(n, -n.x);
+  if (_toward.lengthSq() < 1e-12) {
+    _toward.set(0, 0, 1).addScaledVector(n, -n.z);
+  }
+  _toward.normalize();
+
+  _pole.copy(n).multiplyScalar(Math.cos(obliquity)).addScaledVector(_toward, Math.sin(obliquity)).normalize();
+  return new THREE.Quaternion().setFromUnitVectors(_yAxis, _pole);
 }

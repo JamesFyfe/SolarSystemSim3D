@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useLayoutEffect } from 'react';
 import type { ThreeEvent } from '@react-three/fiber';
 import CelestialBody from '../classes/CelestialBody';
 import useCachedTexture from '../hooks/useCachedTexture';
@@ -29,7 +29,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
   fullyRendered = true,
   onSelect,
 }: CelestialBodyRendererProps) {
-  const { radius, color, axisTilt, lightIntensity } = body.physicalData;
+  const { radius, color, lightIntensity } = body.physicalData;
   const isStar = body.isStar;
   const texture = useCachedTexture(fullyRendered && body.renderer !== 'earth' ? body.physicalData.textureName : null);
 
@@ -45,15 +45,17 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
     [body.id, onSelect],
   );
 
+  useLayoutEffect(() => {
+    const group = body.rotatingGroupRef.current;
+    if (group) {
+      group.quaternion.copy(body.equatorQuaternion);
+    }
+  }, [body]);
+
   return (
     <group ref={body.threeGroupRef} name={body.name} onClick={handleClick}>
-      {/* Spin happens around local Y; the Z tilt is applied first (ZXY order) */}
-      <group
-        ref={body.rotatingGroupRef}
-        name={`${body.name} rotating group`}
-        rotation-order="ZXY"
-        rotation-z={-axisTilt}
-      >
+      {/* Spin is around local Y after equatorQuaternion tips that axis to the orbit-relative pole */}
+      <group ref={body.rotatingGroupRef} name={`${body.name} rotating group`}>
         {fullyRendered ? (
           <>
             {body.renderer === 'earth' ? (

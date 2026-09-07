@@ -124,7 +124,8 @@ export function CityLights({ earth }: EarthLayerProps) {
     // Sun direction in the surface's local frame: undo Earth's spin/tilt
     const sunDirection = material.uniforms.sunDirection.value as THREE.Vector3;
     getSunDirection(earth, sunDirection);
-    sunDirection.applyQuaternion(_inverseRotation.setFromEuler(rotatingGroup.rotation).invert());
+    rotatingGroup.getWorldQuaternion(_inverseRotation).invert();
+    sunDirection.applyQuaternion(_inverseRotation);
   });
 
   if (!texture) {

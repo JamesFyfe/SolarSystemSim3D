@@ -13,8 +13,10 @@ export type OrbitModel = 'kepler' | 'moon';
  * vernal equinox, i to the ecliptic, ϖ = Ω + ω. Ecliptic coordinates
  * (X toward the equinox, Z toward the north ecliptic pole) map to the scene's
  * Y-up frame as  scene = [Y_ecl, Z_ecl, X_ecl].  This is a proper rotation
- * that puts the equinox on scene +z and ecliptic longitude 90° on scene +x,
- * which is where CelestialBodyRenderer tilts each body's spin axis toward.
+ * that puts the equinox on scene +z and ecliptic longitude 90° on scene +x.
+ * Kepler spin axes are tilted from the orbit normal toward that +x by the
+ * JSON obliquity; moons with frame "laplace" or "equatorial" are then
+ * expressed in the parent's equatorial frame.
  *
  * Distances are in 1000 km; angles inside the class are in radians.
  */
@@ -30,8 +32,8 @@ export default class OrbitData {
   longitudeOfPeriapsis: number;
   longitudeOfAscendingNode: number;
   frame: string;
-  cosParentTilt: number | undefined;
-  sinParentTilt: number | undefined;
+  /** Parent equator orientation, for Laplace / equatorial satellite frames. */
+  private parentEquator: THREE.Quaternion | undefined;
 
   // Unit vectors (scene frame) toward periapsis and 90° ahead of it in the
   // orbital plane. Constant for Kepler orbits; recomputed per call for the Moon.
@@ -67,9 +69,8 @@ export default class OrbitData {
     this.longitudeOfPeriapsis = longitudeOfPeriapsis * piOver180;
     this.longitudeOfAscendingNode = longitudeOfAscendingNode * piOver180;
 
-    if (this.parent) {
-      this.cosParentTilt = Math.cos(-this.parent.physicalData.axisTilt);
-      this.sinParentTilt = Math.sin(-this.parent.physicalData.axisTilt);
+    if ((this.frame === 'laplace' || this.frame === 'equatorial') && this.parent) {
+      this.parentEquator = this.parent.equatorQuaternion;
     }
 
     if (this.model === 'moon') {
@@ -79,18 +80,20 @@ export default class OrbitData {
     }
   }
 
-  /** Ecliptic (X, Y, Z) → scene frame, including the optional Laplace-plane tilt. */
+  /** Unit orbit normal in the scene frame (right-handed from periapsis × quadrature). */
+  getOrbitNormal(target: THREE.Vector3): THREE.Vector3 {
+    const [px, py, pz] = this.basisP;
+    const [qx, qy, qz] = this.basisQ;
+    return target.set(px, py, pz).cross(_basisQ.set(qx, qy, qz)).normalize();
+  }
+
+  /** Ecliptic (X, Y, Z) → scene frame, including the optional parent-equator rotation. */
   private eclipticToScene(X: number, Y: number, Z: number): Vec3 {
-    let x = Y,
-      y = Z;
-    const z = X;
-    if (this.frame === 'laplace' && this.cosParentTilt !== undefined && this.sinParentTilt !== undefined) {
-      // same rotation the renderer applies for the parent's axial tilt (rotation.z = -tilt)
-      const xt = x;
-      x = this.cosParentTilt * xt - this.sinParentTilt * y;
-      y = this.sinParentTilt * xt + this.cosParentTilt * y;
+    _scene.set(Y, Z, X);
+    if (this.parentEquator) {
+      _scene.applyQuaternion(this.parentEquator);
     }
-    return [x, y, z];
+    return [_scene.x, _scene.y, _scene.z];
   }
 
   private computeBasis(node: number, lonPeri: number, inc: number) {
@@ -160,3 +163,6 @@ export default class OrbitData {
     group.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(P, Q, N));
   }
 }
+
+const _scene = new THREE.Vector3();
+const _basisQ = new THREE.Vector3();
