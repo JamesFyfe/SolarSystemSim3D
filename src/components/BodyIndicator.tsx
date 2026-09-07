@@ -63,6 +63,7 @@ export default function BodyIndicator({ body }: BodyIndicatorProps) {
       outlineColor="black"
       outlineWidth={0.15}
       textAlign="right"
+      frustumCulled={false}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >

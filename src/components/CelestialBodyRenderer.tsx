@@ -4,6 +4,7 @@ import CelestialBody from '../classes/CelestialBody';
 import useCachedTexture from '../hooks/useCachedTexture';
 import type { SelectBody } from '../hooks/useAnimationLoop';
 import { multiplyRGB } from '../utils/UtilFunctions';
+import { planetSphereGeometry } from '../utils/sharedGeometries';
 import Atmosphere from './Atmosphere';
 import BodyIndicator from './BodyIndicator';
 import EarthLayers from './EarthLayers';
@@ -58,8 +59,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
             {body.renderer === 'earth' ? (
               <EarthLayers earth={body} />
             ) : (
-              <mesh name={`${body.name} mesh`}>
-                <sphereGeometry args={[radius, 100, 50]} />
+              <mesh name={`${body.name} mesh`} geometry={planetSphereGeometry} scale={radius} dispose={null}>
                 {/* See useCachedTexture: a new key when the map arrives forces a shader rebuild */}
                 {isStar ? (
                   <meshStandardMaterial
@@ -81,7 +81,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
             {body.ringData && <Rings body={body} />}
           </>
         ) : (
-          <points>
+          <points frustumCulled={false}>
             <bufferGeometry>
               <bufferAttribute attach="attributes-position" args={[POINT_POSITION, 3]} />
             </bufferGeometry>

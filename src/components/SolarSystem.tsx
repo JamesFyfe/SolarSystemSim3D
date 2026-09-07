@@ -3,9 +3,12 @@ import { OrbitControls } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
 import { ToneMappingMode } from 'postprocessing';
 import Constants from '../Constants';
+import { preloadStartupTextures } from '../utils/textureCache';
 import TimeControls from './TimeControls';
 import BackgroundStars from './BackgroundStars';
 import RenderedBodies from './RenderedBodies';
+
+preloadStartupTextures();
 
 export default function SolarSystem() {
   return (

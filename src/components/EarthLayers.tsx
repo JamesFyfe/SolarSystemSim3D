@@ -7,6 +7,7 @@ import { loadTexture } from '../utils/textureCache';
 import InvertedLightShaderMaterial from '../shaders/InvertedLightShaderMaterial';
 import EarthSurfaceMaterial, { configureOceanNormal } from '../shaders/EarthSurfaceMaterial';
 import { getSunDirection } from '../utils/UtilFunctions';
+import { planetSphereGeometry, shellSphereGeometry } from '../utils/sharedGeometries';
 
 const OCEAN_MASK_TEXTURE = 'earth_specular.jpg';
 const OCEAN_NORMAL_TEXTURE = 'ocean-normal.jpg';
@@ -60,8 +61,7 @@ export function EarthSurface({ earth }: EarthLayerProps) {
   });
 
   return (
-    <mesh name={`${earth.name} mesh`}>
-      <sphereGeometry args={[earth.physicalData.radius, 100, 50]} />
+    <mesh name={`${earth.name} mesh`} geometry={planetSphereGeometry} scale={earth.physicalData.radius} dispose={null}>
       <primitive object={material} attach="material" />
     </mesh>
   );
@@ -83,8 +83,13 @@ export function Clouds({ earth, rotationSpeed = 0.002 }: EarthLayerProps & { rot
   }
 
   return (
-    <mesh ref={meshRef} name={`${earth.name} clouds`}>
-      <sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]} />
+    <mesh
+      ref={meshRef}
+      name={`${earth.name} clouds`}
+      geometry={shellSphereGeometry}
+      scale={earth.physicalData.radius + distFromSurface}
+      dispose={null}
+    >
       <meshStandardMaterial map={texture} transparent />
     </mesh>
   );
@@ -127,8 +132,12 @@ export function CityLights({ earth }: EarthLayerProps) {
   }
 
   return (
-    <mesh name={`${earth.name} city lights`}>
-      <sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]} />
+    <mesh
+      name={`${earth.name} city lights`}
+      geometry={shellSphereGeometry}
+      scale={earth.physicalData.radius + distFromSurface}
+      dispose={null}
+    >
       <primitive object={material} attach="material" />
     </mesh>
   );

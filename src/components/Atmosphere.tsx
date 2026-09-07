@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import CelestialBody, { AtmosphereParams } from '../classes/CelestialBody';
 import createAtmosphereMaterial from '../shaders/AtmosphereShaderMaterial';
 import { getSunDirection } from '../utils/UtilFunctions';
+import { atmosphereSphereGeometry } from '../utils/sharedGeometries';
 
 const _camRel = new THREE.Vector3();
 const _center = new THREE.Vector3();
@@ -54,8 +55,14 @@ export default function Atmosphere({ body }: { body: CelestialBody }) {
   );
 
   return (
-    <mesh name={`${body.name} atmosphere`} scale={atmosphereRadius} renderOrder={2} onBeforeRender={onBeforeRender}>
-      <sphereGeometry args={[1, 64, 64]} />
+    <mesh
+      name={`${body.name} atmosphere`}
+      geometry={atmosphereSphereGeometry}
+      scale={atmosphereRadius}
+      renderOrder={2}
+      dispose={null}
+      onBeforeRender={onBeforeRender}
+    >
       <primitive object={material} attach="material" />
     </mesh>
   );

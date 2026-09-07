@@ -3,6 +3,7 @@ import { CelestialBodyData, collectBodiesById, createCelestialBodyFromJSON } fro
 import useAnimationLoop from '../hooks/useAnimationLoop';
 import { initialVisibleBodies, visibleBodiesReducer } from '../state/visibleBodies';
 import CelestialBodyRenderer from './CelestialBodyRenderer';
+import GpuWarmup from './GpuWarmup';
 import data from '../data/PlanetData.json';
 
 export default function RenderedBodies() {
@@ -13,11 +14,14 @@ export default function RenderedBodies() {
 
   const { setSelectedBody } = useAnimationLoop({ root, bodiesById, visibleBodies, dispatch });
 
+  const warmupRevision = visibleBodies.length + visibleBodies.reduce((sum, entry) => sum + (entry.fullyRendered ? 1 : 0), 0);
+
   return (
     <>
       {visibleBodies.map(({ body, fullyRendered }) => (
         <CelestialBodyRenderer key={body.id} body={body} fullyRendered={fullyRendered} onSelect={setSelectedBody} />
       ))}
+      <GpuWarmup revision={warmupRevision} />
     </>
   );
 }

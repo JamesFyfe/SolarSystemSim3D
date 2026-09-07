@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Dispatch, useCallback, useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import type { Line2, OrbitControls } from 'three-stdlib';
+import type { OrbitControls } from 'three-stdlib';
 import CelestialBody from '../classes/CelestialBody';
 import Constants from '../Constants';
 import { createTransitionState, startTransition, updateTransition } from '../utils/Transition';
@@ -165,11 +165,12 @@ function updateEllipseAndIndicatorOpacities(
 }
 
 function setEllipseAndIndicatorOpacity(body: CelestialBody, opacity: number) {
-  const ellipse = body.ellipseRef?.current?.children[0] as Line2 | undefined;
-  if (ellipse) {
+  const ellipse = body.ellipseRef?.current?.children[0] as THREE.Line | undefined;
+  const ellipseMaterial = ellipse?.material;
+  if (ellipse && ellipseMaterial && !Array.isArray(ellipseMaterial)) {
     ellipse.visible = opacity > 0;
     if (opacity > 0) {
-      ellipse.material.opacity = opacity;
+      ellipseMaterial.opacity = opacity;
     }
   }
 
