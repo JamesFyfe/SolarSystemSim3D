@@ -221,7 +221,7 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
                 event.currentTarget.blur();
               }
             }}
-            className="mb-2 w-full rounded-md border border-white/20 bg-black/70 px-1.5 py-0.5 font-mono text-xs text-white outline-none [color-scheme:dark] focus:border-sky-400"
+            className="mb-2 w-full rounded-md border border-white/20 bg-black/70 px-1.5 py-0.5 font-mono text-xs text-white outline-hidden [color-scheme:dark] focus:border-sky-400"
           />
         ) : (
           <button

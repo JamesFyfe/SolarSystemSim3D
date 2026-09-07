@@ -83,7 +83,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
         ) : (
           <points>
             <bufferGeometry>
-              <bufferAttribute attach="attributes-position" array={POINT_POSITION} count={1} itemSize={3} />
+              <bufferAttribute attach="attributes-position" args={[POINT_POSITION, 3]} />
             </bufferGeometry>
             <pointsMaterial color={multiplyRGB(color, 1.5)} size={radius ** 0.5 / 5} sizeAttenuation={false} />
           </points>

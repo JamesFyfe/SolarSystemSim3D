@@ -78,16 +78,16 @@ export default class CelestialBody {
   renderer?: BodyRenderer;
   position: THREE.Vector3;
   physicalData: PhysicalData;
-  threeGroupRef: React.RefObject<THREE.Group>;
-  rotatingGroupRef: React.RefObject<THREE.Group>;
-  indicatorRef: React.RefObject<IndicatorMesh>;
+  threeGroupRef: React.RefObject<THREE.Group | null>;
+  rotatingGroupRef: React.RefObject<THREE.Group | null>;
+  indicatorRef: React.RefObject<IndicatorMesh | null>;
   parent: CelestialBody | undefined;
   children: CelestialBody[];
   orbitData?: OrbitData;
   atmosphereData?: AtmosphereParams;
   ringData?: RingDataParams;
-  ellipseRef?: React.RefObject<THREE.Group>;
-  lightRef?: React.RefObject<THREE.PointLight>;
+  ellipseRef?: React.RefObject<THREE.Group | null>;
+  lightRef?: React.RefObject<THREE.PointLight | null>;
 
   constructor(
     id: string,
