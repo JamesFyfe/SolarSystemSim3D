@@ -1,18 +1,20 @@
+import { useLayoutEffect, useMemo } from 'react';
 import * as THREE from 'three';
+import { Line } from '@react-three/drei';
 import CelestialBody from '../classes/CelestialBody';
 import OrbitData from '../classes/OrbitData';
-import { Line } from "@react-three/drei";
-import { forwardRef } from 'react';
-import useForwardedRef from '../hooks/useForwardedRef';
 
-type OrbitEllipseProps = {
+interface OrbitEllipseProps {
   body: CelestialBody;
-};
+}
 
-const OrbitEllipse = forwardRef<THREE.Group, OrbitEllipseProps>(
-  ({ body }, ref) => {
-    const ellipseRef = useForwardedRef(ref);
-    const orbitData = body.orbitData as OrbitData;
+/** Orbit lines are decorative: let clicks pass through to the bodies behind them */
+const noRaycast = () => null;
+
+export default function OrbitEllipse({ body }: OrbitEllipseProps) {
+  const orbitData = body.orbitData as OrbitData;
+
+  const points = useMemo(() => {
     const a = orbitData.semiMajorAxis;
     const b = a * Math.sqrt(1 - orbitData.eccentricity ** 2);
     const focalDistance = Math.sqrt(a ** 2 - b ** 2);
@@ -21,31 +23,33 @@ const OrbitEllipse = forwardRef<THREE.Group, OrbitEllipseProps>(
     // and periapsis on +x, matching the basis used by OrbitData.orientEllipse.
     const curve = new THREE.EllipseCurve(
       -focalDistance, // aX (ellipse centre)
-      0,              // aY
-      a,              // xRadius
-      b,              // yRadius
-      0,              // aStartAngle
-      2 * Math.PI,    // aEndAngle
-      false           // aClockwise
+      0, // aY
+      a, // xRadius
+      b, // yRadius
+      0, // aStartAngle
+      2 * Math.PI, // aEndAngle
+      false, // aClockwise
     );
+    return curve.getPoints(5000);
+  }, [orbitData]);
 
-    const points = curve.getPoints(5000);
+  // Orient once on mount; the Moon's fast-precessing orbit is re-oriented every frame in CelestialBody.update
+  useLayoutEffect(() => {
+    if (body.ellipseRef?.current) {
+      orbitData.orientEllipse(body.ellipseRef.current, new Date());
+    }
+  }, [body, orbitData]);
 
-    const group = new THREE.Group();
-    orbitData.orientEllipse(group, new Date());
-
-    return (
-      <primitive object={group} ref={ellipseRef}>
-        <Line
-          points={points} 
-          color={body.physicalData.color} 
-          lineWidth={1} 
-          transparent={true}
-          opacity={0.8}
-        />
-       </primitive>
-    );
-  }
-);
-
-export default OrbitEllipse;
+  return (
+    <group ref={body.ellipseRef}>
+      <Line
+        points={points}
+        color={body.physicalData.color}
+        lineWidth={1}
+        transparent
+        opacity={0.8}
+        raycast={noRaycast}
+      />
+    </group>
+  );
+}

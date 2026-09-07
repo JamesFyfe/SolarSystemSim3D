@@ -47,12 +47,7 @@ export default function SunGlow({ body }: { body: CelestialBody }) {
   });
 
   return (
-    <mesh
-      ref={meshRef}
-      name={`${body.name} glow`}
-      renderOrder={3}
-      raycast={() => null}
-    >
+    <mesh ref={meshRef} name={`${body.name} glow`} renderOrder={3} raycast={() => null}>
       <planeGeometry args={[2, 2]} />
       <primitive object={material} attach="material" />
     </mesh>

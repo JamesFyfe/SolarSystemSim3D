@@ -7,7 +7,7 @@ const InvertedLightShaderMaterial = shaderMaterial(
     map: new THREE.Texture(),
   },
   // vertex shader
-  /*glsl*/`
+  /*glsl*/ `
 		#include <common>
 		#include <logdepthbuf_pars_vertex>
 		precision highp float;
@@ -28,7 +28,7 @@ const InvertedLightShaderMaterial = shaderMaterial(
     }
   `,
   // fragment shader
-  /*glsl*/`
+  /*glsl*/ `
 		#include <common>
 		#include <logdepthbuf_pars_fragment>
 		precision highp float;
@@ -60,7 +60,7 @@ const InvertedLightShaderMaterial = shaderMaterial(
 
       gl_FragColor = vec4(textureColor.rgb, finalOpacity);
     }
-  `
+  `,
 );
 
 export default InvertedLightShaderMaterial;

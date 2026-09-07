@@ -71,6 +71,7 @@
       "id": "0-2",
       "name": "Earth",
       "clickable": true,
+      "renderer": "earth",
       "physicalData": {
         "mass": 5.9722,
         "radius": 6.371,

@@ -1,26 +1,28 @@
-import { useState } from "react";
-import CelestialBody, { CelestialBodyData, createCelestialBodyFromJSON } from "../classes/CelestialBody";
-import { AnimationLoop } from "../utils/AnimationLoop";
-import { CelestialBodyRenderer } from "./CelestialBodyRenderer";
+import { useMemo, useReducer, useState } from 'react';
+import { CelestialBodyData, collectBodiesById, createCelestialBodyFromJSON } from '../classes/CelestialBody';
+import useAnimationLoop from '../hooks/useAnimationLoop';
+import { initialVisibleBodies, visibleBodiesReducer } from '../state/visibleBodies';
+import CelestialBodyRenderer from './CelestialBodyRenderer';
 import data from '../data/PlanetData.json';
 
-export interface BodyAndFullyRendered {
-  body: CelestialBody;
-  fullyRendered: boolean;
+interface RenderedBodiesProps {
+  dateRef: React.MutableRefObject<Date>;
+  timeMultRef: React.MutableRefObject<number>;
 }
 
-export default function RenderedBodies({dateRef, timeMultRef}: {dateRef: React.MutableRefObject<Date>, timeMultRef: React.MutableRefObject<number>}) {
-  const sun = createCelestialBodyFromJSON(data as CelestialBodyData);
-  const [visibleBodies, setVisibleBodies] = useState<BodyAndFullyRendered[]>(
-    [{ body: sun, fullyRendered: true }, ...sun.children.map((planet) => ({ body: planet, fullyRendered: false }))]
-  );
-  const { setSelectedBody } = AnimationLoop({visibleBodies, setVisibleBodies, dateRef, timeMultRef});
-  console.log("Returning Solar System Scene");
+export default function RenderedBodies({ dateRef, timeMultRef }: RenderedBodiesProps) {
+  // Lazy initialiser: the body tree is built once, not on every render
+  const [root] = useState(() => createCelestialBodyFromJSON(data as CelestialBodyData));
+  const bodiesById = useMemo(() => collectBodiesById(root), [root]);
+  const [visibleBodies, dispatch] = useReducer(visibleBodiesReducer, root, initialVisibleBodies);
+
+  const { setSelectedBody } = useAnimationLoop({ root, bodiesById, visibleBodies, dispatch, dateRef, timeMultRef });
+
   return (
     <>
-      {visibleBodies.map((object: BodyAndFullyRendered) => (
-        <CelestialBodyRenderer key={object.body.id} body={object.body} fullyRendered={object.fullyRendered} setSelectedBody={setSelectedBody}/>
+      {visibleBodies.map(({ body, fullyRendered }) => (
+        <CelestialBodyRenderer key={body.id} body={body} fullyRendered={fullyRendered} onSelect={setSelectedBody} />
       ))}
     </>
   );
-};
+}

@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import type CelestialBody from "./CelestialBody";
-import { julianCenturiesTT } from "../utils/astroTime";
-import { moonPosition, moonMeanNode, moonMeanPerigee, MOON_MEAN_INCLINATION } from "../utils/lunarTheory";
-import { eclipticOfDateToJ2000, Vec3 } from "../utils/precession";
+import type CelestialBody from './CelestialBody';
+import { julianCenturiesTT } from '../utils/astroTime';
+import { moonPosition, moonMeanNode, moonMeanPerigee, MOON_MEAN_INCLINATION } from '../utils/lunarTheory';
+import { eclipticOfDateToJ2000, Vec3 } from '../utils/precession';
 
-export type OrbitModel = "kepler" | "moon";
+export type OrbitModel = 'kepler' | 'moon';
 
 /**
  * Frame conventions
@@ -49,7 +49,7 @@ export default class OrbitData {
     longitudeOfPeriapsis: number,
     longitudeOfAscendingNode: number,
     frame: string,
-    model: OrbitModel = "kepler",
+    model: OrbitModel = 'kepler',
   ) {
     const piOver180 = Math.PI / 180;
     this.parent = parent;
@@ -72,7 +72,7 @@ export default class OrbitData {
       this.sinParentTilt = Math.sin(-this.parent.physicalData.axisTilt);
     }
 
-    if (this.model === "moon") {
+    if (this.model === 'moon') {
       this.inclination = MOON_MEAN_INCLINATION;
     } else {
       this.computeBasis(this.longitudeOfAscendingNode, this.longitudeOfPeriapsis, this.inclination);
@@ -81,9 +81,10 @@ export default class OrbitData {
 
   /** Ecliptic (X, Y, Z) → scene frame, including the optional Laplace-plane tilt. */
   private eclipticToScene(X: number, Y: number, Z: number): Vec3 {
-    let x = Y, y = Z;
+    let x = Y,
+      y = Z;
     const z = X;
-    if (this.frame === "laplace" && this.cosParentTilt !== undefined && this.sinParentTilt !== undefined) {
+    if (this.frame === 'laplace' && this.cosParentTilt !== undefined && this.sinParentTilt !== undefined) {
       // same rotation the renderer applies for the parent's axial tilt (rotation.z = -tilt)
       const xt = x;
       x = this.cosParentTilt * xt - this.sinParentTilt * y;
@@ -94,9 +95,12 @@ export default class OrbitData {
 
   private computeBasis(node: number, lonPeri: number, inc: number) {
     const w = lonPeri - node; // argument of periapsis
-    const cw = Math.cos(w), sw = Math.sin(w);
-    const cO = Math.cos(node), sO = Math.sin(node);
-    const ci = Math.cos(inc), si = Math.sin(inc);
+    const cw = Math.cos(w),
+      sw = Math.sin(w);
+    const cO = Math.cos(node),
+      sO = Math.sin(node);
+    const ci = Math.cos(inc),
+      si = Math.sin(inc);
     this.basisP = this.eclipticToScene(cw * cO - sw * sO * ci, cw * sO + sw * cO * ci, sw * si);
     this.basisQ = this.eclipticToScene(-sw * cO - cw * sO * ci, -sw * sO + cw * cO * ci, cw * si);
   }
@@ -124,11 +128,7 @@ export default class OrbitData {
   private lunarPosition(T: number): Vec3 {
     const { lon, lat, range } = moonPosition(T);
     const r = range / 1000; // km → 1000 km
-    const ofDate: Vec3 = [
-      r * Math.cos(lat) * Math.cos(lon),
-      r * Math.cos(lat) * Math.sin(lon),
-      r * Math.sin(lat),
-    ];
+    const ofDate: Vec3 = [r * Math.cos(lat) * Math.cos(lon), r * Math.cos(lat) * Math.sin(lon), r * Math.sin(lat)];
     const [X, Y, Z] = eclipticOfDateToJ2000(ofDate, T);
     return this.eclipticToScene(X, Y, Z);
   }
@@ -136,7 +136,7 @@ export default class OrbitData {
   /** Position relative to the parent, scene frame, 1000 km. */
   calculatePosition(date: Date): Vec3 {
     const T = julianCenturiesTT(date);
-    return this.model === "moon" ? this.lunarPosition(T) : this.keplerPosition(T);
+    return this.model === 'moon' ? this.lunarPosition(T) : this.keplerPosition(T);
   }
 
   /**
@@ -145,7 +145,7 @@ export default class OrbitData {
    * (precessing) node and perigee, so call it every frame.
    */
   orientEllipse(group: THREE.Object3D, date: Date) {
-    if (this.model === "moon") {
+    if (this.model === 'moon') {
       const T = julianCenturiesTT(date);
       // mean node/perigee are given for the ecliptic of date; bring them to J2000
       const toJ2000 = (lon: number): number => {

@@ -1,17 +1,35 @@
-import { useEffect, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
-import CelestialBody from "../classes/CelestialBody";
-import useCacheLoader, { loadTexture } from "../TextureCacheUtils";
+import { useEffect, useMemo, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+import CelestialBody from '../classes/CelestialBody';
+import useCachedTexture from '../hooks/useCachedTexture';
+import { loadTexture } from '../utils/textureCache';
 import InvertedLightShaderMaterial from '../shaders/InvertedLightShaderMaterial';
 import EarthSurfaceMaterial, { configureOceanNormal } from '../shaders/EarthSurfaceMaterial';
 import { getSunDirection } from '../utils/UtilFunctions';
-import * as THREE from 'three';
 
-const OCEAN_MASK_TEXTURE = "earth_specular.jpg";
-const OCEAN_NORMAL_TEXTURE = "ocean-normal.jpg";
+const OCEAN_MASK_TEXTURE = 'earth_specular.jpg';
+const OCEAN_NORMAL_TEXTURE = 'ocean-normal.jpg';
+const CLOUDS_TEXTURE = 'earth_clouds.png';
+const CITY_LIGHTS_TEXTURE = 'earth_lights.png';
+
+interface EarthLayerProps {
+  earth: CelestialBody;
+}
+
+/** Earth is drawn as a stack of shells: surface, night-side city lights, and drifting clouds. */
+export default function EarthLayers({ earth }: EarthLayerProps) {
+  return (
+    <>
+      <EarthSurface earth={earth} />
+      <CityLights earth={earth} />
+      <Clouds earth={earth} />
+    </>
+  );
+}
 
 /** Earth's surface: day texture plus shader-driven ocean specular / sky reflection. */
-export function EarthSurface({ earth }: { earth: CelestialBody }) {
+export function EarthSurface({ earth }: EarthLayerProps) {
   const material = useMemo(() => new EarthSurfaceMaterial(), []);
 
   useEffect(() => {
@@ -30,7 +48,9 @@ export function EarthSurface({ earth }: { earth: CelestialBody }) {
       material.needsUpdate = true;
     };
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [material, earth]);
 
   useEffect(() => () => material.dispose(), [material]);
@@ -40,66 +60,78 @@ export function EarthSurface({ earth }: { earth: CelestialBody }) {
   });
 
   return (
-    <mesh name={`${earth.name} mesh`} userData={{ bodyId: earth.id }}>
+    <mesh name={`${earth.name} mesh`}>
       <sphereGeometry args={[earth.physicalData.radius, 100, 50]} />
       <primitive object={material} attach="material" />
     </mesh>
   );
 }
 
-export function Clouds({ earth, rotationSpeed = 0.002 }: { earth: CelestialBody, rotationSpeed?: number }) {
-const meshRef = useCacheLoader("earth_clouds.png");
-const distFromSurface = 0.02;
+export function Clouds({ earth, rotationSpeed = 0.002 }: EarthLayerProps & { rotationSpeed?: number }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const texture = useCachedTexture(CLOUDS_TEXTURE);
+  const distFromSurface = 0.02;
 
-useFrame(( state, delta ) => {
-	meshRef.current?.rotateY(-rotationSpeed * delta);
-});
-
-  return (
-    <mesh ref={meshRef} name={"Earth clouds"} userData={{ bodyId: earth.id }}>
-      <sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]}></sphereGeometry>
-      <meshStandardMaterial transparent />
-    </mesh>
-  );
-};
-
-export function CityLights({ earth }: { earth: CelestialBody }) {
-	const meshRef = useCacheLoader("earth_lights.png");
-	const distFromSurface = 0.01;
-
-	const cityLightsMat = new InvertedLightShaderMaterial({
-    uniforms: {
-      sunDirection: { value: new THREE.Vector3(-1, 0, 0) },
-      map: { value: new THREE.Texture() },
-    },
-    transparent: true,
+  useFrame((_state, delta) => {
+    // Slow drift on top of the rotating group's spin
+    meshRef.current?.rotateY(-rotationSpeed * delta);
   });
 
-	useFrame(() => {
-		if(earth.rotatingGroupRef.current) {
-			if(!earth.parent) {
-				return;
-			}
-			const earthPosition = earth.position;
-			const sunPosition = earth.parent.position;
+  // Without its alpha map the shell would be a solid white sphere over the surface
+  if (!texture) {
+    return null;
+  }
 
-			const sunDirection = new THREE.Vector3().subVectors(sunPosition, earthPosition).normalize();
+  return (
+    <mesh ref={meshRef} name={`${earth.name} clouds`}>
+      <sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]} />
+      <meshStandardMaterial map={texture} transparent />
+    </mesh>
+  );
+}
 
-			// Create a quaternion representing the Earth's rotation
-			const earthRotation = new THREE.Quaternion().setFromEuler(earth.rotatingGroupRef.current.rotation);
-			
-			// Apply the inverse of the Earth's rotation to the sunDirection
-			sunDirection.applyQuaternion(earthRotation.invert());
+export function CityLights({ earth }: EarthLayerProps) {
+  const texture = useCachedTexture(CITY_LIGHTS_TEXTURE);
+  const distFromSurface = 0.01;
 
-			cityLightsMat.uniforms.sunDirection.value.copy(sunDirection);
-		}
+  const material = useMemo(
+    () =>
+      new InvertedLightShaderMaterial({
+        uniforms: {
+          sunDirection: { value: new THREE.Vector3(-1, 0, 0) },
+          map: { value: null },
+        },
+        transparent: true,
+      }),
+    [],
+  );
+  useEffect(() => () => material.dispose(), [material]);
 
-	});
-	
-	return (
-		<mesh ref={meshRef} name={"Earth city lights"} userData={{ bodyId: earth.id }}>
-			<sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]}></sphereGeometry>
-			<primitive object={cityLightsMat} attach="material" />
-		</mesh>
-	);
-};
+  useEffect(() => {
+    material.uniforms.map.value = texture;
+  }, [material, texture]);
+
+  useFrame(() => {
+    const rotatingGroup = earth.rotatingGroupRef.current;
+    if (!rotatingGroup) {
+      return;
+    }
+    // Sun direction in the surface's local frame: undo Earth's spin/tilt
+    const sunDirection = material.uniforms.sunDirection.value as THREE.Vector3;
+    getSunDirection(earth, sunDirection);
+    sunDirection.applyQuaternion(_inverseRotation.setFromEuler(rotatingGroup.rotation).invert());
+  });
+
+  if (!texture) {
+    return null;
+  }
+
+  return (
+    <mesh name={`${earth.name} city lights`}>
+      <sphereGeometry args={[earth.physicalData.radius + distFromSurface, 80, 40]} />
+      <primitive object={material} attach="material" />
+    </mesh>
+  );
+}
+
+const _inverseRotation = new THREE.Quaternion();

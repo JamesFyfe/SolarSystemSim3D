@@ -1,81 +1,103 @@
-import * as THREE from 'three';
-import { memo, useEffect } from "react";
-import CelestialBody from "../classes/CelestialBody";
-import useCacheLoader from "../TextureCacheUtils";
-import Atmosphere from "./Atmosphere";
-import BodyIndicator from "./BodyIndicator";
-import { Clouds, CityLights, EarthSurface } from "./EarthLayers";
-import OrbitEllipse from "./OrbitEllipse";
-import Rings from "./Rings";
-import SunGlow from "./SunGlow";
+import { memo, useCallback } from 'react';
+import type { ThreeEvent } from '@react-three/fiber';
+import CelestialBody from '../classes/CelestialBody';
+import useCachedTexture from '../hooks/useCachedTexture';
+import type { SelectBody } from '../hooks/useAnimationLoop';
 import { multiplyRGB } from '../utils/UtilFunctions';
+import Atmosphere from './Atmosphere';
+import BodyIndicator from './BodyIndicator';
+import EarthLayers from './EarthLayers';
+import OrbitEllipse from './OrbitEllipse';
+import Rings from './Rings';
+import SunGlow from './SunGlow';
 
-export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSelectedBody }: { body: CelestialBody, fullyRendered?: boolean, setSelectedBody: (id: string, transition?: boolean) => void}) => {
-  // const meshRef = useCacheLoader(body.physicalData.textureName, true, body.physicalData.normalMapName);
-  const meshRef = useCacheLoader(body.physicalData.textureName, true);
+/** Pointer travel (px) above which a pointerdown/up pair counts as an orbit drag, not a click */
+const CLICK_DRAG_TOLERANCE_PX = 5;
 
-  useEffect(() => {
-    if(body.rotatingGroupRef.current) {
-      body.rotatingGroupRef.current.rotation.order = 'ZXY';
-      // rotate mesh by axis tilt
-      body.rotatingGroupRef.current.rotation.z = -body.physicalData.axisTilt;
-    }
-  }, [body]);
+/** A single vertex at the origin, shared by every point-rendered body */
+const POINT_POSITION = new Float32Array([0, 0, 0]);
 
-  const getMeshProps = () => {
-    const geometry = new THREE.SphereGeometry(body.physicalData.radius, 100, 50);
-    const material = body.physicalData.lightIntensity ? 
-      new THREE.MeshStandardMaterial({ emissive: "rgb(160, 160, 90)", emissiveIntensity: 3 }) :
-      new THREE.MeshStandardMaterial({ color: new THREE.Color(body.physicalData.color) });
-    return { geometry, material };
-  };
+interface CelestialBodyRendererProps {
+  body: CelestialBody;
+  fullyRendered?: boolean;
+  onSelect: SelectBody;
+}
 
-  const getPointProps = () => {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0], 3));
-    const material = new THREE.PointsMaterial({ 
-        color: new THREE.Color(multiplyRGB(body.physicalData.color, 1.5)),
-        size: body.physicalData.radius ** 0.5 / 5, 
-        sizeAttenuation: false 
-      });
-    return { geometry, material };
-  };
+const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
+  body,
+  fullyRendered = true,
+  onSelect,
+}: CelestialBodyRendererProps) {
+  const { radius, color, axisTilt, lightIntensity } = body.physicalData;
+  const isStar = body.isStar;
+  const texture = useCachedTexture(fullyRendered && body.renderer !== 'earth' ? body.physicalData.textureName : null);
+
+  const handleClick = useCallback(
+    (event: ThreeEvent<MouseEvent>) => {
+      if (event.delta > CLICK_DRAG_TOLERANCE_PX) {
+        return;
+      }
+      // Only the nearest body under the pointer should be selected
+      event.stopPropagation();
+      onSelect(body.id, true);
+    },
+    [body.id, onSelect],
+  );
 
   return (
-    <group ref={body.threeGroupRef} name={body.name} userData={{ bodyId: body.id }}>
-      <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
-        {fullyRendered ? 
+    <group ref={body.threeGroupRef} name={body.name} onClick={handleClick}>
+      {/* Spin happens around local Y; the Z tilt is applied first (ZXY order) */}
+      <group
+        ref={body.rotatingGroupRef}
+        name={`${body.name} rotating group`}
+        rotation-order="ZXY"
+        rotation-z={-axisTilt}
+      >
+        {fullyRendered ? (
           <>
-            {body.name === "Earth" ?
-              <>
-                <EarthSurface earth={body} />
-                <CityLights earth={body}/>
-                <Clouds earth={body} />
-              </>
-              :
-              <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
-            }
+            {body.renderer === 'earth' ? (
+              <EarthLayers earth={body} />
+            ) : (
+              <mesh name={`${body.name} mesh`}>
+                <sphereGeometry args={[radius, 100, 50]} />
+                {/* See useCachedTexture: a new key when the map arrives forces a shader rebuild */}
+                {isStar ? (
+                  <meshStandardMaterial
+                    key={texture ? 'textured' : 'plain'}
+                    map={texture}
+                    emissiveMap={texture}
+                    emissive="rgb(160, 160, 90)"
+                    emissiveIntensity={3}
+                  />
+                ) : (
+                  <meshStandardMaterial
+                    key={texture ? 'textured' : 'plain'}
+                    map={texture}
+                    color={texture ? 'white' : color}
+                  />
+                )}
+              </mesh>
+            )}
             {body.ringData && <Rings body={body} />}
-          </> 
-          : 
-          <points {...getPointProps()} />
-        }
+          </>
+        ) : (
+          <points>
+            <bufferGeometry>
+              <bufferAttribute attach="attributes-position" array={POINT_POSITION} count={1} itemSize={3} />
+            </bufferGeometry>
+            <pointsMaterial color={multiplyRGB(color, 1.5)} size={radius ** 0.5 / 5} sizeAttenuation={false} />
+          </points>
+        )}
       </group>
-      <BodyIndicator ref={body.indicatorRef} body={body} setSelectedBody={setSelectedBody}/>
-      {body.orbitData && <OrbitEllipse ref={body.ellipseRef} body={body} />}
-      
+
+      <BodyIndicator body={body} />
+      {body.orbitData && <OrbitEllipse body={body} />}
       {fullyRendered && body.atmosphereData && <Atmosphere body={body} />}
-      {body.physicalData.lightIntensity && <SunGlow body={body} />}
-      {fullyRendered && body.physicalData.lightIntensity && 
-      <>
-        <pointLight
-          ref={body.lightRef}
-          intensity={body.physicalData.lightIntensity} position={body.position}>
-        </pointLight>
-      </>
-      }
+      {isStar && <SunGlow body={body} />}
+      {/* The light sits at the group origin, which already tracks the body's position */}
+      {fullyRendered && isStar && <pointLight ref={body.lightRef} intensity={lightIntensity} />}
     </group>
   );
-  },
-  (prevProps, nextProps) => prevProps.body.id === nextProps.body.id && prevProps.fullyRendered === nextProps.fullyRendered
-);
+});
+
+export default CelestialBodyRenderer;

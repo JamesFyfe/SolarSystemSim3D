@@ -1,35 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Constants from '../Constants';
-
-const MINUTE = 60;
-const HOUR = 3600;
-const DAY = 86400;
-const YEAR = 31557600; // 365.25 days
-
-const FORWARD_SPEEDS: { seconds: number; label: string }[] = [
-  { seconds: 1, label: '1 second' },
-  { seconds: 10, label: '10 seconds' },
-  { seconds: MINUTE, label: '1 minute' },
-  { seconds: 10 * MINUTE, label: '10 minutes' },
-  { seconds: 30 * MINUTE, label: '30 minutes' },
-  { seconds: HOUR, label: '1 hour' },
-  { seconds: 3 * HOUR, label: '3 hours' },
-  { seconds: 9 * HOUR, label: '9 hours' },
-  { seconds: DAY, label: '1 day' },
-  { seconds: 5 * DAY, label: '5 days' },
-  { seconds: 30 * DAY, label: '30 days' },
-  { seconds: YEAR, label: '1 year' },
-  { seconds: 5 * YEAR, label: '5 years' },
-];
-
-const SPEED_STEPS = [
-  ...FORWARD_SPEEDS.map((step) => ({ seconds: -step.seconds, label: step.label })).reverse(),
-  { seconds: 0, label: 'Stopped' },
-  ...FORWARD_SPEEDS,
-];
-
-const ZERO_INDEX = SPEED_STEPS.findIndex((step) => step.seconds === 0);
-const REALTIME_INDEX = SPEED_STEPS.findIndex((step) => step.seconds === 1);
+import useForceUpdate from '../hooks/useForceUpdate';
+import { clampSpeedIndex, REALTIME_INDEX, SPEED_STEPS, timeMultipleFor, ZERO_INDEX } from '../utils/speedSteps';
 
 function pad(value: number) {
   return value.toString().padStart(2, '0');
@@ -110,9 +82,11 @@ function IconButton({
       disabled={disabled}
       onClick={onClick}
       className={`inline-flex h-8 w-8 items-center justify-center rounded-full border text-sm transition
-        ${active
-          ? 'border-sky-400/60 bg-sky-400/20 text-sky-200'
-          : 'border-white/10 bg-white/5 text-white/85 hover:border-white/25 hover:bg-white/10'}
+        ${
+          active
+            ? 'border-sky-400/60 bg-sky-400/20 text-sky-200'
+            : 'border-white/10 bg-white/5 text-white/85 hover:border-white/25 hover:bg-white/10'
+        }
         disabled:cursor-not-allowed disabled:opacity-35`}
     >
       {children}
@@ -120,23 +94,23 @@ function IconButton({
   );
 }
 
-const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObject<Date>, timeMultRef: React.MutableRefObject<number> }) => {
+interface TimeControlsProps {
+  dateRef: React.MutableRefObject<Date>;
+  timeMultRef: React.MutableRefObject<number>;
+}
+
+export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [speedIndex, setSpeedIndex] = useState(Constants.timeMultipleIndex);
   const [isEditingDate, setIsEditingDate] = useState(false);
-  const [, setClockTick] = useState(0);
+  // The clock lives in a ref (so the 3D scene doesn't re-render every frame); poll it for display
+  const refreshClock = useForceUpdate();
 
-  const refreshClock = useCallback(() => {
-    setClockTick((tick) => tick + 1);
-  }, []);
-
-  const applySpeed = useCallback((index: number, paused: boolean) => {
-    timeMultRef.current = paused ? 0 : SPEED_STEPS[index].seconds;
-  }, [timeMultRef]);
-
+  // `speedIndex` + `isPaused` are the single source of truth; the ref the
+  // animation loop reads is derived from them.
   useEffect(() => {
-    applySpeed(Constants.timeMultipleIndex, false);
-  }, [applySpeed]);
+    timeMultRef.current = timeMultipleFor(speedIndex, isPaused);
+  }, [isPaused, speedIndex, timeMultRef]);
 
   useEffect(() => {
     if (isPaused || isEditingDate) {
@@ -147,35 +121,27 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
   }, [isPaused, isEditingDate, refreshClock]);
 
   const setSpeed = useCallback((index: number) => {
-    const nextIndex = Math.max(0, Math.min(SPEED_STEPS.length - 1, index));
-    setSpeedIndex(nextIndex);
-    applySpeed(nextIndex, isPaused);
-  }, [applySpeed, isPaused]);
+    setSpeedIndex(clampSpeedIndex(index));
+  }, []);
 
   const togglePause = useCallback(() => {
-    if (isPaused) {
-      const nextIndex = SPEED_STEPS[speedIndex].seconds === 0 ? REALTIME_INDEX : speedIndex;
-      setSpeedIndex(nextIndex);
-      applySpeed(nextIndex, false);
-      setIsPaused(false);
-    } else {
-      applySpeed(speedIndex, true);
-      setIsPaused(true);
+    if (isPaused && SPEED_STEPS[speedIndex].seconds === 0) {
+      // Resuming from "Stopped" would be a no-op; go to realtime instead
+      setSpeedIndex(REALTIME_INDEX);
     }
-  }, [applySpeed, isPaused, speedIndex]);
+    setIsPaused(!isPaused);
+  }, [isPaused, speedIndex]);
 
   const resetToNow = useCallback(() => {
     dateRef.current = new Date();
     setSpeedIndex(REALTIME_INDEX);
-    applySpeed(REALTIME_INDEX, false);
     setIsPaused(false);
     refreshClock();
-  }, [applySpeed, dateRef, refreshClock]);
+  }, [dateRef, refreshClock]);
 
   const jumpToRealtime = useCallback(() => {
     setSpeedIndex(REALTIME_INDEX);
-    applySpeed(REALTIME_INDEX, isPaused);
-  }, [applySpeed, isPaused]);
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -288,7 +254,11 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
           >
             {isPaused ? (
-              <svg viewBox="0 0 24 24" className={`h-4 w-4 fill-current ${isReverse ? '-scale-x-100' : ''}`} aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                className={`h-4 w-4 fill-current ${isReverse ? '-scale-x-100' : ''}`}
+                aria-hidden="true"
+              >
                 <path d="M8 5v14l11-7L8 5z" />
               </svg>
             ) : (
@@ -297,7 +267,11 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
               </svg>
             )}
           </button>
-          <IconButton label="Faster (→)" onClick={() => setSpeed(speedIndex + 1)} disabled={speedIndex === SPEED_STEPS.length - 1}>
+          <IconButton
+            label="Faster (→)"
+            onClick={() => setSpeed(speedIndex + 1)}
+            disabled={speedIndex === SPEED_STEPS.length - 1}
+          >
             <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
               <path d="M13 6v12l8.5-6L13 6zM3.5 18l8.5-6-8.5-6v12z" />
             </svg>
@@ -323,14 +297,14 @@ const TimeControls = ({ dateRef, timeMultRef }: { dateRef: React.MutableRefObjec
             }}
           />
         </div>
-        <div className={`mt-1.5 text-sm ${
-          isPaused || speed === 0 ? 'text-slate-400' : isReverse ? 'text-orange-300' : 'text-sky-300'
-        }`}>
+        <div
+          className={`mt-1.5 text-sm ${
+            isPaused || speed === 0 ? 'text-slate-400' : isReverse ? 'text-orange-300' : 'text-sky-300'
+          }`}
+        >
           {formatSpeed(speed)}
         </div>
       </div>
     </div>
   );
-};
-
-export default TimeControls;
+}

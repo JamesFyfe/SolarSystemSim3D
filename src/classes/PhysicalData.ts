@@ -26,11 +26,11 @@ export default class PhysicalData {
     this.textureName = textureName;
     this.rotationPeriod = rotationPeriod;
     this.startingRotation = startingRotation;
-    this.axisTilt = axisTilt * Math.PI / 180;
-    if(lightIntensity) {
+    this.axisTilt = (axisTilt * Math.PI) / 180;
+    if (lightIntensity) {
       this.lightIntensity = lightIntensity;
     }
-    if(normalMapName) {
+    if (normalMapName) {
       this.normalMapName = normalMapName;
     }
   }

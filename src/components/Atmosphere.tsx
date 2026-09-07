@@ -54,13 +54,7 @@ export default function Atmosphere({ body }: { body: CelestialBody }) {
   );
 
   return (
-    <mesh
-      name={`${body.name} atmosphere`}
-      userData={{ bodyId: body.id }}
-      scale={atmosphereRadius}
-      renderOrder={2}
-      onBeforeRender={onBeforeRender}
-    >
+    <mesh name={`${body.name} atmosphere`} scale={atmosphereRadius} renderOrder={2} onBeforeRender={onBeforeRender}>
       <sphereGeometry args={[1, 64, 64]} />
       <primitive object={material} attach="material" />
     </mesh>

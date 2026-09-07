@@ -27,7 +27,7 @@ export default class EarthSurfaceMaterial extends THREE.MeshStandardMaterial {
     oceanTint: { value: new THREE.Color(0.8, 0.9, 1.08) },
     skyColor: { value: new THREE.Color(0.35, 0.55, 1.0) },
     skyStrength: { value: 0.35 },
-    uNormalScale: { value: 0.65 },
+    uNormalScale: { value: 0.25 },
   };
 
   constructor() {
@@ -86,6 +86,8 @@ export default class EarthSurfaceMaterial extends THREE.MeshStandardMaterial {
           '#include <normal_fragment_maps>',
           /* glsl */ `
           #include <normal_fragment_maps>
+          // vMapUv only exists once a map is assigned; before then ocean == 0 and there is nothing to perturb
+          #ifdef USE_MAP
           {
             // Same 3 × 1.5 lat-lon tiling as earth-history. Near the poles those
             // UVs pinch into meridians, so blend to an XZ polar-cap projection.
@@ -100,6 +102,7 @@ export default class EarthSurfaceMaterial extends THREE.MeshStandardMaterial {
             vec3 waterN = normalize(mix(waveN, poleN, poleW));
             normal = normalize(mix(nonPerturbedNormal, waterN, ocean));
           }
+          #endif
           `,
         )
         .replace(

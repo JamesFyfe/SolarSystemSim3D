@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-const useForceUpdate = () => {
+/** Returns a stable function that forces the calling component to re-render. */
+export default function useForceUpdate() {
   const [, setTick] = useState(0);
-  const update = () => setTick((tick) => tick + 1);
-  return update;
-};
-
-export default useForceUpdate;
+  return useCallback(() => setTick((tick) => tick + 1), []);
+}

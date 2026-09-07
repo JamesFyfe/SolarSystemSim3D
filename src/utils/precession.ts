@@ -10,11 +10,13 @@ const ARCSEC = Math.PI / (180 * 3600);
 export type Vec3 = [number, number, number];
 
 function rotX(v: Vec3, a: number): Vec3 {
-  const c = Math.cos(a), s = Math.sin(a);
+  const c = Math.cos(a),
+    s = Math.sin(a);
   return [v[0], c * v[1] - s * v[2], s * v[1] + c * v[2]];
 }
 function rotZ(v: Vec3, a: number): Vec3 {
-  const c = Math.cos(a), s = Math.sin(a);
+  const c = Math.cos(a),
+    s = Math.sin(a);
   return [c * v[0] - s * v[1], s * v[0] + c * v[1], v[2]];
 }
 
@@ -26,8 +28,8 @@ function rotZ(v: Vec3, a: number): Vec3 {
 export function eclipticOfDateToJ2000(v: Vec3, T: number): Vec3 {
   // Precession angles from J2000 (T0 = 0) to date (t = T), eq. 21.5.
   const t = T;
-  const eta = (47.0029 * t - 0.03302 * t * t + 0.000060 * t * t * t) * ARCSEC;
-  const Pi = 174.876384 * Math.PI / 180 + (-869.8089 * t + 0.03536 * t * t) * ARCSEC;
+  const eta = (47.0029 * t - 0.03302 * t * t + 0.00006 * t * t * t) * ARCSEC;
+  const Pi = (174.876384 * Math.PI) / 180 + (-869.8089 * t + 0.03536 * t * t) * ARCSEC;
   const p = (5029.0966 * t + 1.11113 * t * t - 0.000006 * t * t * t) * ARCSEC;
 
   // Forward (J2000 → date) is Rz(Π + p) · Rx(−η) · Rz(−Π); this is its inverse.

@@ -31,26 +31,29 @@ export interface OrbitDataParams {
 
 export interface AtmosphereParams {
   /** CSS colour of the haze, e.g. "rgb(90, 120, 160)" */
-  color: string,
+  color: string;
   /** Height of the visible shell as a fraction of the planet radius (visually exaggerated) */
-  height: number,
+  height: number;
   /** Maximum opacity of the haze at the limb, 0-1 */
-  opacity: number,
+  opacity: number;
   /** Scattering strength multiplier (default 1) */
-  intensity?: number,
+  intensity?: number;
   /** Haze density multiplier (default 1) */
-  density?: number,
+  density?: number;
   /** How quickly density falls off with altitude; larger = thinner upper layers (default 5) */
-  falloff?: number
+  falloff?: number;
 }
 
 export interface RingDataParams {
-  distance: number,
-  width: number,
-  color: string,
-  opacity: number,
-  textureName: string
+  distance: number;
+  width: number;
+  color: string;
+  opacity: number;
+  textureName: string;
 }
+
+/** Bodies that need a bespoke set of surface layers instead of the default textured sphere. */
+export type BodyRenderer = 'earth';
 
 export interface CelestialBodyData {
   id: string;
@@ -61,17 +64,23 @@ export interface CelestialBodyData {
   orbitData?: OrbitDataParams;
   atmosphere?: AtmosphereParams;
   ringData?: RingDataParams;
+  /** Selects a custom renderer for the surface; omit for the default textured sphere. */
+  renderer?: BodyRenderer;
 }
+
+/** The drei `<Text>` mesh, which exposes troika's `fillOpacity`. */
+export type IndicatorMesh = THREE.Mesh & { fillOpacity: number };
 
 export default class CelestialBody {
   id: string;
   name: string;
   clickable: boolean;
+  renderer?: BodyRenderer;
   position: THREE.Vector3;
   physicalData: PhysicalData;
   threeGroupRef: React.RefObject<THREE.Group>;
   rotatingGroupRef: React.RefObject<THREE.Group>;
-  indicatorRef: React.RefObject<THREE.Object3D>;
+  indicatorRef: React.RefObject<IndicatorMesh>;
   parent: CelestialBody | undefined;
   children: CelestialBody[];
   orbitData?: OrbitData;
@@ -90,11 +99,13 @@ export default class CelestialBody {
     orbitData?: OrbitDataParams,
     atmosphere?: AtmosphereParams,
     ringData?: RingDataParams,
+    renderer?: BodyRenderer,
   ) {
     this.id = id;
     this.name = name;
     this.position = new THREE.Vector3(0, 0, 0);
     this.clickable = clickable;
+    this.renderer = renderer;
     this.parent = parent;
     this.physicalData = new PhysicalData(
       physicalData.mass,
@@ -105,7 +116,7 @@ export default class CelestialBody {
       physicalData.startingRotation,
       physicalData.axisTilt,
       physicalData.lightIntensity,
-      physicalData.normalMapName
+      physicalData.normalMapName,
     );
     if (orbitData) {
       this.orbitData = new OrbitData(
@@ -121,7 +132,7 @@ export default class CelestialBody {
         orbitData.frame,
         orbitData.model,
       );
-      if (this.orbitData.frame === "laplace" && this.parent) {
+      if (this.orbitData.frame === 'laplace' && this.parent) {
         this.physicalData.axisTilt += this.parent.physicalData.axisTilt;
       }
       // subtract inclination from tilt since tilt is relative to inclination
@@ -131,7 +142,7 @@ export default class CelestialBody {
 
     this.threeGroupRef = createRef<THREE.Group>();
     this.rotatingGroupRef = createRef<THREE.Group>();
-    this.indicatorRef = createRef<THREE.Object3D>();
+    this.indicatorRef = createRef<IndicatorMesh>();
 
     if (physicalData.lightIntensity) {
       this.lightRef = createRef<THREE.PointLight>();
@@ -151,6 +162,11 @@ export default class CelestialBody {
     }
   }
 
+  /** True for self-luminous bodies (the Sun): they carry a point light and a glow. */
+  get isStar(): boolean {
+    return (this.physicalData.lightIntensity ?? 0) > 0;
+  }
+
   update(date: Date) {
     if (!this.threeGroupRef.current) {
       return;
@@ -158,7 +174,9 @@ export default class CelestialBody {
     // rotate bodies
     if (this.physicalData.rotationPeriod !== 0 && this.rotatingGroupRef.current) {
       // 3.6e+6 ms per hour
-      this.rotatingGroupRef.current.rotation.y = this.physicalData.startingRotation * Math.PI / 180 + ((date.getTime() / 3.6e+6) / this.physicalData.rotationPeriod) * (2 * Math.PI);
+      this.rotatingGroupRef.current.rotation.y =
+        (this.physicalData.startingRotation * Math.PI) / 180 +
+        (date.getTime() / 3.6e6 / this.physicalData.rotationPeriod) * (2 * Math.PI);
     }
 
     if (this.orbitData && this.parent) {
@@ -171,7 +189,7 @@ export default class CelestialBody {
     if (this.parent && this.orbitData && this.ellipseRef?.current) {
       const diff = new THREE.Vector3().subVectors(this.parent.position, this.position);
       this.ellipseRef.current.position.set(...diff.toArray());
-      if (this.orbitData.model === "moon") {
+      if (this.orbitData.model === 'moon') {
         // lunar node and perigee precess quickly; keep the drawn orbit in step
         this.orbitData.orientEllipse(this.ellipseRef.current, date);
       }
@@ -190,7 +208,19 @@ export function createCelestialBodyFromJSON(jsonData: CelestialBodyData, parent?
     jsonData.orbitData,
     jsonData.atmosphere,
     jsonData.ringData,
+    jsonData.renderer,
   );
 
   return celestialBody;
+}
+
+/** Flattens the body tree rooted at `root` into an id → body lookup. */
+export function collectBodiesById(root: CelestialBody): Map<string, CelestialBody> {
+  const bodies = new Map<string, CelestialBody>();
+  const visit = (body: CelestialBody) => {
+    bodies.set(body.id, body);
+    body.children.forEach(visit);
+  };
+  visit(root);
+  return bodies;
 }
