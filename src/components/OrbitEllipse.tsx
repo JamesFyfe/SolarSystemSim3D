@@ -9,7 +9,7 @@ interface OrbitEllipseProps {
 }
 
 /** Smooth enough for screen-space ellipses; 5000-point fat lines stalled the first camera pan. */
-const ORBIT_SEGMENTS = 256;
+const ORBIT_SEGMENTS = 5000;
 
 /** Orbit lines are decorative: let clicks pass through to the bodies behind them */
 function noRaycast() {}

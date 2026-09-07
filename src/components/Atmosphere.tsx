@@ -19,10 +19,8 @@ export default function Atmosphere({ body }: { body: CelestialBody }) {
         color: atmosphere.color,
         planetRadius,
         atmosphereRadius,
-        intensity: atmosphere.intensity,
-        density: atmosphere.density,
-        opacity: atmosphere.opacity,
-        falloff: atmosphere.falloff,
+        limb: atmosphere.limb,
+        surface: atmosphere.surface,
       }),
     [atmosphere, planetRadius, atmosphereRadius],
   );

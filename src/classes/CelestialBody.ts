@@ -34,14 +34,10 @@ export interface AtmosphereParams {
   color: string;
   /** Height of the visible shell as a fraction of the planet radius (visually exaggerated) */
   height: number;
-  /** Maximum opacity of the haze at the limb, 0-1 */
-  opacity: number;
-  /** Scattering strength multiplier (default 1) */
-  intensity?: number;
-  /** Haze density multiplier (default 1) */
-  density?: number;
-  /** How quickly density falls off with altitude; larger = thinner upper layers (default 5) */
-  falloff?: number;
+  /** Silhouette glow strength. 0 = none, ~1 = typical, higher = brighter limb. */
+  limb: number;
+  /** Haze over the disc. 0 = clear surface, ~0.2 = moderate veil, higher = more coverage. */
+  surface: number;
 }
 
 export interface RingDataParams {
