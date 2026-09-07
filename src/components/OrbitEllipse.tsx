@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Line } from '@react-three/drei';
 import CelestialBody from '../classes/CelestialBody';
 import OrbitData from '../classes/OrbitData';
+import { getDate } from '../state/simulationClock';
 
 interface OrbitEllipseProps {
   body: CelestialBody;
@@ -36,7 +37,7 @@ export default function OrbitEllipse({ body }: OrbitEllipseProps) {
   // Orient once on mount; the Moon's fast-precessing orbit is re-oriented every frame in CelestialBody.update
   useLayoutEffect(() => {
     if (body.ellipseRef?.current) {
-      orbitData.orientEllipse(body.ellipseRef.current, new Date());
+      orbitData.orientEllipse(body.ellipseRef.current, getDate());
     }
   }, [body, orbitData]);
 

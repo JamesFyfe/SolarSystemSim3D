@@ -1,20 +1,13 @@
-import { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { EffectComposer, Bloom, ToneMapping } from '@react-three/postprocessing';
 import { ToneMappingMode } from 'postprocessing';
 import Constants from '../Constants';
-import { timeMultipleFor } from '../utils/speedSteps';
 import TimeControls from './TimeControls';
 import BackgroundStars from './BackgroundStars';
 import RenderedBodies from './RenderedBodies';
 
 export default function SolarSystem() {
-  // Simulation clock. Kept in refs so advancing it every frame doesn't re-render the scene;
-  // TimeControls writes to them and the animation loop reads them.
-  const dateRef = useRef(Constants.startDate);
-  const timeMultRef = useRef(timeMultipleFor(Constants.timeMultipleIndex, false));
-
   return (
     <div className="h-full overflow-hidden">
       <Canvas
@@ -36,10 +29,10 @@ export default function SolarSystem() {
           maxDistance={20000000}
         />
         <ambientLight intensity={0.07} />
-        <RenderedBodies dateRef={dateRef} timeMultRef={timeMultRef} />
+        <RenderedBodies />
         <BackgroundStars />
       </Canvas>
-      <TimeControls dateRef={dateRef} timeMultRef={timeMultRef} />
+      <TimeControls />
     </div>
   );
 }

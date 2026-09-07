@@ -5,18 +5,13 @@ import { initialVisibleBodies, visibleBodiesReducer } from '../state/visibleBodi
 import CelestialBodyRenderer from './CelestialBodyRenderer';
 import data from '../data/PlanetData.json';
 
-interface RenderedBodiesProps {
-  dateRef: React.MutableRefObject<Date>;
-  timeMultRef: React.MutableRefObject<number>;
-}
-
-export default function RenderedBodies({ dateRef, timeMultRef }: RenderedBodiesProps) {
+export default function RenderedBodies() {
   // Lazy initialiser: the body tree is built once, not on every render
   const [root] = useState(() => createCelestialBodyFromJSON(data as CelestialBodyData));
   const bodiesById = useMemo(() => collectBodiesById(root), [root]);
   const [visibleBodies, dispatch] = useReducer(visibleBodiesReducer, root, initialVisibleBodies);
 
-  const { setSelectedBody } = useAnimationLoop({ root, bodiesById, visibleBodies, dispatch, dateRef, timeMultRef });
+  const { setSelectedBody } = useAnimationLoop({ root, bodiesById, visibleBodies, dispatch });
 
   return (
     <>

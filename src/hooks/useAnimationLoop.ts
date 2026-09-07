@@ -6,6 +6,7 @@ import CelestialBody from '../classes/CelestialBody';
 import Constants from '../Constants';
 import { createTransitionState, startTransition, updateTransition } from '../utils/Transition';
 import { VisibleBodiesAction, VisibleBody } from '../state/visibleBodies';
+import { advance } from '../state/simulationClock';
 
 interface AnimationLoopOptions {
   /** The Sun: root of the body tree. */
@@ -13,8 +14,6 @@ interface AnimationLoopOptions {
   bodiesById: ReadonlyMap<string, CelestialBody>;
   visibleBodies: VisibleBody[];
   dispatch: Dispatch<VisibleBodiesAction>;
-  dateRef: React.MutableRefObject<Date>;
-  timeMultRef: React.MutableRefObject<number>;
 }
 
 /** Callback for focusing the camera on a body, optionally with a fly-to animation. */
@@ -30,14 +29,7 @@ const _camPos = new THREE.Vector3();
  * Drives the simulation: advances the clock, moves every visible body, keeps
  * the camera locked to the selected body and adjusts level-of-detail.
  */
-export default function useAnimationLoop({
-  root,
-  bodiesById,
-  visibleBodies,
-  dispatch,
-  dateRef,
-  timeMultRef,
-}: AnimationLoopOptions) {
+export default function useAnimationLoop({ root, bodiesById, visibleBodies, dispatch }: AnimationLoopOptions) {
   const camera = useThree((state) => state.camera);
   const controls = useThree((state) => state.controls) as OrbitControls | null;
   const get = useThree((state) => state.get);
@@ -91,8 +83,7 @@ export default function useAnimationLoop({
       return;
     }
 
-    dateRef.current = new Date(dateRef.current.getTime() + delta * 1000 * timeMultRef.current);
-    const date = dateRef.current;
+    const date = advance(delta);
 
     selectedGroup.getWorldPosition(_posBefore);
     visibleBodies.forEach((entry) => entry.body.update(date));

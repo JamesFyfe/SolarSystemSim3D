@@ -1,7 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
-import Constants from '../Constants';
-import useForceUpdate from '../hooks/useForceUpdate';
-import { clampSpeedIndex, REALTIME_INDEX, SPEED_STEPS, timeMultipleFor, ZERO_INDEX } from '../utils/speedSteps';
+import { useEffect, useState } from 'react';
+import {
+  jumpToRealtime,
+  nudgeSpeed,
+  resetToNow,
+  setSpeedIndex,
+  setTime,
+  togglePause,
+  useSimulationDate,
+  useSimulationPlayback,
+} from '../state/simulationClock';
+import { SPEED_STEPS, ZERO_INDEX } from '../utils/speedSteps';
 
 function pad(value: number) {
   return value.toString().padStart(2, '0');
@@ -94,54 +102,10 @@ function IconButton({
   );
 }
 
-interface TimeControlsProps {
-  dateRef: React.MutableRefObject<Date>;
-  timeMultRef: React.MutableRefObject<number>;
-}
-
-export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps) {
-  const [isPaused, setIsPaused] = useState(false);
-  const [speedIndex, setSpeedIndex] = useState(Constants.timeMultipleIndex);
+export default function TimeControls() {
   const [isEditingDate, setIsEditingDate] = useState(false);
-  // The clock lives in a ref (so the 3D scene doesn't re-render every frame); poll it for display
-  const refreshClock = useForceUpdate();
-
-  // `speedIndex` + `isPaused` are the single source of truth; the ref the
-  // animation loop reads is derived from them.
-  useEffect(() => {
-    timeMultRef.current = timeMultipleFor(speedIndex, isPaused);
-  }, [isPaused, speedIndex, timeMultRef]);
-
-  useEffect(() => {
-    if (isPaused || isEditingDate) {
-      return;
-    }
-    const intervalId = window.setInterval(refreshClock, 100);
-    return () => window.clearInterval(intervalId);
-  }, [isPaused, isEditingDate, refreshClock]);
-
-  const setSpeed = useCallback((index: number) => {
-    setSpeedIndex(clampSpeedIndex(index));
-  }, []);
-
-  const togglePause = useCallback(() => {
-    if (isPaused && SPEED_STEPS[speedIndex].seconds === 0) {
-      // Resuming from "Stopped" would be a no-op; go to realtime instead
-      setSpeedIndex(REALTIME_INDEX);
-    }
-    setIsPaused(!isPaused);
-  }, [isPaused, speedIndex]);
-
-  const resetToNow = useCallback(() => {
-    dateRef.current = new Date();
-    setSpeedIndex(REALTIME_INDEX);
-    setIsPaused(false);
-    refreshClock();
-  }, [dateRef, refreshClock]);
-
-  const jumpToRealtime = useCallback(() => {
-    setSpeedIndex(REALTIME_INDEX);
-  }, []);
+  const date = useSimulationDate(!isEditingDate);
+  const { speedIndex, paused: isPaused } = useSimulationPlayback();
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -156,11 +120,11 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
           break;
         case 'ArrowLeft':
           event.preventDefault();
-          setSpeed(speedIndex - 1);
+          nudgeSpeed(-1);
           break;
         case 'ArrowRight':
           event.preventDefault();
-          setSpeed(speedIndex + 1);
+          nudgeSpeed(1);
           break;
         case 'n':
         case 'N':
@@ -179,9 +143,8 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [jumpToRealtime, resetToNow, setSpeed, speedIndex, togglePause]);
+  }, []);
 
-  const date = dateRef.current;
   const speed = SPEED_STEPS[speedIndex].seconds;
   const isReverse = speed < 0;
   const isRealtime = speed === 1;
@@ -192,8 +155,7 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
     if (!value) {
       return;
     }
-    dateRef.current = parseDatetimeUtc(value);
-    refreshClock();
+    setTime(parseDatetimeUtc(value));
   };
 
   return (
@@ -241,7 +203,7 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
               <path d="M17.65 6.35A7.96 7.96 0 0 0 12 4V1L7 6l5 5V8a5 5 0 1 1-5 5H5c0 4.42 3.58 8 8 8s8-3.58 8-8c0-2.21-.9-4.2-2.35-5.65z" />
             </svg>
           </IconButton>
-          <IconButton label="Slower (←)" onClick={() => setSpeed(speedIndex - 1)} disabled={speedIndex === 0}>
+          <IconButton label="Slower (←)" onClick={() => nudgeSpeed(-1)} disabled={speedIndex === 0}>
             <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
               <path d="M11 18V6l-8.5 6L11 18zm.5-6 8.5 6V6l-8.5 6z" />
             </svg>
@@ -267,11 +229,7 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
               </svg>
             )}
           </button>
-          <IconButton
-            label="Faster (→)"
-            onClick={() => setSpeed(speedIndex + 1)}
-            disabled={speedIndex === SPEED_STEPS.length - 1}
-          >
+          <IconButton label="Faster (→)" onClick={() => nudgeSpeed(1)} disabled={speedIndex === SPEED_STEPS.length - 1}>
             <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
               <path d="M13 6v12l8.5-6L13 6zM3.5 18l8.5-6-8.5-6v12z" />
             </svg>
@@ -289,7 +247,7 @@ export default function TimeControls({ dateRef, timeMultRef }: TimeControlsProps
             step={1}
             value={speedIndex}
             aria-label="Simulation speed"
-            onChange={(event) => setSpeed(parseInt(event.target.value, 10))}
+            onChange={(event) => setSpeedIndex(parseInt(event.target.value, 10))}
             className="time-controls-slider w-full cursor-pointer"
             style={{
               accentColor: sliderAccent,
