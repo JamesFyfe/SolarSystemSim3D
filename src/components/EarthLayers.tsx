@@ -1,8 +1,47 @@
+import { useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import CelestialBody from "../classes/CelestialBody";
-import useCacheLoader from "../TextureCacheUtils";
+import useCacheLoader, { loadTexture } from "../TextureCacheUtils";
 import InvertedLightShaderMaterial from '../shaders/InvertedLightShaderMaterial';
+import EarthSurfaceMaterial from '../shaders/EarthSurfaceMaterial';
+import { getSunDirection } from '../utils/UtilFunctions';
 import * as THREE from 'three';
+
+const OCEAN_MASK_TEXTURE = "earth_specular.jpg";
+
+/** Earth's surface: day texture plus shader-driven ocean specular / sky reflection. */
+export function EarthSurface({ earth }: { earth: CelestialBody }) {
+  const material = useMemo(() => new EarthSurfaceMaterial(), []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      const [dayMap, oceanMask] = await Promise.all([
+        loadTexture(earth.physicalData.textureName),
+        loadTexture(OCEAN_MASK_TEXTURE),
+      ]);
+      if (cancelled) return;
+      material.map = dayMap;
+      material.oceanUniforms.oceanMask.value = oceanMask;
+      material.needsUpdate = true;
+    };
+    load();
+    return () => { cancelled = true; };
+  }, [material, earth]);
+
+  useEffect(() => () => material.dispose(), [material]);
+
+  useFrame(() => {
+    getSunDirection(earth, material.oceanUniforms.sunDirection.value);
+  });
+
+  return (
+    <mesh name={`${earth.name} mesh`} userData={{ bodyId: earth.id }}>
+      <sphereGeometry args={[earth.physicalData.radius, 100, 50]} />
+      <primitive object={material} attach="material" />
+    </mesh>
+  );
+}
 
 export function Clouds({ earth, rotationSpeed = 0.002 }: { earth: CelestialBody, rotationSpeed?: number }) {
 const meshRef = useCacheLoader("earth_clouds.png");

@@ -30,10 +30,18 @@ export interface OrbitDataParams {
 }
 
 export interface AtmosphereParams {
+  /** CSS colour of the haze, e.g. "rgb(90, 120, 160)" */
   color: string,
-  layers: number,
-  thickness: number,
-  opacity: number
+  /** Height of the visible shell as a fraction of the planet radius (visually exaggerated) */
+  height: number,
+  /** Maximum opacity of the haze at the limb, 0-1 */
+  opacity: number,
+  /** Scattering strength multiplier (default 1) */
+  intensity?: number,
+  /** Haze density multiplier (default 1) */
+  density?: number,
+  /** How quickly density falls off with altitude; larger = thinner upper layers (default 5) */
+  falloff?: number
 }
 
 export interface RingDataParams {

@@ -4,8 +4,7 @@ import CelestialBody from "../classes/CelestialBody";
 import useCacheLoader from "../TextureCacheUtils";
 import Atmosphere from "./Atmosphere";
 import BodyIndicator from "./BodyIndicator";
-import { Clouds } from "./EarthLayers";
-import { CityLights } from "./EarthLayers";
+import { Clouds, CityLights, EarthSurface } from "./EarthLayers";
 import OrbitEllipse from "./OrbitEllipse";
 import Rings from "./Rings";
 import { multiplyRGB } from '../utils/UtilFunctions';
@@ -46,14 +45,16 @@ export const CelestialBodyRenderer = memo(({ body, fullyRendered = true, setSele
       <group ref={body.rotatingGroupRef} name={`${body.name } rotating group`} userData={{ bodyId: body.id }}>
         {fullyRendered ? 
           <>
-            <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
-            {body.ringData && <Rings body={body} />}
-            {body.name === "Earth" && 
+            {body.name === "Earth" ?
               <>
+                <EarthSurface earth={body} />
                 <CityLights earth={body}/>
                 <Clouds earth={body} />
               </>
-            } 
+              :
+              <mesh ref={meshRef} name={`${body.name} mesh`} userData={{ bodyId: body.id }} {...getMeshProps()} />
+            }
+            {body.ringData && <Rings body={body} />}
           </> 
           : 
           <points {...getPointProps()} />
