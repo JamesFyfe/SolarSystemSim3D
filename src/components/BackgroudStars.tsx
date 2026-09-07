@@ -33,6 +33,13 @@ const fragmentShader = `
   }
 `;
 
+// J2000 mean obliquity. Star RA/Dec are equatorial; the scene is the J2000
+// ecliptic (see OrbitData): scene = [Y_ecl, Z_ecl, X_ecl], so the solar-system
+// plane is XZ and +Y is the north ecliptic pole.
+const OBLIQUITY_J2000 = 23.4392911 * Math.PI / 180;
+const COS_OBLIQUITY_J2000 = Math.cos(OBLIQUITY_J2000);
+const SIN_OBLIQUITY_J2000 = Math.sin(OBLIQUITY_J2000);
+
 const BackgroundStars: React.FC = () => {
   const starsRef = useRef<Points>(null);
   const camera = useThree((state) => state.camera);
@@ -45,15 +52,18 @@ const BackgroundStars: React.FC = () => {
 
   starData.forEach((star: Star, index: number) => {
     const { ra, dec, spectral_type, magnitude } = star;
-    const phi = ra;
-    const theta = Math.PI / 2 - dec;
-    const x = Math.cos(phi) * Math.sin(theta) * radius;
-    const y = Math.sin(phi) * Math.sin(theta) * radius;
-    const z = Math.cos(theta) * radius;
+    const cosDec = Math.cos(dec);
+    const Xeq = cosDec * Math.cos(ra);
+    const Yeq = cosDec * Math.sin(ra);
+    const Zeq = Math.sin(dec);
 
-    positions[index * 3] = x;
-    positions[index * 3 + 1] = y;
-    positions[index * 3 + 2] = z;
+    const Xecl = Xeq;
+    const Yecl = Yeq * COS_OBLIQUITY_J2000 + Zeq * SIN_OBLIQUITY_J2000;
+    const Zecl = -Yeq * SIN_OBLIQUITY_J2000 + Zeq * COS_OBLIQUITY_J2000;
+
+    positions[index * 3] = Yecl * radius;
+    positions[index * 3 + 1] = Zecl * radius;
+    positions[index * 3 + 2] = Xecl * radius;
 
     // multiply color based off magnitude so dimmer stars are darker
     const colorStr = multiplyRGB(spectralTypeColors[spectral_type], (8 - magnitude) / 5);
