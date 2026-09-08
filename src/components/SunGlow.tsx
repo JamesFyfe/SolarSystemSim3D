@@ -13,8 +13,8 @@ const _worldPos = new THREE.Vector3();
 
 /**
  * Camera-facing additive quad centred on the Sun. The quad is only a canvas:
- * the shader computes the glow from true angular geometry, so its on-screen
- * size and brightness fall off continuously with distance.
+ * the shader computes the glow from true angular geometry, so the disc shrinks
+ * continuously with distance while keeping a constant HDR brightness.
  *
  * Depth testing stays on, so the Sun's own sphere hides the part of the quad
  * behind the disc (leaving the surface texture visible close up) and planets

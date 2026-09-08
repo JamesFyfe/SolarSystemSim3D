@@ -15,6 +15,9 @@ import SunGlow from './SunGlow';
 /** Pointer travel (px) above which a pointerdown/up pair counts as an orbit drag, not a click */
 const CLICK_DRAG_TOLERANCE_PX = 5;
 
+/** Warm HDR tint so the photosphere is as bright as the glow disc, without growing the silhouette */
+const SUN_COLOR: [number, number, number] = [1, 1, 1];
+
 /** Skip picking so clicks pass through non-selectable bodies to whatever is behind them */
 function noRaycast() {}
 
@@ -69,18 +72,16 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
               <mesh
                 name={`${body.name} mesh`}
                 geometry={planetSphereGeometry}
-                scale={radius}
+                scale={isStar ? 0.9 * radius : radius}
                 dispose={null}
                 raycast={raycast}
               >
                 {/* See useCachedTexture: a new key when the map arrives forces a shader rebuild */}
                 {isStar ? (
-                  <meshStandardMaterial
+                  <meshBasicMaterial
                     key={texture ? 'textured' : 'plain'}
                     map={texture}
-                    emissiveMap={texture}
-                    emissive="rgb(160, 160, 90)"
-                    emissiveIntensity={3}
+                    color={SUN_COLOR}
                   />
                 ) : (
                   <meshStandardMaterial

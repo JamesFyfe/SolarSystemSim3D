@@ -9,11 +9,11 @@ import * as THREE from 'three';
  *   x     = angle from the Sun's centre / angular radius of the disc
  *   sigma = angular size of one pixel / angular radius of the disc
  *
- * The disc is treated as a very bright HDR source (`uDiscIntensity`). When the
- * disc is smaller than a pixel (sigma > 1) it is spread over the pixel
- * footprint and its intensity is divided by the area it now covers, so the
- * total light stays consistent and the Sun keeps getting smaller and dimmer
- * (~1/d^2) the further away you are, without any clamping.
+ * The disc is a constant-brightness HDR source (`uDiscIntensity`). It shrinks
+ * with distance; when it is smaller than a pixel, `sigma` spreads the edge
+ * over the pixel footprint so it still hits a pixel instead of aliasing out.
+ * Intensity is not divided by that area — energy conservation would dim it as
+ * ~1/d^2, which is the falloff we don't want.
  *
  * A wide 1/x^2 glare term (like a camera point-spread function) is added on
  * top, softened by the same pixel footprint. The two terms blend smoothly.
@@ -66,13 +66,12 @@ const fragmentShader = /* glsl */ `
     float x = angle / discAngle;          // distance from centre in disc radii
     float sigma = uPixelAngle / discAngle; // pixel footprint in disc radii
 
-    // Disc, blurred by the pixel footprint. Edge softness is at least a pixel
-    // (or a hair when the disc is huge). Intensity is spread over the enlarged
-    // area so the total light is conserved as the disc shrinks below a pixel.
+    // Disc, anti-aliased by the pixel footprint. Edge softness is at least a
+    // pixel (or a hair when the disc is huge). Brightness is constant; the
+    // disc just occupies fewer pixels as you recede.
     float edge = max(sigma, 0.02);
-    float spread = 1.0 + sigma;
     float disc = 1.0 - smoothstep(1.0 - edge, 1.0 + edge, x);
-    float core = uDiscIntensity * disc / (spread * spread);
+    float core = uDiscIntensity * disc;
 
     // Wide glare wing (~1/x^2), softened by the pixel footprint
     float glare = uGlareStrength / (x * x + sigma * sigma + 1.0);
@@ -112,8 +111,8 @@ export default function createSunGlowMaterial({
   sunRadius,
   coreColor = 'rgb(255, 210, 120)',
   glareColor = 'rgb(255, 210, 120)',
-  discIntensity = 40,
-  glareStrength = 0.35,
+  discIntensity = 400,
+  glareStrength = 0.75,
 }: SunGlowMaterialOptions): SunGlowMaterial {
   return new THREE.ShaderMaterial({
     vertexShader,
@@ -121,7 +120,7 @@ export default function createSunGlowMaterial({
     uniforms: {
       uCoreColor: { value: new THREE.Color(coreColor) },
       uGlareColor: { value: new THREE.Color(glareColor) },
-      uSunRadius: { value: sunRadius },
+      uSunRadius: { value: sunRadius * 0.9 },
       uPixelAngle: { value: 0.001 },
       uDiscIntensity: { value: discIntensity },
       uGlareStrength: { value: glareStrength },
