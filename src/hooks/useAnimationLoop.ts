@@ -43,7 +43,7 @@ export default function useAnimationLoop({ root, bodiesById, visibleBodies, disp
       const next = bodiesById.get(id);
       // Read controls from the store so this callback stays stable
       const controls = get().controls as OrbitControls | null;
-      if (!next || next === previous || !next.threeGroupRef.current || !controls) {
+      if (!next || !next.clickable || next === previous || !next.threeGroupRef.current || !controls) {
         return;
       }
 
@@ -154,10 +154,13 @@ function updateEllipseAndIndicatorOpacities(
     const distToParent = body.position.distanceTo(body.parent.position);
     const camDistToParent = camera.position.distanceTo(body.parent.position);
     const distMultiple = camDistToParent / distToParent;
-    if (distMultiple > 60) {
+    // Non-selectable moons drop out sooner so they don't clutter the view
+    const fadeStart = body.clickable ? 30 : 12;
+    const fadeEnd = body.clickable ? 60 : 24;
+    if (distMultiple > fadeEnd) {
       setEllipseAndIndicatorOpacity(body, 0);
-    } else if (distMultiple > 30) {
-      setEllipseAndIndicatorOpacity(body, (60 - distMultiple) / 37.5);
+    } else if (distMultiple > fadeStart) {
+      setEllipseAndIndicatorOpacity(body, (0.8 * (fadeEnd - distMultiple)) / (fadeEnd - fadeStart));
     } else {
       setEllipseAndIndicatorOpacity(body, 0.8);
     }
@@ -179,6 +182,14 @@ function setEllipseAndIndicatorOpacity(body: CelestialBody, opacity: number) {
     indicator.visible = opacity > 0;
     if (opacity > 0) {
       indicator.fillOpacity = opacity;
+    }
+  }
+
+  // Minor moons unrender entirely once their orbit/label have faded out
+  if (!body.clickable) {
+    const rotating = body.rotatingGroupRef.current;
+    if (rotating) {
+      rotating.visible = opacity > 0;
     }
   }
 }

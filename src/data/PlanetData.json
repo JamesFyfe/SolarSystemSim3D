@@ -159,7 +159,7 @@
           "physicalData": {
             "mass": 1.0666298536488537e-08,
             "radius": 0.01108,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "phobos_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 7.656792,
@@ -183,7 +183,7 @@
           "physicalData": {
             "mass": 1.4685081141236327e-09,
             "radius": 0.0062,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "deimos_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 30.296664,
@@ -232,7 +232,7 @@
           "physicalData": {
             "mass": 3.747511701991484e-08,
             "radius": 0.0215,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 18212.397672,
@@ -256,7 +256,7 @@
           "physicalData": {
             "mass": 2.0827656066491343e-09,
             "radius": 0.008199999999999999,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 17846.695703999998,
@@ -280,7 +280,7 @@
           "physicalData": {
             "mass": 2.465710849552938e-06,
             "radius": 0.0835,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 11.998031999999998,
@@ -304,7 +304,7 @@
           "physicalData": {
             "mass": 4.517226597133636e-07,
             "radius": 0.0493,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 6231.357216,
@@ -328,7 +328,7 @@
           "physicalData": {
             "mass": 0.0892993539938575,
             "radius": 1.82149,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "io_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 42.305568,
@@ -352,7 +352,7 @@
           "physicalData": {
             "mass": 0.04798765303731091,
             "radius": 1.5608,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "europa_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 84.61111199999999,
@@ -376,7 +376,7 @@
           "physicalData": {
             "mass": 0.1481528307868716,
             "radius": 2.6311999999999998,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "ganymede_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 171.73411199999998,
@@ -400,7 +400,7 @@
           "physicalData": {
             "mass": 0.10757249532390255,
             "radius": 2.4103000000000003,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "callisto_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 400.57056,
@@ -424,7 +424,7 @@
           "physicalData": {
             "mass": 2.2706934804908986e-06,
             "radius": 0.085,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 6013.493039999999,
@@ -480,7 +480,7 @@
           "physicalData": {
             "mass": 3.750897212932284e-05,
             "radius": 0.1982,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "mimas_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 22.618128,
@@ -504,7 +504,7 @@
           "physicalData": {
             "mass": 0.00010803191893445308,
             "radius": 0.2521,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "enceladus_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 32.885232,
@@ -528,7 +528,7 @@
           "physicalData": {
             "mass": 0.0006174653790978631,
             "radius": 0.5311,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "tethys_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 45.307248,
@@ -552,7 +552,7 @@
           "physicalData": {
             "mass": 0.0010954931118688966,
             "radius": 0.5614,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "dione_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 65.68598399999999,
@@ -576,7 +576,7 @@
           "physicalData": {
             "mass": 0.002306511608975552,
             "radius": 0.7635,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "rhea_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 108.42007199999999,
@@ -600,7 +600,7 @@
           "physicalData": {
             "mass": 0.1345178785892705,
             "radius": 2.5747600000000004,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "titan_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 382.69075200000003,
@@ -630,7 +630,7 @@
           "physicalData": {
             "mass": 5.550808745474568e-06,
             "radius": 0.135,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 510.63979200000006,
@@ -654,7 +654,7 @@
           "physicalData": {
             "mass": 0.0018055828326377261,
             "radius": 0.7343,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "iapetus_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 1903.9440479999998,
@@ -678,7 +678,7 @@
           "physicalData": {
             "mass": 8.312317566763457e-06,
             "radius": 0.1065,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 13207.293839999998,
@@ -702,7 +702,7 @@
           "physicalData": {
             "mass": 1.8970200324904313e-06,
             "radius": 0.0892,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 16.736472,
@@ -726,7 +726,7 @@
           "physicalData": {
             "mass": 5.264265109983035e-07,
             "radius": 0.0582,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 16.728288,
@@ -750,7 +750,7 @@
           "physicalData": {
             "mass": 7.1283893416048904e-09,
             "radius": 0.018,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 65.68598399999999,
@@ -774,7 +774,7 @@
           "physicalData": {
             "mass": 5.552392778378409e-09,
             "radius": 0.015099999999999999,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 45.307248,
@@ -798,7 +798,7 @@
           "physicalData": {
             "mass": 1.6043960746806972e-07,
             "radius": 0.0431,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 45.307272,
@@ -822,7 +822,7 @@
           "physicalData": {
             "mass": 1.387063683288819e-07,
             "radius": 0.040600000000000004,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 14.510448,
@@ -846,7 +846,7 @@
           "physicalData": {
             "mass": 4.195324717505857e-09,
             "radius": 0.014,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 14.781072000000002,
@@ -902,7 +902,7 @@
           "physicalData": {
             "mass": 0.0012506560197747957,
             "radius": 0.5789,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "ariel_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 60.49632,
@@ -926,7 +926,7 @@
           "physicalData": {
             "mass": 0.0012752278656673484,
             "radius": 0.5847,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "umbriel_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 99.46915200000001,
@@ -950,7 +950,7 @@
           "physicalData": {
             "mass": 0.0033995961681581627,
             "radius": 0.7888999999999999,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "titania_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 208.954656,
@@ -974,7 +974,7 @@
           "physicalData": {
             "mass": 0.0030766673919980763,
             "radius": 0.7614,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "oberon_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 323.126544,
@@ -998,7 +998,7 @@
           "physicalData": {
             "mass": 6.469419333007398e-05,
             "radius": 0.2358,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "miranda_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 33.930816,
@@ -1047,7 +1047,7 @@
           "physicalData": {
             "mass": 1.2781288182540412e-07,
             "radius": 0.029,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 8643.367968,
@@ -1071,7 +1071,7 @@
           "physicalData": {
             "mass": 3.534400643833842e-07,
             "radius": 0.04,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 7.0555200000000005,
@@ -1095,7 +1095,7 @@
           "physicalData": {
             "mass": 1.7489992309314684e-06,
             "radius": 0.074,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 7.465872000000001,
@@ -1119,7 +1119,7 @@
           "physicalData": {
             "mass": 2.845276923665506e-06,
             "radius": 0.079,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 8.031744,
@@ -1143,7 +1143,7 @@
           "physicalData": {
             "mass": 3.818264487387735e-06,
             "radius": 0.096,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 10.289856,
@@ -1167,7 +1167,7 @@
           "physicalData": {
             "mass": 3.870853795375281e-05,
             "radius": 0.208,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 13.319735999999999,
@@ -1191,7 +1191,7 @@
           "physicalData": {
             "mass": 0.021404041425738114,
             "radius": 1.3525999999999998,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "triton_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 141.047856,
@@ -1215,7 +1215,7 @@
           "physicalData": {
             "mass": 3.870853795375281e-05,
             "radius": 0.208,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 13.319735999999999,
@@ -1264,7 +1264,7 @@
           "physicalData": {
             "mass": 0.0015864084012358725,
             "radius": 0.606,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": "charon_texture.jpeg",
             "axisTilt": 0,
             "rotationPeriod": 153.293352,
@@ -1288,7 +1288,7 @@
           "physicalData": {
             "mass": 4.4949405032738175e-08,
             "radius": 0.018,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 596.513256,
@@ -1312,7 +1312,7 @@
           "physicalData": {
             "mass": 4.79461982251721e-08,
             "radius": 0.0185,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 923.738184,
@@ -1336,7 +1336,7 @@
           "physicalData": {
             "mass": 1.6481448512004e-08,
             "radius": 0.006,
-            "color": "rgb(175, 175, 175)",
+            "color": "rgb(100, 100, 100)",
             "textureName": null,
             "axisTilt": 0,
             "rotationPeriod": 764.586552,

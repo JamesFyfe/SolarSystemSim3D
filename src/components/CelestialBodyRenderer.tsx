@@ -15,6 +15,9 @@ import SunGlow from './SunGlow';
 /** Pointer travel (px) above which a pointerdown/up pair counts as an orbit drag, not a click */
 const CLICK_DRAG_TOLERANCE_PX = 5;
 
+/** Skip picking so clicks pass through non-selectable bodies to whatever is behind them */
+function noRaycast() {}
+
 /** A single vertex at the origin, shared by every point-rendered body */
 const POINT_POSITION = new Float32Array([0, 0, 0]);
 
@@ -35,15 +38,17 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
 
   const handleClick = useCallback(
     (event: ThreeEvent<MouseEvent>) => {
-      if (event.delta > CLICK_DRAG_TOLERANCE_PX) {
+      if (!body.clickable || event.delta > CLICK_DRAG_TOLERANCE_PX) {
         return;
       }
       // Only the nearest body under the pointer should be selected
       event.stopPropagation();
       onSelect(body.id, true);
     },
-    [body.id, onSelect],
+    [body.clickable, body.id, onSelect],
   );
+
+  const raycast = body.clickable ? undefined : noRaycast;
 
   useLayoutEffect(() => {
     const group = body.rotatingGroupRef.current;
@@ -53,7 +58,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
   }, [body]);
 
   return (
-    <group ref={body.threeGroupRef} name={body.name} onClick={handleClick}>
+    <group ref={body.threeGroupRef} name={body.name} onClick={body.clickable ? handleClick : undefined}>
       {/* Spin is around local Y after equatorQuaternion tips that axis to the orbit-relative pole */}
       <group ref={body.rotatingGroupRef} name={`${body.name} rotating group`}>
         {fullyRendered ? (
@@ -61,7 +66,13 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
             {body.renderer === 'earth' ? (
               <EarthLayers earth={body} />
             ) : (
-              <mesh name={`${body.name} mesh`} geometry={planetSphereGeometry} scale={radius} dispose={null}>
+              <mesh
+                name={`${body.name} mesh`}
+                geometry={planetSphereGeometry}
+                scale={radius}
+                dispose={null}
+                raycast={raycast}
+              >
                 {/* See useCachedTexture: a new key when the map arrives forces a shader rebuild */}
                 {isStar ? (
                   <meshStandardMaterial
@@ -83,7 +94,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
             {body.ringData && <Rings body={body} />}
           </>
         ) : (
-          <points frustumCulled={false}>
+          <points frustumCulled={false} raycast={raycast}>
             <bufferGeometry>
               <bufferAttribute attach="attributes-position" args={[POINT_POSITION, 3]} />
             </bufferGeometry>

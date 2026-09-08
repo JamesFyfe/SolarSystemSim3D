@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import CelestialBody from '../classes/CelestialBody';
 import OrbitData from '../classes/OrbitData';
 import { getDate } from '../state/simulationClock';
+import { multiplyRGB } from '../utils/UtilFunctions';
 
 interface OrbitEllipseProps {
   body: CelestialBody;
@@ -16,7 +17,7 @@ function noRaycast() {}
 
 export default function OrbitEllipse({ body }: OrbitEllipseProps) {
   const orbitData = body.orbitData as OrbitData;
-  const color = body.physicalData.color;
+  const color = body.clickable ? body.physicalData.color : multiplyRGB(body.physicalData.color, 0.55);
 
   const line = useMemo(() => {
     const a = orbitData.semiMajorAxis;
