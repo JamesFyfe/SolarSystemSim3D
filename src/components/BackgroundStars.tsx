@@ -40,7 +40,7 @@ const OBLIQUITY_J2000 = (23.4392911 * Math.PI) / 180;
 const COS_OBLIQUITY_J2000 = Math.cos(OBLIQUITY_J2000);
 const SIN_OBLIQUITY_J2000 = Math.sin(OBLIQUITY_J2000);
 
-const STAR_SPHERE_RADIUS = 10000;
+const STAR_SPHERE_RADIUS = 2000;
 
 /** Builds the star-field geometry once: positions on a sphere, colours by spectral type, sizes by magnitude. */
 function createStarGeometry(stars: Star[]): THREE.BufferGeometry {
@@ -64,12 +64,13 @@ function createStarGeometry(stars: Star[]): THREE.BufferGeometry {
     positions[index * 3 + 2] = Xecl * STAR_SPHERE_RADIUS;
 
     // Dim faint stars; never brighten beyond the catalogue colour
-    color.set(multiplyRGB(spectralTypeColors[spectral_type], Math.min(1, (8 - magnitude) / 5)));
+    color.set(multiplyRGB(spectralTypeColors[spectral_type], Math.min(1, (8 - magnitude) / 4)));
+    // color.set(spectralTypeColors[spectral_type]);
     colors[index * 3] = color.r;
     colors[index * 3 + 1] = color.g;
     colors[index * 3 + 2] = color.b;
 
-    sizes[index] = (8 - magnitude) ** 2.2;
+    sizes[index] = (8 - magnitude) ** 1.5;
   });
 
   const geometry = new THREE.BufferGeometry();
