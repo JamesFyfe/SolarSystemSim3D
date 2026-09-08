@@ -108,7 +108,7 @@ const CelestialBodyRenderer = memo(function CelestialBodyRenderer({
       {fullyRendered && body.atmosphereData && <Atmosphere body={body} />}
       {isStar && <SunGlow body={body} />}
       {/* The light sits at the group origin, which already tracks the body's position */}
-      {fullyRendered && isStar && <pointLight ref={body.lightRef} intensity={lightIntensity} />}
+      {fullyRendered && isStar && <pointLight ref={body.lightRef} intensity={lightIntensity} decay={0.35} />}
     </group>
   );
 });

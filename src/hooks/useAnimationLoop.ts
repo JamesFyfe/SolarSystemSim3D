@@ -96,7 +96,6 @@ export default function useAnimationLoop({ root, bodiesById, visibleBodies, disp
     updateTransition(transitionRef.current, delta, _posAfter, selectedBody, camera, controls);
     updateEllipseAndIndicatorOpacities(visibleBodies, selectedBody, camera);
     updateRenderQuality(selectedBody);
-    updateSunBrightness();
   });
 
   /** Swap the selected body between sphere and point based on its apparent size. */
@@ -116,15 +115,6 @@ export default function useAnimationLoop({ root, bodiesById, visibleBodies, disp
     const entry = visibleBodies.find((candidate) => candidate.body === body);
     if (entry && entry.fullyRendered !== fullyRendered) {
       dispatch({ type: 'setFullyRendered', body, fullyRendered });
-    }
-  }
-
-  /** Brighten the sun with distance so the outer planets stay lit. */
-  function updateSunBrightness() {
-    const sunLight = root.lightRef?.current;
-    if (sunLight) {
-      const distToSun = camera.position.distanceTo(root.position);
-      sunLight.intensity = distToSun ** 1.8 * 10;
     }
   }
 

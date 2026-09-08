@@ -56,7 +56,7 @@ const fragmentShader = /* glsl */ `
     float brightness = uBrightness;
 
     if (along < 0.0 && perpSqrd < uPlanetR * uPlanetR) {
-      brightness = 0.1;
+      brightness = 0.07;
     }
 
     vec3 col = tex.rgb * brightness;
@@ -97,7 +97,7 @@ export type RingMaterial = THREE.ShaderMaterial & {
 export default function createRingMaterial({
   opacity,
   planetRadius,
-  brightness = 0.8,
+  brightness = 0.5,
 }: RingMaterialOptions): RingMaterial {
   return new THREE.ShaderMaterial({
     vertexShader,
